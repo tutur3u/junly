@@ -5,8 +5,8 @@ import type {
 	ThemePreference,
 } from "@/components/launcher/types";
 
-export const LOADING_PREF_KEY = "junly-loading-screens";
-export const THEME_PREF_KEY = "junly-theme";
+export const LOADING_PREF_KEY = "chunli-loading-screens";
+export const THEME_PREF_KEY = "chunli-theme";
 
 export const getThemePreferenceSnapshot = (): ThemePreference | null => {
 	if (typeof window === "undefined") {

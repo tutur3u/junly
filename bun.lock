@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "junly",
+      "name": "chunli",
       "dependencies": {
         "@vercel/analytics": "^2.0.1",
         "lucide-react": "^0.553.0",

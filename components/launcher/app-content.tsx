@@ -222,8 +222,8 @@ const AboutContent = ({ theme }: { theme: ThemeMode }) => {
 					}`}
 				>
 					<Image
-						src="https://picsum.photos/seed/junly/200/200"
-						alt="Junly"
+						src="https://picsum.photos/seed/chunli/200/200"
+						alt="Chunli"
 						fill
 						className="object-cover"
 						referrerPolicy="no-referrer"
@@ -235,7 +235,7 @@ const AboutContent = ({ theme }: { theme: ThemeMode }) => {
 							isDark ? "text-white" : "text-slate-800"
 						}`}
 					>
-						Hi, I&apos;m Junly!
+						Hi, I&apos;m Chunli!
 					</h2>
 					<p className={`text-lg ${isDark ? "text-slate-400" : "text-slate-500"}`}>
 						Digital Creator & Developer

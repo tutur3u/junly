@@ -100,7 +100,7 @@ export function LauncherShell({
 							theme === "dark" ? "text-slate-100" : "text-slate-600"
 						}`}
 					>
-						Junly
+						Chunli
 					</span>
 				</div>
 				<div className="flex items-center gap-3">

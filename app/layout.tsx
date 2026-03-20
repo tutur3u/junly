@@ -34,8 +34,8 @@ const monogram = localFont({
 });
 
 export const metadata: Metadata = {
-	title: "Junly's Portfolio",
-	description: "A Nintendo Wii U inspired portfolio website for Junly.",
+	title: "Chunli's Portfolio",
+	description: "A Nintendo Wii U inspired portfolio website for Chunli.",
 };
 
 export default function RootLayout({

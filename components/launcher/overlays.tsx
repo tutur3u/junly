@@ -49,7 +49,7 @@ export function InitialBootOverlay({ theme }: { theme: ThemeMode }) {
 							theme === "dark" ? "text-slate-100" : "text-slate-800"
 						}`}
 					>
-						Junly
+						Chunli
 					</div>
 					<p className={`mt-3 ${theme === "dark" ? "text-slate-400" : "text-slate-500"}`}>
 						Starting up the Wii U-style portfolio system.
