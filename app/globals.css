@@ -69,6 +69,26 @@
   );
 }
 
+.theme-shell {
+  color: rgb(51 65 85);
+}
+
+.theme-dark {
+  color: rgb(226 232 240);
+}
+
+.theme-dark .bg-stripes {
+  background-image:
+    linear-gradient(180deg, rgba(125, 211, 252, 0.06), transparent 28%),
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.028) 0px,
+      rgba(255, 255, 255, 0.028) 18px,
+      transparent 18px,
+      transparent 38px
+    );
+}
+
 .wii-u-topbar {
   background:
     linear-gradient(180deg, rgba(245, 251, 255, 0.94), rgba(228, 241, 250, 0.9)),
@@ -172,4 +192,145 @@
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 1),
     0 6px 12px rgba(130, 169, 196, 0.08);
+}
+
+.theme-dark .wii-u-icon {
+  border-color: rgba(225, 242, 255, 0.18);
+  background:
+    linear-gradient(180deg, rgba(34, 57, 78, 0.94) 0%, rgba(18, 33, 47, 0.96) 52%, rgba(10, 21, 33, 0.98) 100%),
+    radial-gradient(circle at 50% 0%, rgba(186, 230, 253, 0.18), transparent 58%);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.34),
+    0 0 0 1px rgba(145, 220, 255, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -18px 24px rgba(0, 0, 0, 0.24),
+    inset 0 -42px 60px rgba(56, 189, 248, 0.06);
+}
+
+.theme-dark .wii-u-icon::before {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.03));
+}
+
+.theme-dark .wii-u-icon::after {
+  background: rgba(56, 189, 248, 0.18);
+}
+
+.theme-dark .wii-u-icon:hover {
+  border-color: rgba(186, 230, 253, 0.3);
+  box-shadow:
+    0 22px 48px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(125, 211, 252, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -20px 26px rgba(4, 47, 76, 0.24),
+    0 0 18px rgba(56, 189, 248, 0.12);
+}
+
+.theme-dark .wii-u-window {
+  background:
+    linear-gradient(180deg, rgba(14, 24, 37, 0.96), rgba(8, 16, 27, 0.95)),
+    radial-gradient(circle at top, rgba(125, 211, 252, 0.12), transparent 34%);
+  border-color: rgba(227, 242, 253, 0.14);
+  box-shadow:
+    0 34px 82px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -24px 34px rgba(0, 0, 0, 0.18);
+}
+
+.theme-dark .wii-u-titlebar {
+  background:
+    linear-gradient(180deg, rgba(28, 44, 60, 0.98), rgba(16, 28, 42, 0.94)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent);
+  border-bottom-color: rgba(186, 230, 253, 0.14);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.theme-dark .wii-u-scrollbar::-webkit-scrollbar-track {
+  background: rgba(11, 23, 35, 0.46);
+}
+
+.theme-dark .wii-u-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(61, 95, 122, 0.92);
+  border-color: rgba(15, 23, 42, 0.65);
+}
+
+.theme-dark .wii-u-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(83, 132, 168, 0.96);
+}
+
+.theme-dark .wii-u-topbar {
+  background:
+    linear-gradient(180deg, rgba(20, 34, 48, 0.94), rgba(11, 21, 33, 0.9)),
+    linear-gradient(180deg, rgba(186, 230, 253, 0.12), transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 12px 28px rgba(0, 0, 0, 0.22);
+}
+
+.theme-dark .wii-u-topbar::after {
+  background: rgba(186, 230, 253, 0.16);
+}
+
+.theme-dark .wii-u-user-badge {
+  background:
+    linear-gradient(180deg, rgba(36, 58, 77, 0.96), rgba(18, 30, 44, 0.94));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 8px 18px rgba(0, 0, 0, 0.22);
+}
+
+.theme-dark .wii-u-status-pill {
+  background:
+    linear-gradient(180deg, rgba(26, 43, 61, 0.94), rgba(12, 24, 36, 0.94));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    0 10px 22px rgba(0, 0, 0, 0.22);
+}
+
+.theme-dark .wii-u-home-button {
+  background:
+    radial-gradient(circle at 30% 28%, rgba(186, 230, 253, 0.24), transparent 28%),
+    linear-gradient(180deg, #253343 0%, #111827 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 10px 24px rgba(0, 0, 0, 0.28);
+}
+
+.theme-dark .wii-u-close-button {
+  background:
+    linear-gradient(180deg, rgba(40, 63, 84, 0.94), rgba(22, 36, 51, 0.9));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 8px 16px rgba(0, 0, 0, 0.22);
+}
+
+.theme-dark .wii-u-dialog-surface {
+  background:
+    radial-gradient(circle at top, rgba(125, 211, 252, 0.08), transparent 24%),
+    linear-gradient(180deg, rgba(15, 27, 40, 0.92), rgba(8, 17, 28, 0.96));
+}
+
+.theme-dark .wii-u-soft-panel {
+  background:
+    linear-gradient(180deg, rgba(27, 44, 61, 0.78), rgba(16, 28, 42, 0.74));
+  border-color: rgba(186, 230, 253, 0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 14px 26px rgba(0, 0, 0, 0.18);
+}
+
+.theme-dark .wii-u-round-button {
+  background:
+    linear-gradient(180deg, rgba(45, 71, 93, 0.96), rgba(23, 37, 52, 0.94));
+  color: rgb(226 232 240);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 10px 18px rgba(0, 0, 0, 0.2);
+}
+
+.theme-dark .wii-u-field {
+  background:
+    linear-gradient(180deg, rgba(10, 20, 31, 0.96), rgba(14, 24, 37, 0.94));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 8px 16px rgba(0, 0, 0, 0.14);
 }
