@@ -198,7 +198,7 @@ export function LauncherShell({
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
-						className={`fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm sm:p-8 ${
+						className={`fixed inset-0 z-50 flex items-center justify-center p-3 backdrop-blur-md sm:p-6 lg:p-8 ${
 							theme === "dark"
 								? "bg-[radial-gradient(circle_at_top,rgba(14,165,233,0.12),transparent_30%),rgba(2,6,23,0.72)]"
 								: "bg-slate-900/20"
@@ -210,18 +210,19 @@ export function LauncherShell({
 							animate={{ scale: 1, y: 0, opacity: 1 }}
 							exit={{ scale: 0.9, y: 20, opacity: 0 }}
 							transition={{ type: "spring", stiffness: 300, damping: 25 }}
-							className="wii-u-window flex h-[80vh] max-h-[800px] w-full max-w-4xl flex-col overflow-hidden"
+							className="wii-u-window relative flex h-[88vh] min-h-[720px] w-full max-w-[1480px] flex-col overflow-hidden rounded-[34px]"
 							onClick={(event) => event.stopPropagation()}
 						>
-							<div className="wii-u-titlebar flex-shrink-0">
-								<div className="flex items-center gap-2">
+							<div className="pointer-events-none absolute inset-[10px] rounded-[26px] border border-white/10 opacity-70" />
+							<div className="wii-u-titlebar relative flex-shrink-0 px-6 py-4">
+								<div className="flex items-center gap-3">
 									<div
-										className={`flex h-8 w-8 items-center justify-center rounded-full border border-white/90 shadow-inner ${activeAppData.color}`}
+										className={`flex h-10 w-10 items-center justify-center rounded-full border border-white/90 shadow-inner ${activeAppData.color}`}
 									>
-										<div className="scale-50">{activeAppData.icon}</div>
+										<div className="scale-[0.56]">{activeAppData.icon}</div>
 									</div>
 									<span
-										className={`font-bold tracking-wide ${
+										className={`text-[1.12rem] font-bold tracking-wide ${
 											theme === "dark" ? "text-slate-100" : "text-slate-700"
 										}`}
 									>
@@ -231,7 +232,7 @@ export function LauncherShell({
 								<button
 									type="button"
 									onClick={onCloseApp}
-									className={`wii-u-close-button flex h-9 w-9 items-center justify-center rounded-full border border-white/80 transition-colors ${
+									className={`wii-u-close-button flex h-11 w-11 items-center justify-center rounded-full border border-white/80 transition-colors ${
 										theme === "dark" ? "text-slate-300" : "text-slate-500"
 									}`}
 								>
