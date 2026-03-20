@@ -1,18 +1,21 @@
 "use client";
 
 import {
+	Disc3,
 	Expand,
 	Gamepad2,
 	Github,
 	Mail,
 	MessageSquare,
 	Moon,
+	Play,
 	Settings,
 	Sparkles,
 	Star,
 	Sun,
 	Trophy,
 	Twitter,
+	Volume2,
 	X,
 	Zap,
 } from "lucide-react";
@@ -76,6 +79,16 @@ type GamePreview = {
 	seed: string;
 	description: string;
 	features: string[];
+};
+
+type MusicTrack = {
+	id: string;
+	title: string;
+	artist: string;
+	length: string;
+	mood: string;
+	seed: string;
+	accent: string;
 };
 
 const PROJECTS: ProjectRecord[] = [
@@ -241,6 +254,36 @@ const GAME_PREVIEWS: GamePreview[] = [
 		description:
 			"A score-attack prototype framed like a console training room, mixing compact challenges with collectible mastery badges.",
 		features: ["Trial ladders", "Badge unlocks", "Daily challenge slot"],
+	},
+];
+
+const MUSIC_TRACKS: MusicTrack[] = [
+	{
+		id: "lobby-lights",
+		title: "Lobby Lights",
+		artist: "Chunli System Sound Team",
+		length: "3:28",
+		mood: "Soft boot groove",
+		seed: "lobby-lights",
+		accent: "from-pink-400 via-fuchsia-500 to-orange-400",
+	},
+	{
+		id: "night-plaza",
+		title: "Night Plaza",
+		artist: "Portable Dreams",
+		length: "4:11",
+		mood: "Late-hour menu drift",
+		seed: "night-plaza",
+		accent: "from-cyan-300 via-sky-500 to-indigo-500",
+	},
+	{
+		id: "starlight-bus",
+		title: "Starlight Bus",
+		artist: "Pixel Garden",
+		length: "2:57",
+		mood: "Bright handheld pop",
+		seed: "starlight-bus",
+		accent: "from-emerald-300 via-lime-400 to-yellow-300",
 	},
 ];
 
@@ -1162,6 +1205,247 @@ const SettingsContent = ({
 	</div>
 );
 
+const MusicContent = ({ theme }: { theme: ThemeMode }) => {
+	const isDark = theme === "dark";
+	const [activeTrackId, setActiveTrackId] = useState<string>(MUSIC_TRACKS[0].id);
+	const activeTrack =
+		MUSIC_TRACKS.find((track) => track.id === activeTrackId) ?? MUSIC_TRACKS[0];
+
+	return (
+		<div className="h-full overflow-y-auto p-6 wii-u-scrollbar">
+			<div
+				className={`relative overflow-hidden rounded-[30px] border p-6 ${
+					isDark
+						? "border-pink-200/10 bg-[radial-gradient(circle_at_top_left,rgba(244,114,182,0.18),transparent_22%),linear-gradient(180deg,rgba(14,24,37,0.98),rgba(8,16,27,0.98))]"
+						: "border-white/85 bg-[radial-gradient(circle_at_top_left,rgba(244,114,182,0.12),transparent_20%),linear-gradient(180deg,rgba(255,255,255,0.94),rgba(245,239,255,0.82))]"
+				}`}
+			>
+				<div className="pointer-events-none absolute inset-0 bg-stripes opacity-10" />
+				<div className="relative grid gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+					<div className="flex items-center justify-center">
+						<div className="relative flex h-72 w-72 items-center justify-center">
+							<motion.div
+								className={`absolute inset-0 rounded-full bg-gradient-to-br ${activeTrack.accent} blur-3xl opacity-30`}
+								animate={{ scale: [0.96, 1.04, 0.96] }}
+								transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut" }}
+							/>
+							<motion.div
+								className={`relative flex h-60 w-60 items-center justify-center rounded-full border-[10px] ${
+									isDark
+										? "border-white/10 bg-[radial-gradient(circle_at_35%_35%,rgba(255,255,255,0.16),transparent_24%),linear-gradient(180deg,rgba(32,48,65,0.98),rgba(8,16,27,0.98))]"
+										: "border-white/90 bg-[radial-gradient(circle_at_35%_35%,rgba(255,255,255,0.95),transparent_22%),linear-gradient(180deg,rgba(250,250,255,0.98),rgba(224,236,248,0.96))]"
+								}`}
+								animate={{ rotate: 360 }}
+								transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
+							>
+								<div className={`absolute inset-8 rounded-full border ${isDark ? "border-white/8" : "border-slate-200/70"}`} />
+								<div className={`absolute h-26 w-26 rounded-full bg-gradient-to-br ${activeTrack.accent} opacity-70`} />
+								<div className={`relative flex h-20 w-20 items-center justify-center rounded-full border ${
+									isDark ? "border-white/10 bg-slate-950/85" : "border-white/90 bg-white/95"
+								}`}>
+									<Disc3 className="h-10 w-10 text-white" />
+								</div>
+							</motion.div>
+						</div>
+					</div>
+
+					<div>
+						<div
+							className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-bold uppercase tracking-[0.18em] ${
+								isDark
+									? "border border-pink-200/10 bg-pink-400/10 text-pink-200"
+									: "border border-white/80 bg-pink-100/80 text-pink-700"
+							}`}
+						>
+							<Volume2 className="h-4 w-4" />
+							Now Spinning
+						</div>
+						<h2 className={`mt-4 text-3xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>
+							{activeTrack.title}
+						</h2>
+						<p className={`mt-2 text-lg ${isDark ? "text-slate-300" : "text-slate-600"}`}>
+							{activeTrack.artist}
+						</p>
+						<p className={`mt-4 max-w-xl ${isDark ? "text-slate-400" : "text-slate-500"}`}>
+							A stylized music placeholder with a featured track, visualizer motion,
+							and a queue designed to feel like a console-native media app.
+						</p>
+
+						<div className="mt-6 flex flex-wrap gap-3">
+							<button className="wii-u-primary-button inline-flex items-center gap-2 rounded-full px-4 py-2 font-bold text-white">
+								<Play className="h-4 w-4 fill-current" />
+								Play Demo Mix
+							</button>
+							<div
+								className={`inline-flex items-center rounded-full border px-4 py-2 font-bold ${
+									isDark
+										? "border-white/8 bg-slate-950/35 text-slate-200"
+										: "border-white/80 bg-white/65 text-slate-700"
+								}`}
+							>
+								{activeTrack.length}
+							</div>
+							<div
+								className={`inline-flex items-center rounded-full border px-4 py-2 text-sm ${
+									isDark
+										? "border-white/8 bg-slate-950/35 text-slate-400"
+										: "border-white/80 bg-white/65 text-slate-500"
+								}`}
+							>
+								{activeTrack.mood}
+							</div>
+						</div>
+
+						<div className="mt-7 grid grid-cols-12 items-end gap-2">
+							{[32, 52, 38, 68, 58, 86, 44, 72, 62, 48, 74, 40].map(
+								(height, index) => (
+									<motion.div
+										key={`${activeTrack.id}-${index}`}
+										className={`col-span-1 rounded-t-full bg-gradient-to-t ${activeTrack.accent}`}
+										style={{ height }}
+										animate={{ scaleY: [0.72, 1, 0.8, 1] }}
+										transition={{
+											duration: 1.2 + index * 0.03,
+											repeat: Infinity,
+											repeatType: "mirror",
+											ease: "easeInOut",
+											delay: index * 0.05,
+										}}
+									/>
+								),
+							)}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div className="mt-6 grid gap-5 xl:grid-cols-[0.95fr_1.05fr]">
+				<div
+					className={`rounded-[28px] border p-5 ${
+						isDark
+							? "border-white/8 bg-slate-900/55"
+							: "border-white/85 bg-white/72"
+					}`}
+				>
+					<div className="flex items-center justify-between">
+						<div>
+							<div className={`text-xs uppercase tracking-[0.18em] ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+								Queue
+							</div>
+							<div className={`mt-2 text-2xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>
+								Featured Tracks
+							</div>
+						</div>
+						<div className={`text-sm ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+							{MUSIC_TRACKS.length} items
+						</div>
+					</div>
+
+					<div className="mt-5 space-y-3">
+						{MUSIC_TRACKS.map((track, index) => {
+							const isActive = track.id === activeTrack.id;
+							return (
+								<motion.button
+									key={track.id}
+									type="button"
+									onClick={() => setActiveTrackId(track.id)}
+									initial={{ opacity: 0, y: 12 }}
+									animate={{ opacity: 1, y: 0 }}
+									transition={{ delay: index * 0.05, duration: 0.25 }}
+									className={`w-full cursor-pointer rounded-2xl border p-4 text-left transition-all ${
+										isActive
+											? isDark
+												? "border-pink-300/20 bg-pink-400/10"
+												: "border-pink-200 bg-pink-50/80"
+											: isDark
+												? "border-white/8 bg-slate-950/28 hover:border-pink-200/10"
+												: "border-white/80 bg-white/55 hover:border-pink-100"
+									}`}
+									whileHover={{ x: 3 }}
+								>
+									<div className="flex items-center gap-4">
+										<div
+											className={`relative h-16 w-16 overflow-hidden rounded-2xl ${
+												isDark ? "bg-slate-900" : "bg-slate-100"
+											}`}
+										>
+											<Image
+												src={`https://picsum.photos/seed/${track.seed}/220/220`}
+												alt={track.title}
+												fill
+												className="object-cover"
+												referrerPolicy="no-referrer"
+											/>
+										</div>
+										<div className="min-w-0 flex-1">
+											<div className={`font-bold ${isDark ? "text-slate-100" : "text-slate-800"}`}>
+												{track.title}
+											</div>
+											<div className={`mt-1 text-sm ${isDark ? "text-slate-400" : "text-slate-500"}`}>
+												{track.artist}
+											</div>
+										</div>
+										<div className={`text-sm ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+											{track.length}
+										</div>
+									</div>
+								</motion.button>
+							);
+						})}
+					</div>
+				</div>
+
+				<div
+					className={`rounded-[28px] border p-5 ${
+						isDark
+							? "border-white/8 bg-slate-900/55"
+							: "border-white/85 bg-white/72"
+					}`}
+				>
+					<div className="flex items-center justify-between">
+						<div>
+							<div className={`text-xs uppercase tracking-[0.18em] ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+								Status
+							</div>
+							<div className={`mt-2 text-2xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>
+								Listening Room
+							</div>
+						</div>
+						<div className={`rounded-full px-3 py-1 text-sm font-bold bg-gradient-to-r ${activeTrack.accent} text-white`}>
+							Live
+						</div>
+					</div>
+
+					<div className="mt-5 grid gap-3">
+						{[
+							["Output", "GamePad speakers"],
+							["Preset", "Soft vinyl shimmer"],
+							["Session", "Visualizer enabled"],
+							["Theme sync", isDark ? "Night listening mode" : "Day listening mode"],
+						].map(([label, value]) => (
+							<div
+								key={label}
+								className={`flex items-center justify-between rounded-2xl border px-4 py-3 ${
+									isDark
+										? "border-white/8 bg-slate-950/35 text-slate-300"
+										: "border-white/80 bg-white/60 text-slate-600"
+								}`}
+							>
+								<span className={`text-sm uppercase tracking-[0.14em] ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+									{label}
+								</span>
+								<span className={`font-bold ${isDark ? "text-slate-100" : "text-slate-800"}`}>
+									{value}
+								</span>
+							</div>
+						))}
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+};
+
 const GamesContent = ({ theme }: { theme: ThemeMode }) => {
 	const isDark = theme === "dark";
 	const [selectedGameId, setSelectedGameId] = useState<string>(GAME_PREVIEWS[0].id);
@@ -1377,22 +1661,6 @@ const GamesContent = ({ theme }: { theme: ThemeMode }) => {
 	);
 };
 
-const PlaceholderContent = ({
-	copy,
-	theme,
-}: {
-	copy: string;
-	theme: ThemeMode;
-}) => (
-	<div
-		className={`mt-20 p-6 text-center ${
-			theme === "dark" ? "text-slate-300" : "text-slate-500"
-		}`}
-	>
-		{copy}
-	</div>
-);
-
 export function renderAppContent(
 	appId: AppId,
 	settings: SettingsContentProps,
@@ -1407,7 +1675,7 @@ export function renderAppContent(
 		case "blog":
 			return <BlogContent theme={settings.theme} />;
 		case "music":
-			return <PlaceholderContent copy="Now playing..." theme={settings.theme} />;
+			return <MusicContent theme={settings.theme} />;
 		case "games":
 			return <GamesContent theme={settings.theme} />;
 		case "contact":
