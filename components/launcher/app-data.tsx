@@ -2,14 +2,14 @@
 
 import {
 	Briefcase,
-	Gamepad2,
-	Image as ImageIcon,
+	Comment,
+	Gamepad,
+	Image,
 	Mail,
-	MessageSquare,
 	Music,
-	Settings,
+	Settings2,
 	User,
-} from "lucide-react";
+} from "pixelarticons/react";
 import type { AppData } from "@/components/launcher/types";
 
 export const apps: AppData[] = [
@@ -22,7 +22,7 @@ export const apps: AppData[] = [
 	{
 		id: "games",
 		title: "Games",
-		icon: <Gamepad2 className="w-12 h-12 text-purple-500" />,
+		icon: <Gamepad className="w-12 h-12 text-purple-500" />,
 		color: "bg-purple-100",
 	},
 	{
@@ -34,13 +34,13 @@ export const apps: AppData[] = [
 	{
 		id: "gallery",
 		title: "Art",
-		icon: <ImageIcon className="w-12 h-12 text-yellow-500" />,
+		icon: <Image className="w-12 h-12 text-yellow-500" />,
 		color: "bg-yellow-100",
 	},
 	{
 		id: "blog",
 		title: "Blog",
-		icon: <MessageSquare className="w-12 h-12 text-green-600" />,
+		icon: <Comment className="w-12 h-12 text-green-600" />,
 		color: "bg-green-50",
 	},
 	{
@@ -58,7 +58,7 @@ export const apps: AppData[] = [
 	{
 		id: "settings",
 		title: "Settings",
-		icon: <Settings className="w-12 h-12 text-slate-500" />,
+		icon: <Settings2 className="w-12 h-12 text-slate-500" />,
 		color: "bg-slate-200",
 	},
 ];

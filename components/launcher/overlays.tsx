@@ -1,6 +1,7 @@
 "use client";
 
-import { Monitor, Moon, Sun, User } from "lucide-react";
+import { Sun } from "lucide-react";
+import { Monitor, Moon, User } from "pixelarticons/react";
 import { motion } from "motion/react";
 import type { ReactNode } from "react";
 import type {

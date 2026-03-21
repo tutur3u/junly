@@ -3,7 +3,8 @@
 import { useEffect } from "react";
 import { InitialBootOverlay } from "@/components/launcher/overlays";
 import type { AppData, AppId, ThemeMode } from "@/components/launcher/types";
-import { Moon, Sun, User, X } from "lucide-react";
+import { Sun } from "lucide-react";
+import { Cancel, Moon, User } from "pixelarticons/react";
 import { AnimatePresence, motion } from "motion/react";
 import type { ReactNode } from "react";
 
@@ -312,7 +313,7 @@ export function LauncherShell({
 											: "bg-gray-100 text-gray-600 hover:bg-red-500 hover:text-white"
 									}`}
 								>
-									<X className="h-5 w-5" />
+									<Cancel className="h-5 w-5" />
 								</button>
 							</div>
 

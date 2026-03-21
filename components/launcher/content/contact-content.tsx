@@ -1,4 +1,4 @@
-import { Github, Mail, MessageSquare, Twitter } from "lucide-react";
+import { Comment, Link, Mail, Rss } from "pixelarticons/react";
 import type { ThemeMode } from "@/components/launcher/types";
 
 export function ContactContent({ theme }: { theme: ThemeMode }) {
@@ -29,7 +29,7 @@ export function ContactContent({ theme }: { theme: ThemeMode }) {
 						isDark ? "text-slate-300 hover:text-sky-300" : "text-slate-600 hover:text-blue-500"
 					}`}
 				>
-					<Twitter className="h-5 w-5" />
+					<Rss className="h-5 w-5" />
 				</a>
 				<a
 					href="#"
@@ -37,7 +37,7 @@ export function ContactContent({ theme }: { theme: ThemeMode }) {
 						isDark ? "text-slate-300 hover:text-white" : "text-slate-600 hover:text-slate-900"
 					}`}
 				>
-					<Github className="h-5 w-5" />
+					<Link className="h-5 w-5" />
 				</a>
 				<a
 					href="#"
@@ -45,7 +45,7 @@ export function ContactContent({ theme }: { theme: ThemeMode }) {
 						isDark ? "text-slate-300 hover:text-pink-300" : "text-slate-600 hover:text-pink-500"
 					}`}
 				>
-					<MessageSquare className="h-5 w-5" />
+					<Comment className="h-5 w-5" />
 				</a>
 			</div>
 

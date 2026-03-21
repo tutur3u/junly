@@ -1,4 +1,4 @@
-import { MessageSquare, Sparkles, Star } from "lucide-react";
+import { Comment, Heart, Sparkles } from "pixelarticons/react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -204,7 +204,7 @@ export function BlogContent({ theme }: { theme: ThemeMode }) {
 												: "text-slate-500 hover:bg-green-50 hover:text-green-500"
 									}`}
 								>
-									<Star className={`h-4 w-4 ${state.liked ? "fill-current" : ""}`} />
+									<Heart className={`h-4 w-4 ${state.liked ? "fill-current" : ""}`} />
 									Yeah! {state.yeahs}
 								</button>
 								<button
@@ -220,7 +220,7 @@ export function BlogContent({ theme }: { theme: ThemeMode }) {
 												: "text-slate-500 hover:bg-sky-50 hover:text-blue-500"
 									}`}
 								>
-									<MessageSquare className="h-4 w-4" />
+									<Comment className="h-4 w-4" />
 									Comment {state.comments.length}
 								</button>
 							</div>

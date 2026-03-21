@@ -1,4 +1,4 @@
-import { Disc3, Play, Volume2 } from "lucide-react";
+import { Album, Play, Volume } from "pixelarticons/react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import { MUSIC_TRACKS } from "@/components/launcher/content-data";
@@ -51,7 +51,7 @@ export function MusicContent({ theme, activeTrack, setActiveTrack }: MusicConten
 										isDark ? "border-white/10 bg-slate-950/85" : "border-white/90 bg-white/95"
 									}`}
 								>
-									<Disc3 className="h-10 w-10 text-white" />
+									<Album className="h-10 w-10 text-white" />
 								</div>
 							</motion.div>
 						</div>
@@ -65,7 +65,7 @@ export function MusicContent({ theme, activeTrack, setActiveTrack }: MusicConten
 									: "border border-white/80 bg-pink-100/80 text-pink-700"
 							}`}
 						>
-							<Volume2 className="h-4 w-4" />
+							<Volume className="h-4 w-4" />
 							Now Spinning
 						</div>
 						<h2 className={`mt-4 text-3xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>{trackData.title}</h2>

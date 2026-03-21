@@ -1,4 +1,4 @@
-import { Sparkles, Star, Trophy, Zap } from "lucide-react";
+import { Heart, Sparkles, Trophy, Zap } from "pixelarticons/react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import type { ThemeMode } from "@/components/launcher/types";
@@ -22,7 +22,7 @@ const ABOUT_TRAITS = [
 		title: "Creative Energy",
 		description:
 			"A balance of polish and warmth, with enough weirdness to keep things from feeling generic.",
-		icon: <Star className="h-5 w-5" />,
+		icon: <Heart className="h-5 w-5" />,
 		accent: "from-pink-400 via-fuchsia-500 to-orange-400",
 	},
 ] as const;

@@ -1,4 +1,5 @@
-import { Moon, Settings, Sun } from "lucide-react";
+import { Sun } from "lucide-react";
+import { Moon, Settings2 } from "pixelarticons/react";
 import type { SettingsContentProps, ThemePreference } from "@/components/launcher/types";
 
 export function SettingsContent({
@@ -23,7 +24,7 @@ export function SettingsContent({
 							theme === "dark" ? "bg-slate-800 border-slate-700" : "bg-slate-100 border-white"
 						}`}
 					>
-						<Settings className="h-6 w-6 sm:h-7 sm:w-7 text-slate-500" />
+						<Settings2 className="h-6 w-6 sm:h-7 sm:w-7 text-slate-500" />
 					</div>
 				</div>
 			</div>
@@ -104,7 +105,7 @@ export function SettingsContent({
 							[
 								{ id: "light" as ThemePreference, label: "Light", icon: <Sun className="h-5 w-5 text-amber-400" /> },
 								{ id: "dark" as ThemePreference, label: "Dark", icon: <Moon className="h-5 w-5 text-sky-300" /> },
-								{ id: "system" as ThemePreference, label: "System", icon: <Settings className="h-5 w-5 text-emerald-400" /> },
+								{ id: "system" as ThemePreference, label: "System", icon: <Settings2 className="h-5 w-5 text-emerald-400" /> },
 							]
 						).map((option) => {
 							const isSelected = (themePreference ?? "light") === option.id;

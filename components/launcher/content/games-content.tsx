@@ -1,6 +1,6 @@
 "use client";
 
-import { Gamepad2, Sparkles, Trophy, Zap, ArrowLeft, Play, FileText, X, Maximize2, ChevronLeft, ChevronRight, Loader2, Filter } from "lucide-react";
+import { ArrowLeft, Cancel, ChevronLeft, ChevronRight, Expand, FileText, Gamepad, Loader, Play, SortHorizontal, Sparkles, Trophy, Zap } from "pixelarticons/react";
 import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
 import { useState, useCallback, useEffect, useRef } from "react";
@@ -60,7 +60,7 @@ function ScreenshotLightbox({
 				onClick={onClose}
 				aria-label="Close"
 			>
-				<X className="h-6 w-6" />
+				<Cancel className="h-6 w-6" />
 			</button>
 
 			<button
@@ -188,7 +188,7 @@ function ScreenshotStrip({ screenshots, gameTab, setGameTab }: { screenshots: { 
 									className="object-cover transition-transform duration-500 group-hover:scale-105"
 								/>
 								<div className="absolute inset-0 flex items-center justify-center bg-slate-950/0 transition-colors group-hover:bg-slate-950/40">
-									<Maximize2 className="h-8 w-8 text-white opacity-0 transition-opacity group-hover:opacity-100" />
+									<Expand className="h-8 w-8 text-white opacity-0 transition-opacity group-hover:opacity-100" />
 								</div>
 							</motion.button>
 						))}
@@ -252,7 +252,7 @@ function PdfModal({ pdfUrl, onClose }: { pdfUrl: string; onClose: () => void }) 
 						onClick={onClose}
 						className="rounded-full p-2 transition-colors hover:bg-white/10 text-slate-400 hover:text-white"
 					>
-						<X className="h-5 w-5" />
+						<Cancel className="h-5 w-5" />
 					</button>
 				</div>
 				<div className="relative flex-1">
@@ -262,7 +262,7 @@ function PdfModal({ pdfUrl, onClose }: { pdfUrl: string; onClose: () => void }) 
 								animate={{ rotate: 360 }}
 								transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
 							>
-								<Loader2 className="h-10 w-10 text-emerald-400" />
+								<Loader className="h-10 w-10 text-emerald-400" />
 							</motion.div>
 							<span className="text-slate-400">Loading document...</span>
 							<div className="h-1 w-48 overflow-hidden rounded-full bg-slate-800">
@@ -364,7 +364,7 @@ function GameDetailView({
 													: "bg-emerald-100/90 text-emerald-700 border border-emerald-200/80"
 											}`}
 										>
-											<Gamepad2 className="h-4 w-4" />
+											<Gamepad className="h-4 w-4" />
 											{game.tagline}
 										</div>
 
@@ -654,7 +654,7 @@ export function GamesContent({ theme, selectedGame, setSelectedGame, gameFilter,
 									: "bg-sky-100/80 text-sky-700 border border-white/80"
 							}`}
 						>
-							<Gamepad2 className="h-4 w-4" />
+							<Gamepad className="h-4 w-4" />
 							Game Center
 						</div>
 						<h2 className={`mt-4 text-3xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>
@@ -691,7 +691,7 @@ export function GamesContent({ theme, selectedGame, setSelectedGame, gameFilter,
 			<div className="mt-4 overflow-x-auto pb-2">
 				<div className="flex items-center gap-3">
 					<div className={`flex items-center gap-2 text-sm font-bold uppercase tracking-[0.12em] ${isDark ? "text-slate-500" : "text-slate-400"}`}>
-						<Filter className="h-4 w-4" />
+						<SortHorizontal className="h-4 w-4" />
 						Filter
 					</div>
 					<div className="flex gap-2">
@@ -745,7 +745,7 @@ export function GamesContent({ theme, selectedGame, setSelectedGame, gameFilter,
 			<div className="mt-6 grid gap-5 md:grid-cols-2">
 				{filteredGames.length === 0 ? (
 					<div className={`col-span-2 rounded-[28px] border p-12 text-center ${isDark ? "border-white/10 bg-slate-900/40 text-slate-500" : "border-white/80 bg-white/40 text-slate-400"}`}>
-						<Gamepad2 className="mx-auto h-12 w-12 opacity-30" />
+						<Gamepad className="mx-auto h-12 w-12 opacity-30" />
 						<p className="mt-4 font-bold">No games match this filter</p>
 						<button
 							type="button"

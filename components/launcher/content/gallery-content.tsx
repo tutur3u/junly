@@ -1,4 +1,4 @@
-import { Expand, X } from "lucide-react";
+import { Cancel, Expand } from "pixelarticons/react";
 import Image from "next/image";
 import { ARTWORKS } from "@/components/launcher/content-data";
 import type { ThemeMode } from "@/components/launcher/types";
@@ -58,7 +58,7 @@ export function GalleryContent({ theme, selectedArtwork, setSelectedArtwork }: G
 							onClick={() => setSelectedArtwork(null)}
 							className="absolute top-4 right-4 z-10 inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-black/35 text-white backdrop-blur-sm transition-colors hover:bg-black/55"
 						>
-							<X className="h-5 w-5" />
+							<Cancel className="h-5 w-5" />
 						</button>
 						<div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-slate-950/85 p-3 shadow-[0_30px_80px_rgba(0,0,0,0.45)]">
 							<div className="relative h-[72vh] overflow-hidden rounded-[22px]">
