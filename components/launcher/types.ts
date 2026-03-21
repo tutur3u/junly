@@ -18,6 +18,7 @@ export type AppData = {
 	title: string;
 	icon: ReactNode;
 	color: string;
+	accent: string;
 };
 
 export type SettingsContentProps = {

@@ -47,6 +47,16 @@
     @apply scale-[0.985] shadow-[0_8px_18px_rgba(120,170,205,0.2),inset_0_2px_10px_rgba(255,255,255,0.8),inset_0_-10px_20px_rgba(121,175,210,0.14)];
   }
 
+  .app-icon {
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), inset 0 2px 8px rgba(255, 255, 255, 0.2);
+  }
+
+  .theme-dark .app-icon {
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), inset 0 2px 8px rgba(255, 255, 255, 0.1);
+  }
+
   .wii-u-window {
     @apply bg-white/88 backdrop-blur-2xl border-[4px] border-white/90 rounded-[30px] shadow-[0_36px_88px_rgba(66,108,139,0.3),0_0_0_1px_rgba(255,255,255,0.22),inset_0_2px_20px_rgba(255,255,255,0.94),inset_0_-24px_34px_rgba(176,215,238,0.17)];
   }
