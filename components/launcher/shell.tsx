@@ -3,8 +3,7 @@
 import { useEffect } from "react";
 import { InitialBootOverlay } from "@/components/launcher/overlays";
 import type { AppData, AppId, ThemeMode } from "@/components/launcher/types";
-import { Moon, Sun } from "lucide-react";
-import { User, Cancel } from "pixelarticons/react";
+import { Moon, Sun, User, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import type { ReactNode } from "react";
 
@@ -198,17 +197,28 @@ export function LauncherShell({
 							<button
 								type="button"
 								onClick={() => onOpenApp(app.id)}
-								className={`app-icon flex h-28 w-28 cursor-pointer items-center justify-center rounded-2xl bg-gradient-to-br ${app.accent} shadow-lg hover:scale-105 active:scale-95 transition-transform duration-300 sm:h-40 sm:w-40`}
+								className="wii-u-icon flex h-28 w-28 cursor-pointer items-center justify-center sm:h-40 sm:w-40"
 							>
-								<div className="text-white drop-shadow-md text-[2.5rem] sm:text-[3.5rem]">
+								<div className="transition-transform duration-300 ease-out group-hover:scale-110 group-hover:-rotate-2 group-active:scale-95">
 									{app.icon}
 								</div>
 							</button>
 							<span
-								className={`mt-2 text-center text-sm font-bold sm:text-lg md:text-xl bg-clip-text text-transparent bg-gradient-to-br ${app.accent}`}
+								className={`mt-2 text-center text-xs font-bold sm:hidden ${
+									theme === "dark" ? "text-slate-300" : "text-slate-600"
+								}`}
 							>
 								{app.title}
 							</span>
+							<div
+								className={`absolute left-1/2 top-full mt-3 z-20 -translate-x-1/2 rounded-full border px-3 py-1.5 text-sm font-bold whitespace-nowrap opacity-0 shadow-md transition-opacity backdrop-blur-sm hidden md:block group-hover:opacity-100 ${
+									theme === "dark"
+										? "bg-slate-950/90 text-slate-100 border-sky-100/20"
+										: "bg-white/95 text-slate-700 border-white/60 shadow-lg"
+								}`}
+							>
+								{app.title}
+							</div>
 						</motion.div>
 					))}
 				</div>
@@ -236,7 +246,16 @@ export function LauncherShell({
 				>
 					v1.0.0
 				</div>
+				<div
+					className={`flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium ${
+						theme === "dark" 
+							? "bg-slate-800/80 border border-slate-700/50 text-slate-300" 
+							: "bg-white/80 border border-white/80 text-slate-600"
+					}`}
+				>
+					{new Date().getFullYear()}
 				</div>
+			</div>
 
 			{showBootOverlay && <InitialBootOverlay theme={theme} />}
 			{themePickerOverlay}
@@ -293,7 +312,7 @@ export function LauncherShell({
 											: "bg-gray-100 text-gray-600 hover:bg-red-500 hover:text-white"
 									}`}
 								>
-									<Cancel className="h-5 w-5" />
+									<X className="h-5 w-5" />
 								</button>
 							</div>
 
