@@ -3,7 +3,7 @@
 import { Gamepad2, Sparkles, Trophy, Zap, ArrowLeft, Play, FileText, X, Maximize2, ChevronLeft, ChevronRight, Loader2, Filter } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { GAME_PREVIEWS } from "@/components/launcher/content-data";
 import type { ThemeMode } from "@/components/launcher/types";
 import type { GamePreview } from "@/components/launcher/content-data";
@@ -107,6 +107,7 @@ function ScreenshotLightbox({
 
 function ScreenshotStrip({ screenshots, gameTab, setGameTab }: { screenshots: { gameplay: string[]; bts?: string[] }; gameTab: string | null; setGameTab: (value: string | null) => void }) {
 	const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+	const scrollRef = useRef<HTMLDivElement>(null);
 	const images = gameTab === "bts" ? screenshots.bts ?? [] : screenshots.gameplay;
 
 	const openLightbox = (index: number) => setLightboxIndex(index);
@@ -121,6 +122,16 @@ function ScreenshotStrip({ screenshots, gameTab, setGameTab }: { screenshots: { 
 			setLightboxIndex((lightboxIndex - 1 + images.length) % images.length);
 		}
 	}, [lightboxIndex, images.length]);
+
+	const scroll = (direction: "left" | "right") => {
+		if (scrollRef.current) {
+			const scrollAmount = 320;
+			scrollRef.current.scrollBy({
+				left: direction === "right" ? scrollAmount : -scrollAmount,
+				behavior: "smooth",
+			});
+		}
+	};
 
 	return (
 		<>
@@ -152,7 +163,14 @@ function ScreenshotStrip({ screenshots, gameTab, setGameTab }: { screenshots: { 
 					)}
 				</div>
 				<div className="relative">
-					<div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+					<button
+						type="button"
+						onClick={() => scroll("left")}
+						className="absolute left-2 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-slate-900/90 border border-white/20 text-white/80 hover:text-white hover:border-emerald-400/50 hover:bg-slate-800/90 transition-all shadow-lg"
+					>
+						<ChevronLeft className="h-5 w-5" />
+					</button>
+					<div ref={scrollRef} className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
 						{images.map((src, index) => (
 							<motion.button
 								type="button"
@@ -175,6 +193,13 @@ function ScreenshotStrip({ screenshots, gameTab, setGameTab }: { screenshots: { 
 							</motion.button>
 						))}
 					</div>
+					<button
+						type="button"
+						onClick={() => scroll("right")}
+						className="absolute right-2 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-slate-900/90 border border-white/20 text-white/80 hover:text-white hover:border-emerald-400/50 hover:bg-slate-800/90 transition-all shadow-lg"
+					>
+						<ChevronRight className="h-5 w-5" />
+					</button>
 					<div className="pointer-events-none absolute right-0 top-0 bottom-2 w-12 bg-gradient-to-l from-[rgba(10,20,31,0.95)] to-transparent" />
 				</div>
 			</div>
