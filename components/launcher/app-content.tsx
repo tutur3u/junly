@@ -9,18 +9,18 @@ import { GamesContent } from "@/components/launcher/content/games-content";
 import { MusicContent } from "@/components/launcher/content/music-content";
 import { ProjectsContent } from "@/components/launcher/content/projects-content";
 import { SettingsContent } from "@/components/launcher/content/settings-content";
-import type { AppId, SettingsContentProps } from "@/components/launcher/types";
+import type { AppId, SettingsContentProps, UrlParams } from "@/components/launcher/types";
 
 const APP_COMPONENTS: Record<
 	AppId,
-	(settings: SettingsContentProps) => ReactNode
+	(settings: SettingsContentProps, urlParams: UrlParams) => ReactNode
 > = {
 	about: (settings) => <AboutContent theme={settings.theme} />,
-	projects: (settings) => <ProjectsContent theme={settings.theme} />,
-	gallery: (settings) => <GalleryContent theme={settings.theme} />,
+	projects: (settings, urlParams) => <ProjectsContent theme={settings.theme} {...urlParams} />,
+	gallery: (settings, urlParams) => <GalleryContent theme={settings.theme} {...urlParams} />,
 	blog: (settings) => <BlogContent theme={settings.theme} />,
-	music: (settings) => <MusicContent theme={settings.theme} />,
-	games: (settings) => <GamesContent theme={settings.theme} />,
+	music: (settings, urlParams) => <MusicContent theme={settings.theme} {...urlParams} />,
+	games: (settings, urlParams) => <GamesContent theme={settings.theme} {...urlParams} />,
 	contact: (settings) => <ContactContent theme={settings.theme} />,
 	settings: (settings) => <SettingsContent {...settings} />,
 };
@@ -28,6 +28,7 @@ const APP_COMPONENTS: Record<
 export function renderAppContent(
 	appId: AppId,
 	settings: SettingsContentProps,
+	urlParams: UrlParams,
 ): ReactNode {
-	return APP_COMPONENTS[appId]?.(settings) ?? null;
+	return APP_COMPONENTS[appId]?.(settings, urlParams) ?? null;
 }

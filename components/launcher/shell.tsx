@@ -141,27 +141,26 @@ export function LauncherShell({
 								stiffness: 200,
 								damping: 15,
 							}}
-							className="flex cursor-pointer flex-col items-center gap-3"
+							className="group relative flex cursor-pointer flex-col items-center"
 						>
 							<button
 								type="button"
 								onClick={() => onOpenApp(app.id)}
-								className="wii-u-icon group relative flex h-28 w-28 cursor-pointer items-center justify-center sm:h-40 sm:w-40"
+								className="wii-u-icon flex h-28 w-28 cursor-pointer items-center justify-center sm:h-40 sm:w-40"
 							>
-								<motion.div className="transition-transform duration-300 ease-out group-hover:scale-110 group-hover:-rotate-2 group-active:scale-95">
+								<div className="transition-transform duration-300 ease-out group-hover:scale-110 group-hover:-rotate-2 group-active:scale-95">
 									{app.icon}
-								</motion.div>
-
-								<div
-									className={`pointer-events-none absolute -bottom-12 z-20 rounded-full border px-3 py-1 text-sm font-bold whitespace-nowrap opacity-0 shadow-md transition-opacity backdrop-blur-sm group-hover:opacity-100 ${
-										theme === "dark"
-											? "bg-slate-950/80 text-slate-100 border-sky-100/10"
-											: "bg-white/90 text-slate-700 border-white/50"
-									}`}
-								>
-									{app.title}
 								</div>
 							</button>
+							<div
+								className={`absolute left-1/2 top-full mt-3 z-20 -translate-x-1/2 rounded-full border px-3 py-1.5 text-sm font-bold whitespace-nowrap opacity-0 shadow-md transition-opacity backdrop-blur-sm group-hover:opacity-100 ${
+									theme === "dark"
+										? "bg-slate-950/90 text-slate-100 border-sky-100/20"
+										: "bg-white/95 text-slate-700 border-white/60 shadow-lg"
+								}`}
+							>
+								{app.title}
+							</div>
 						</motion.div>
 					))}
 				</div>

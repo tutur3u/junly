@@ -1,5 +1,6 @@
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
+import { NuqsAdapter } from "nuqs/adapters/next";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -50,7 +51,7 @@ export default function RootLayout({
 				suppressHydrationWarning
 			>
 				<Analytics />
-				{children}
+				<NuqsAdapter>{children}</NuqsAdapter>
 			</body>
 		</html>
 	);

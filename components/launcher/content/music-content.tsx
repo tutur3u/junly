@@ -1,15 +1,21 @@
 import { Disc3, Play, Volume2 } from "lucide-react";
 import { motion } from "motion/react";
 import Image from "next/image";
-import { useState } from "react";
 import { MUSIC_TRACKS } from "@/components/launcher/content-data";
 import type { ThemeMode } from "@/components/launcher/types";
 
-export function MusicContent({ theme }: { theme: ThemeMode }) {
+type MusicContentProps = {
+	theme: ThemeMode;
+	activeTrack: string | null;
+	setActiveTrack: (value: string | null) => void;
+};
+
+export function MusicContent({ theme, activeTrack, setActiveTrack }: MusicContentProps) {
 	const isDark = theme === "dark";
-	const [activeTrackId, setActiveTrackId] = useState<string>(MUSIC_TRACKS[0].id);
-	const activeTrack =
-		MUSIC_TRACKS.find((track) => track.id === activeTrackId) ?? MUSIC_TRACKS[0];
+	const trackData =
+		activeTrack !== null
+			? MUSIC_TRACKS.find((track) => track.id === activeTrack) ?? MUSIC_TRACKS[0]
+			: MUSIC_TRACKS[0];
 
 	return (
 		<div className="h-full overflow-y-auto p-6 wii-u-scrollbar">
@@ -25,7 +31,7 @@ export function MusicContent({ theme }: { theme: ThemeMode }) {
 					<div className="flex items-center justify-center">
 						<div className="relative flex h-72 w-72 items-center justify-center">
 							<motion.div
-								className={`absolute inset-0 rounded-full bg-gradient-to-br ${activeTrack.accent} blur-3xl opacity-30`}
+								className={`absolute inset-0 rounded-full bg-gradient-to-br ${trackData.accent} blur-3xl opacity-30`}
 								animate={{ scale: [0.96, 1.04, 0.96] }}
 								transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut" }}
 							/>
@@ -39,7 +45,7 @@ export function MusicContent({ theme }: { theme: ThemeMode }) {
 								transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
 							>
 								<div className={`absolute inset-8 rounded-full border ${isDark ? "border-white/8" : "border-slate-200/70"}`} />
-								<div className={`absolute h-26 w-26 rounded-full bg-gradient-to-br ${activeTrack.accent} opacity-70`} />
+								<div className={`absolute h-26 w-26 rounded-full bg-gradient-to-br ${trackData.accent} opacity-70`} />
 								<div
 									className={`relative flex h-20 w-20 items-center justify-center rounded-full border ${
 										isDark ? "border-white/10 bg-slate-950/85" : "border-white/90 bg-white/95"
@@ -62,14 +68,14 @@ export function MusicContent({ theme }: { theme: ThemeMode }) {
 							<Volume2 className="h-4 w-4" />
 							Now Spinning
 						</div>
-						<h2 className={`mt-4 text-3xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>{activeTrack.title}</h2>
-						<p className={`mt-2 text-lg ${isDark ? "text-slate-300" : "text-slate-600"}`}>{activeTrack.artist}</p>
+						<h2 className={`mt-4 text-3xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>{trackData.title}</h2>
+						<p className={`mt-2 text-lg ${isDark ? "text-slate-300" : "text-slate-600"}`}>{trackData.artist}</p>
 						<p className={`mt-4 max-w-xl ${isDark ? "text-slate-400" : "text-slate-500"}`}>
 							A stylized music placeholder with a featured track, visualizer motion, and a queue designed to feel like a console-native media app.
 						</p>
 
 						<div className="mt-6 flex flex-wrap gap-3">
-							<button className="wii-u-primary-button inline-flex items-center gap-2 rounded-full px-4 py-2 font-bold text-white">
+							<button type="button" className="wii-u-primary-button inline-flex items-center gap-2 rounded-full px-4 py-2 font-bold text-white">
 								<Play className="h-4 w-4 fill-current" />
 								Play Demo Mix
 							</button>
@@ -78,22 +84,22 @@ export function MusicContent({ theme }: { theme: ThemeMode }) {
 									isDark ? "border-white/8 bg-slate-950/35 text-slate-200" : "border-white/80 bg-white/65 text-slate-700"
 								}`}
 							>
-								{activeTrack.length}
+								{trackData.length}
 							</div>
 							<div
 								className={`inline-flex items-center rounded-full border px-4 py-2 text-sm ${
 									isDark ? "border-white/8 bg-slate-950/35 text-slate-400" : "border-white/80 bg-white/65 text-slate-500"
 								}`}
 							>
-								{activeTrack.mood}
+								{trackData.mood}
 							</div>
 						</div>
 
 						<div className="mt-7 grid grid-cols-12 items-end gap-2">
 							{[32, 52, 38, 68, 58, 86, 44, 72, 62, 48, 74, 40].map((height, index) => (
 								<motion.div
-									key={`${activeTrack.id}-${index}`}
-									className={`col-span-1 rounded-t-full bg-gradient-to-t ${activeTrack.accent}`}
+									key={`${trackData.id}-${index}`}
+									className={`col-span-1 rounded-t-full bg-gradient-to-t ${trackData.accent}`}
 									style={{ height }}
 									animate={{ scaleY: [0.72, 1, 0.8, 1] }}
 									transition={{
@@ -122,13 +128,13 @@ export function MusicContent({ theme }: { theme: ThemeMode }) {
 
 					<div className="mt-5 space-y-3">
 						{MUSIC_TRACKS.map((track, index) => {
-							const isActive = track.id === activeTrack.id;
+							const isActive = track.id === trackData.id;
 
 							return (
 								<motion.button
 									key={track.id}
 									type="button"
-									onClick={() => setActiveTrackId(track.id)}
+									onClick={() => setActiveTrack(track.id)}
 									initial={{ opacity: 0, y: 12 }}
 									animate={{ opacity: 1, y: 0 }}
 									transition={{ delay: index * 0.05, duration: 0.25 }}
@@ -171,7 +177,7 @@ export function MusicContent({ theme }: { theme: ThemeMode }) {
 							<div className={`text-xs uppercase tracking-[0.18em] ${isDark ? "text-slate-500" : "text-slate-400"}`}>Status</div>
 							<div className={`mt-2 text-2xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>Listening Room</div>
 						</div>
-						<div className={`rounded-full px-3 py-1 text-sm font-bold bg-gradient-to-r ${activeTrack.accent} text-white`}>Live</div>
+						<div className="rounded-full px-3 py-1 text-sm font-bold bg-gradient-to-r from-pink-500 to-rose-500 text-white">Live</div>
 					</div>
 
 					<div className="mt-5 grid gap-3">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useSyncExternalStore } from "react";
+import { useQueryState } from "nuqs";
 import { apps } from "@/components/launcher/app-data";
 import { renderAppContent } from "@/components/launcher/app-content";
 import {
@@ -15,6 +16,17 @@ import {
 	subscribeToThemePreference,
 } from "@/components/launcher/preferences";
 import { LauncherShell } from "@/components/launcher/shell";
+import {
+	APP_KEY,
+	PROJECT_KEY,
+	ARTWORK_KEY,
+	TRACK_KEY,
+	GAME_KEY,
+	GAME_FILTER_KEY,
+	GAME_TAB_KEY,
+	appIdParser,
+	gameTabParser,
+} from "@/lib/nuqs-keys";
 import type {
 	AppId,
 	ThemeMode,
@@ -22,7 +34,13 @@ import type {
 } from "@/components/launcher/types";
 
 export default function HomeClient() {
-	const [activeApp, setActiveApp] = useState<AppId | null>(null);
+	const [activeApp, setActiveApp] = useQueryState(APP_KEY, appIdParser);
+	const [selectedProject, setSelectedProject] = useQueryState(PROJECT_KEY);
+	const [selectedArtwork, setSelectedArtwork] = useQueryState(ARTWORK_KEY);
+	const [activeTrack, setActiveTrack] = useQueryState(TRACK_KEY);
+	const [selectedGame, setSelectedGame] = useQueryState(GAME_KEY);
+	const [gameFilter, setGameFilter] = useQueryState(GAME_FILTER_KEY);
+	const [gameTab, setGameTab] = useQueryState(GAME_TAB_KEY, gameTabParser);
 	const [loadingApp, setLoadingApp] = useState<AppId | null>(null);
 	const [isBooting, setIsBooting] = useState(true);
 	const [isHydrated, setIsHydrated] = useState(false);
@@ -113,6 +131,12 @@ export default function HomeClient() {
 
 	const closeApp = () => {
 		setActiveApp(null);
+		setSelectedProject(null);
+		setSelectedArtwork(null);
+		setActiveTrack(null);
+		setSelectedGame(null);
+		setGameFilter(null);
+		setGameTab(null);
 		setLoadingApp(null);
 	};
 
@@ -133,6 +157,21 @@ export default function HomeClient() {
 	const resolvedTheme = isHydrated ? theme : "light";
 	const resolvedThemePreference = isHydrated ? themePreference : null;
 
+	const urlParams = {
+		selectedProject,
+		setSelectedProject,
+		selectedArtwork,
+		setSelectedArtwork,
+		activeTrack,
+		setActiveTrack,
+		selectedGame,
+		setSelectedGame,
+		gameFilter,
+		setGameFilter,
+		gameTab,
+		setGameTab,
+	} as const;
+
 	const appContent = activeAppData
 		? renderAppContent(activeAppData.id, {
 				theme: resolvedTheme,
@@ -140,7 +179,7 @@ export default function HomeClient() {
 				loadingScreensEnabled,
 				onToggleLoadingScreens: toggleLoadingScreens,
 				onSetThemePreference: setThemePreference,
-			})
+			}, urlParams as Parameters<typeof renderAppContent>[2])
 		: null;
 
 	const loadingContent = activeAppData ? (

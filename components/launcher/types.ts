@@ -27,3 +27,18 @@ export type SettingsContentProps = {
 	onToggleLoadingScreens: () => void;
 	onSetThemePreference: (preference: ThemePreference) => void;
 };
+
+export type UrlParams = {
+	selectedProject: string | null;
+	setSelectedProject: (value: string | null) => void;
+	selectedArtwork: string | null;
+	setSelectedArtwork: (value: string | null) => void;
+	activeTrack: string | null;
+	setActiveTrack: (value: string | null) => void;
+	selectedGame: string | null;
+	setSelectedGame: (value: string | null) => void;
+	gameFilter: string | null;
+	setGameFilter: (value: string | null) => void;
+	gameTab: string | null;
+	setGameTab: (value: string | null) => void;
+};

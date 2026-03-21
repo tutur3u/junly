@@ -105,10 +105,9 @@ function ScreenshotLightbox({
 	);
 }
 
-function ScreenshotStrip({ screenshots }: { screenshots: { gameplay: string[]; bts?: string[] } }) {
-	const [activeTab, setActiveTab] = useState<"gameplay" | "bts">("gameplay");
+function ScreenshotStrip({ screenshots, gameTab, setGameTab }: { screenshots: { gameplay: string[]; bts?: string[] }; gameTab: string | null; setGameTab: (value: string | null) => void }) {
 	const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-	const images = activeTab === "gameplay" ? screenshots.gameplay : screenshots.bts ?? [];
+	const images = gameTab === "bts" ? screenshots.bts ?? [] : screenshots.gameplay;
 
 	const openLightbox = (index: number) => setLightboxIndex(index);
 	const closeLightbox = () => setLightboxIndex(null);
@@ -129,9 +128,9 @@ function ScreenshotStrip({ screenshots }: { screenshots: { gameplay: string[]; b
 				<div className="flex gap-2">
 					<button
 						type="button"
-						onClick={() => setActiveTab("gameplay")}
+						onClick={() => setGameTab("gameplay")}
 						className={`rounded-full px-4 py-1.5 text-sm font-bold transition-all ${
-							activeTab === "gameplay"
+							gameTab !== "bts"
 								? "bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 text-white shadow-lg"
 								: "bg-slate-800/60 text-slate-400 hover:text-white border border-white/10"
 						}`}
@@ -141,9 +140,9 @@ function ScreenshotStrip({ screenshots }: { screenshots: { gameplay: string[]; b
 					{screenshots.bts && screenshots.bts.length > 0 && (
 						<button
 							type="button"
-							onClick={() => setActiveTab("bts")}
+							onClick={() => setGameTab("bts")}
 							className={`rounded-full px-4 py-1.5 text-sm font-bold transition-all ${
-								activeTab === "bts"
+								gameTab === "bts"
 									? "bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 text-white shadow-lg"
 									: "bg-slate-800/60 text-slate-400 hover:text-white border border-white/10"
 							}`}
@@ -267,10 +266,14 @@ function GameDetailView({
 	game,
 	onBack,
 	theme,
+	gameTab,
+	setGameTab,
 }: {
 	game: GamePreview;
 	onBack: () => void;
 	theme: ThemeMode;
+	gameTab: string | null;
+	setGameTab: (value: string | null) => void;
 }) {
 	const [showPdf, setShowPdf] = useState(false);
 	const isDark = theme === "dark";
@@ -468,7 +471,7 @@ function GameDetailView({
 										{game.screenshots!.gameplay.length + (game.screenshots!.bts?.length ?? 0)} images
 									</span>
 								</div>
-								<ScreenshotStrip screenshots={game.screenshots} />
+								<ScreenshotStrip screenshots={game.screenshots} gameTab={gameTab} setGameTab={setGameTab} />
 							</motion.div>
 						)}
 
@@ -565,12 +568,22 @@ function GameCard({
 	);
 }
 
-export function GamesContent({ theme }: { theme: ThemeMode }) {
+type GamesContentProps = {
+	theme: ThemeMode;
+	selectedGame: string | null;
+	setSelectedGame: (value: string | null) => void;
+	gameFilter: string | null;
+	setGameFilter: (value: string | null) => void;
+	gameTab: string | null;
+	setGameTab: (value: string | null) => void;
+};
+
+export function GamesContent({ theme, selectedGame, setSelectedGame, gameFilter, setGameFilter, gameTab, setGameTab }: GamesContentProps) {
 	const isDark = theme === "dark";
-	const [selectedGameId, setSelectedGameId] = useState<string | null>(null);
-	const [showDetail, setShowDetail] = useState(false);
-	const [activeFilter, setActiveFilter] = useState<string>("All");
-	const activeGame = GAME_PREVIEWS.find((game) => game.id === selectedGameId) ?? GAME_PREVIEWS[0];
+	const activeGame = selectedGame !== null
+		? GAME_PREVIEWS.find((game) => game.id === selectedGame) ?? null
+		: null;
+	const showDetail = selectedGame !== null && activeGame !== null;
 
 	const allGenres = Array.from(
 		new Set(GAME_PREVIEWS.flatMap((game) => game.genres))
@@ -579,23 +592,22 @@ export function GamesContent({ theme }: { theme: ThemeMode }) {
 	const statusFilters = ["All", "Completed", "In Progress"];
 
 	const filteredGames = GAME_PREVIEWS.filter((game) => {
-		if (activeFilter === "All") return true;
-		if (activeFilter === "Completed") return game.state === "Completed";
-		if (activeFilter === "In Progress") return game.state !== "Completed";
-		return game.genres.includes(activeFilter);
+		if (!gameFilter || gameFilter === "All") return true;
+		if (gameFilter === "Completed") return game.state === "Completed";
+		if (gameFilter === "In Progress") return game.state !== "Completed";
+		return game.genres.includes(gameFilter);
 	});
 
 	const handleGameClick = (gameId: string) => {
-		setSelectedGameId(gameId);
-		setShowDetail(true);
+		setSelectedGame(gameId);
 	};
 
 	const handleBack = () => {
-		setShowDetail(false);
+		setSelectedGame(null);
 	};
 
 	if (showDetail && activeGame) {
-		return <GameDetailView game={activeGame} onBack={handleBack} theme={theme} />;
+		return <GameDetailView game={activeGame} onBack={handleBack} theme={theme} gameTab={gameTab} setGameTab={setGameTab} />;
 	}
 
 	return (
@@ -662,9 +674,9 @@ export function GamesContent({ theme }: { theme: ThemeMode }) {
 							<button
 								key={filter}
 								type="button"
-								onClick={() => setActiveFilter(filter)}
+								onClick={() => setGameFilter(filter)}
 								className={`rounded-full px-4 py-1.5 text-sm font-bold transition-all whitespace-nowrap ${
-									activeFilter === filter
+									gameFilter === filter
 										? "bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 text-white shadow-lg shadow-emerald-500/20"
 										: isDark
 											? "bg-slate-800/60 text-slate-400 hover:text-white border border-white/10"
@@ -689,9 +701,9 @@ export function GamesContent({ theme }: { theme: ThemeMode }) {
 							<button
 								key={genre}
 								type="button"
-								onClick={() => setActiveFilter(genre)}
+								onClick={() => setGameFilter(genre)}
 								className={`rounded-full px-4 py-1.5 text-sm font-bold transition-all whitespace-nowrap ${
-									activeFilter === genre
+									gameFilter === genre
 										? "bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 text-white shadow-lg shadow-emerald-500/20"
 										: isDark
 											? "bg-slate-800/60 text-slate-400 hover:text-white border border-white/10"
@@ -712,7 +724,7 @@ export function GamesContent({ theme }: { theme: ThemeMode }) {
 						<p className="mt-4 font-bold">No games match this filter</p>
 						<button
 							type="button"
-							onClick={() => setActiveFilter("All")}
+							onClick={() => setGameFilter("All")}
 							className={`mt-3 text-sm underline ${isDark ? "text-slate-400 hover:text-white" : "text-slate-500 hover:text-slate-700"}`}
 						>
 							Clear filter
@@ -723,7 +735,7 @@ export function GamesContent({ theme }: { theme: ThemeMode }) {
 						<GameCard
 							key={game.id}
 							game={game}
-							isSelected={game.id === selectedGameId}
+							isSelected={game.id === selectedGame}
 							onClick={() => handleGameClick(game.id)}
 							isDark={isDark}
 						/>

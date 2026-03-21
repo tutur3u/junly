@@ -1,13 +1,20 @@
 import { Expand, X } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
 import { ARTWORKS } from "@/components/launcher/content-data";
-import type { ArtworkRecord } from "@/components/launcher/content-data";
 import type { ThemeMode } from "@/components/launcher/types";
 
-export function GalleryContent({ theme }: { theme: ThemeMode }) {
+type GalleryContentProps = {
+	theme: ThemeMode;
+	selectedArtwork: string | null;
+	setSelectedArtwork: (value: string | null) => void;
+};
+
+export function GalleryContent({ theme, selectedArtwork, setSelectedArtwork }: GalleryContentProps) {
 	const isDark = theme === "dark";
-	const [selectedArtwork, setSelectedArtwork] = useState<ArtworkRecord | null>(null);
+	const artworkData =
+		selectedArtwork !== null
+			? ARTWORKS.find((artwork) => artwork.id === Number(selectedArtwork)) ?? null
+			: null;
 
 	return (
 		<div className="h-full overflow-y-auto p-6 wii-u-scrollbar">
@@ -17,7 +24,7 @@ export function GalleryContent({ theme }: { theme: ThemeMode }) {
 					<button
 						key={artwork.id}
 						type="button"
-						onClick={() => setSelectedArtwork(artwork)}
+						onClick={() => setSelectedArtwork(String(artwork.id))}
 						className={`group relative block w-full cursor-pointer break-inside-avoid overflow-hidden rounded-xl border-4 shadow-sm transition-shadow hover:shadow-lg ${
 							isDark ? "bg-slate-900/50 border-slate-700" : "bg-white border-white"
 						}`}
@@ -40,7 +47,7 @@ export function GalleryContent({ theme }: { theme: ThemeMode }) {
 				))}
 			</div>
 
-			{selectedArtwork && (
+			{artworkData && (
 				<div
 					className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/88 p-6 backdrop-blur-xl"
 					onClick={() => setSelectedArtwork(null)}
@@ -56,8 +63,8 @@ export function GalleryContent({ theme }: { theme: ThemeMode }) {
 						<div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-slate-950/85 p-3 shadow-[0_30px_80px_rgba(0,0,0,0.45)]">
 							<div className="relative h-[72vh] overflow-hidden rounded-[22px]">
 								<Image
-									src={`https://picsum.photos/seed/${selectedArtwork.seed}/1600/1200`}
-									alt={selectedArtwork.title}
+									src={`https://picsum.photos/seed/${artworkData.seed}/1600/1200`}
+									alt={artworkData.title}
 									fill
 									className="object-contain"
 									referrerPolicy="no-referrer"
@@ -65,7 +72,7 @@ export function GalleryContent({ theme }: { theme: ThemeMode }) {
 							</div>
 							<div className="flex items-center justify-between px-3 pt-4 text-white">
 								<div>
-									<div className="text-lg font-bold">{selectedArtwork.title}</div>
+									<div className="text-lg font-bold">{artworkData.title}</div>
 									<div className="text-sm text-slate-400">Fullscreen gallery view</div>
 								</div>
 								<div className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-300">

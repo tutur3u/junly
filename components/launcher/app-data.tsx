@@ -15,25 +15,31 @@ import type { AppData } from "@/components/launcher/types";
 export const apps: AppData[] = [
 	{
 		id: "about",
-		title: "Mii Maker",
+		title: "About me",
 		icon: <User className="w-12 h-12 text-green-500" />,
 		color: "bg-green-100",
 	},
 	{
+		id: "games",
+		title: "Games",
+		icon: <Gamepad2 className="w-12 h-12 text-purple-500" />,
+		color: "bg-purple-100",
+	},
+	{
 		id: "projects",
-		title: "Projects",
+		title: "Research",
 		icon: <Briefcase className="w-12 h-12 text-blue-500" />,
 		color: "bg-blue-100",
 	},
 	{
 		id: "gallery",
-		title: "Gallery",
+		title: "Art",
 		icon: <ImageIcon className="w-12 h-12 text-yellow-500" />,
 		color: "bg-yellow-100",
 	},
 	{
 		id: "blog",
-		title: "Miiverse",
+		title: "Blog",
 		icon: <MessageSquare className="w-12 h-12 text-green-600" />,
 		color: "bg-green-50",
 	},
@@ -44,14 +50,8 @@ export const apps: AppData[] = [
 		color: "bg-pink-100",
 	},
 	{
-		id: "games",
-		title: "Games",
-		icon: <Gamepad2 className="w-12 h-12 text-purple-500" />,
-		color: "bg-purple-100",
-	},
-	{
 		id: "contact",
-		title: "Friends",
+		title: "Contact",
 		icon: <Mail className="w-12 h-12 text-orange-500" />,
 		color: "bg-orange-100",
 	},
