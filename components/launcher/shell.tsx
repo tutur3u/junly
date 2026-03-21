@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { InitialBootOverlay } from "@/components/launcher/overlays";
 import type { AppData, AppId, ThemeMode } from "@/components/launcher/types";
 import { Moon, Sun, User, X } from "lucide-react";
@@ -35,6 +36,16 @@ export function LauncherShell({
 	loadingContent,
 	themePickerOverlay,
 }: LauncherShellProps) {
+	useEffect(() => {
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key === "Escape" && activeAppData) {
+				onCloseApp();
+			}
+		};
+		window.addEventListener("keydown", handleKeyDown);
+		return () => window.removeEventListener("keydown", handleKeyDown);
+	}, [activeAppData, onCloseApp]);
+
 	return (
 		<main
 			className={`theme-shell theme-${theme} relative min-h-screen w-full overflow-hidden transition-colors duration-500 ${
@@ -86,18 +97,24 @@ export function LauncherShell({
 				})}
 			</div>
 
-			<header className="wii-u-topbar absolute top-0 left-0 right-0 z-10 flex h-16 items-center justify-between px-6">
+			<header className={`absolute top-0 left-0 right-0 z-10 flex h-14 items-center justify-between px-5 ${
+				theme === "dark" 
+					? "bg-gradient-to-b from-slate-900/95 to-slate-900/80 border-b border-slate-800/50" 
+					: "bg-white/90 border-b border-gray-200/80"
+			}`}>
 				<div className="flex items-center gap-3">
-					<div className="wii-u-user-badge flex h-11 w-11 items-center justify-center rounded-full border border-white/90">
+					<div className={`flex h-10 w-10 items-center justify-center rounded-full ${
+						theme === "dark" ? "bg-slate-800 border border-slate-700" : "bg-gray-100 border border-gray-200"
+					}`}>
 						<User
 							className={`h-5 w-5 ${
-								theme === "dark" ? "text-slate-300" : "text-slate-400"
+								theme === "dark" ? "text-slate-300" : "text-slate-500"
 							}`}
 						/>
 					</div>
 					<span
-						className={`text-[1.05rem] font-bold tracking-wide ${
-							theme === "dark" ? "text-slate-100" : "text-slate-600"
+						className={`text-[1rem] font-bold tracking-wide ${
+							theme === "dark" ? "text-slate-100" : "text-slate-700"
 						}`}
 					>
 						Chunli
@@ -110,7 +127,11 @@ export function LauncherShell({
 						aria-label={
 							theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
 						}
-						className="wii-u-round-button inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/80 transition-transform hover:-translate-y-0.5"
+						className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-full transition-all ${
+							theme === "dark" 
+								? "bg-slate-800 border border-slate-700 hover:bg-slate-700 text-slate-300" 
+								: "bg-gray-100 border border-gray-200 hover:bg-gray-200 text-slate-600"
+						}`}
 					>
 						{theme === "dark" ? (
 							<Sun className="h-5 w-5 text-amber-400" />
@@ -119,8 +140,8 @@ export function LauncherShell({
 						)}
 					</button>
 					<div
-						className={`text-[1.05rem] font-bold tracking-wider ${
-							theme === "dark" ? "text-slate-300" : "text-slate-500"
+						className={`text-[1rem] font-medium tracking-wide ${
+							theme === "dark" ? "text-slate-400" : "text-slate-500"
 						}`}
 					>
 						{currentTime}
@@ -174,15 +195,17 @@ export function LauncherShell({
 			</div>
 
 			<div
-				className={`absolute right-0 bottom-0 left-0 z-10 flex h-16 items-center justify-center gap-8 ${
+				className={`absolute right-0 bottom-0 left-0 z-10 flex h-14 items-center justify-center gap-6 ${
 					theme === "dark"
-						? "bg-gradient-to-t from-slate-950/30 to-transparent"
-						: "bg-gradient-to-t from-white/25 to-transparent"
+						? "bg-gradient-to-t from-slate-950/50 to-transparent"
+						: "bg-gradient-to-t from-white/30 to-transparent"
 				}`}
 			>
 				<div
-					className={`wii-u-status-pill flex items-center gap-2 rounded-full border border-white/70 px-5 py-2 text-sm font-medium backdrop-blur-sm ${
-						theme === "dark" ? "text-slate-300" : "text-slate-500"
+					className={`flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium ${
+						theme === "dark" 
+							? "bg-slate-800/80 border border-slate-700/50 text-slate-300" 
+							: "bg-white/80 border border-white/80 text-slate-600"
 					}`}
 				>
 					<span className="h-2 w-2 animate-pulse rounded-full bg-green-400" />
@@ -204,7 +227,7 @@ export function LauncherShell({
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
-						className={`fixed inset-0 z-50 flex items-center justify-center p-3 backdrop-blur-md sm:p-6 lg:p-8 ${
+						className={`fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-6 lg:p-8 ${
 							theme === "dark"
 								? "bg-[radial-gradient(circle_at_top,rgba(14,165,233,0.12),transparent_30%),rgba(2,6,23,0.72)]"
 								: "bg-slate-900/20"
@@ -216,11 +239,17 @@ export function LauncherShell({
 							animate={{ scale: 1, y: 0, opacity: 1 }}
 							exit={{ scale: 0.9, y: 20, opacity: 0 }}
 							transition={{ type: "spring", stiffness: 300, damping: 25 }}
-							className="wii-u-window relative flex h-[88vh] min-h-[720px] w-full max-w-[1480px] flex-col overflow-hidden rounded-[34px]"
+							className={`relative flex h-full w-full flex-col overflow-hidden sm:inset-auto sm:h-[88vh] sm:min-h-[720px] sm:w-full sm:max-w-[1480px] sm:rounded-[34px] ${
+								theme === "dark" ? "bg-slate-900" : "bg-white"
+							} sm:wii-u-window`}
 							onClick={(event) => event.stopPropagation()}
 						>
-							<div className="pointer-events-none absolute inset-[10px] rounded-[26px] border border-white/10 opacity-70" />
-							<div className="wii-u-titlebar relative flex-shrink-0 px-6 py-4">
+							<div className="pointer-events-none absolute inset-[10px] rounded-[26px] border border-white/10 opacity-70 hidden sm:block" />
+							<div className={`relative flex flex-shrink-0 items-center justify-between px-4 py-3 sm:px-6 sm:py-4 ${
+								theme === "dark" 
+									? "bg-slate-900 sm:bg-slate-800/95 border-b border-slate-800 sm:border-b-0" 
+									: "bg-white sm:bg-white/95 border-b border-gray-200 sm:border-b-0"
+							}`}>
 								<div className="flex items-center gap-3">
 									<div
 										className={`flex h-10 w-10 items-center justify-center rounded-full border border-white/90 shadow-inner ${activeAppData.color}`}
@@ -238,8 +267,10 @@ export function LauncherShell({
 								<button
 									type="button"
 									onClick={onCloseApp}
-									className={`wii-u-close-button flex h-11 w-11 items-center justify-center rounded-full border border-white/80 transition-colors ${
-										theme === "dark" ? "text-slate-300" : "text-slate-500"
+									className={`flex h-10 w-10 items-center justify-center rounded-full transition-colors ${
+										theme === "dark" 
+											? "bg-slate-800 text-slate-300 hover:bg-red-500/90 hover:text-white" 
+											: "bg-gray-100 text-gray-600 hover:bg-red-500 hover:text-white"
 									}`}
 								>
 									<X className="h-5 w-5" />

@@ -222,8 +222,10 @@ export function ThemePickerOverlay({
 			<motion.div
 				initial={{ opacity: 0, y: 12, scale: 0.96 }}
 				animate={{ opacity: 1, y: 0, scale: 1 }}
-				className={`wii-u-window w-full max-w-3xl border p-6 my-4 ${
-					theme === "dark" ? "border-sky-200/10" : "border-white/85"
+				className={`w-full max-w-3xl p-6 my-4 ${
+					theme === "dark" ? "bg-slate-900" : "bg-white"
+				} sm:wii-u-window sm:border sm:rounded-[30px] ${
+					theme === "dark" ? "sm:border-sky-200/10" : "sm:border-white/85"
 				}`}
 			>
 				<div className="text-center">
