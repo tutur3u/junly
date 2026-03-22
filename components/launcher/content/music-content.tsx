@@ -1,5 +1,4 @@
 import { Album, Play, Volume } from "pixelarticons/react";
-import { motion } from "motion/react";
 import Image from "next/image";
 import { MUSIC_TRACKS } from "@/components/launcher/content-data";
 import type { ThemeMode } from "@/components/launcher/types";
@@ -30,19 +29,15 @@ export function MusicContent({ theme, activeTrack, setActiveTrack }: MusicConten
 				<div className="relative grid gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
 					<div className="flex items-center justify-center">
 						<div className="relative flex h-72 w-72 items-center justify-center">
-							<motion.div
-								className={`absolute inset-0 rounded-full bg-gradient-to-br ${trackData.accent} blur-3xl opacity-30`}
-								animate={{ scale: [0.96, 1.04, 0.96] }}
-								transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut" }}
+							<div
+								className={`absolute inset-0 rounded-full bg-gradient-to-br ${trackData.accent} blur-3xl opacity-30 glow-pulse`}
 							/>
-							<motion.div
-								className={`relative flex h-60 w-60 items-center justify-center rounded-full border-[10px] ${
+							<div
+								className={`relative flex h-60 w-60 items-center justify-center rounded-full border-[10px] vinyl-spin ${
 									isDark
 										? "border-white/10 bg-[radial-gradient(circle_at_35%_35%,rgba(255,255,255,0.16),transparent_24%),linear-gradient(180deg,rgba(32,48,65,0.98),rgba(8,16,27,0.98))]"
 										: "border-white/90 bg-[radial-gradient(circle_at_35%_35%,rgba(255,255,255,0.95),transparent_22%),linear-gradient(180deg,rgba(250,250,255,0.98),rgba(224,236,248,0.96))]"
 								}`}
-								animate={{ rotate: 360 }}
-								transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
 							>
 								<div className={`absolute inset-8 rounded-full border ${isDark ? "border-white/8" : "border-slate-200/70"}`} />
 								<div className={`absolute h-26 w-26 rounded-full bg-gradient-to-br ${trackData.accent} opacity-70`} />
@@ -53,7 +48,7 @@ export function MusicContent({ theme, activeTrack, setActiveTrack }: MusicConten
 								>
 									<Album className="h-10 w-10 text-white" />
 								</div>
-							</motion.div>
+							</div>
 						</div>
 					</div>
 
@@ -95,19 +90,15 @@ export function MusicContent({ theme, activeTrack, setActiveTrack }: MusicConten
 							</div>
 						</div>
 
-						<div className="mt-7 grid grid-cols-12 items-end gap-2">
-							{[32, 52, 38, 68, 58, 86, 44, 72, 62, 48, 74, 40].map((height, index) => (
-								<motion.div
-									key={`${trackData.id}-${index}`}
-									className={`col-span-1 rounded-t-full bg-gradient-to-t ${trackData.accent}`}
-									style={{ height }}
-									animate={{ scaleY: [0.72, 1, 0.8, 1] }}
-									transition={{
-										duration: 1.2 + index * 0.03,
-										repeat: Infinity,
-										repeatType: "mirror",
-										ease: "easeInOut",
-										delay: index * 0.05,
+						<div className="mt-7 flex items-end justify-between gap-1">
+							{[52, 38, 68, 58, 86, 44].map((height, index) => (
+								<div
+									key={`bar-${trackData.id}-${height}`}
+									className={`flex-1 rounded-t-full bg-gradient-to-t ${trackData.accent} visualizer-bar`}
+									style={{
+										height,
+										animationDelay: `${index * 0.15}s`,
+										animationDuration: `${0.8 + index * 0.1}s`,
 									}}
 								/>
 							))}
@@ -127,18 +118,15 @@ export function MusicContent({ theme, activeTrack, setActiveTrack }: MusicConten
 					</div>
 
 					<div className="mt-5 space-y-3">
-						{MUSIC_TRACKS.map((track, index) => {
+						{MUSIC_TRACKS.map((track) => {
 							const isActive = track.id === trackData.id;
 
 							return (
-								<motion.button
+								<button
 									key={track.id}
 									type="button"
 									onClick={() => setActiveTrack(track.id)}
-									initial={{ opacity: 0, y: 12 }}
-									animate={{ opacity: 1, y: 0 }}
-									transition={{ delay: index * 0.05, duration: 0.25 }}
-									className={`w-full cursor-pointer rounded-2xl border p-4 text-left transition-all ${
+									className={`w-full cursor-pointer rounded-2xl border p-4 text-left transition-all hover:translate-x-1 ${
 										isActive
 											? isDark
 												? "border-pink-300/20 bg-pink-400/10"
@@ -147,7 +135,6 @@ export function MusicContent({ theme, activeTrack, setActiveTrack }: MusicConten
 												? "border-white/8 bg-slate-950/28 hover:border-pink-200/10"
 												: "border-white/80 bg-white/55 hover:border-pink-100"
 									}`}
-									whileHover={{ x: 3 }}
 								>
 									<div className="flex items-center gap-4">
 										<div className={`relative h-16 w-16 overflow-hidden rounded-2xl ${isDark ? "bg-slate-900" : "bg-slate-100"}`}>
@@ -162,10 +149,10 @@ export function MusicContent({ theme, activeTrack, setActiveTrack }: MusicConten
 										<div className="min-w-0 flex-1">
 											<div className={`font-bold ${isDark ? "text-slate-100" : "text-slate-800"}`}>{track.title}</div>
 											<div className={`mt-1 text-sm ${isDark ? "text-slate-400" : "text-slate-500"}`}>{track.artist}</div>
-										</div>
-										<div className={`text-sm ${isDark ? "text-slate-500" : "text-slate-400"}`}>{track.length}</div>
-									</div>
-								</motion.button>
+								</div>
+								<div className={`text-sm ${isDark ? "text-slate-500" : "text-slate-400"}`}>{track.length}</div>
+							</div>
+						</button>
 							);
 						})}
 					</div>

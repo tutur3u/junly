@@ -1,7 +1,14 @@
+"use client";
+
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { PROJECTS } from "@/components/launcher/content-data";
 import type { ThemeMode } from "@/components/launcher/types";
+
+// Global flag to track if escape was handled by a modal (shared across content files)
+declare global {
+  var escapeHandledByModal: boolean;
+}
 
 type ProjectsContentProps = {
 	theme: ThemeMode;
@@ -20,6 +27,19 @@ export function ProjectsContent({ theme, selectedProject, setSelectedProject }: 
 			scrollRef.current.scrollTo({ top: 0, behavior: "smooth" });
 		}
 	}, [projectData]);
+
+	// Handle Escape key to go back from project details
+	useEffect(() => {
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key === "Escape" && projectData) {
+				// Check if a modal already handled this escape
+				if (globalThis.escapeHandledByModal) return;
+				setSelectedProject(null);
+			}
+		};
+		window.addEventListener("keydown", handleKeyDown);
+		return () => window.removeEventListener("keydown", handleKeyDown);
+	}, [projectData, setSelectedProject]);
 
 	if (projectData) {
 		return (

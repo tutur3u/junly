@@ -8,6 +8,10 @@ import { Cancel, Moon, User } from "pixelarticons/react";
 import { AnimatePresence, motion } from "motion/react";
 import type { ReactNode } from "react";
 
+function generateParticleId(index: number, left: number, top: number): string {
+	return `particle-${index}-${left}-${top}`;
+}
+
 function AnimatedSeparator() {
 	return (
 		<div className="flex items-center gap-1">
@@ -52,7 +56,14 @@ export function LauncherShell({
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
 			if (e.key === "Escape" && activeAppData) {
-				onCloseApp();
+				// Check if a modal already handled this escape
+				if ((globalThis as unknown as { escapeHandledByModal?: boolean }).escapeHandledByModal) return;
+				// Also check DOM markers as fallback
+				const isModalOpen = document.querySelector('[data-lightbox-open="true"]') !== null;
+				const isPdfOpen = document.querySelector('[data-pdf-open="true"]') !== null;
+				if (!isModalOpen && !isPdfOpen) {
+					onCloseApp();
+				}
 			}
 		};
 		window.addEventListener("keydown", handleKeyDown);
@@ -76,38 +87,31 @@ export function LauncherShell({
 			)}
 
 			<div className="pointer-events-none absolute inset-0 overflow-hidden">
-				{[...Array(15)].map((_, i) => {
-					const size = ((i * 17) % 40) + 10;
-					const left = (i * 23) % 100;
-					const top = (i * 31) % 100;
-					const duration = ((i * 13) % 10) + 10;
-					const xOffset = ((i * 7) % 50) - 25;
+				<div className="absolute inset-0 particles-container">
+					{[...Array(6)].map((_, i) => {
+						const size = ((i * 17) % 40) + 10;
+						const left = (i * 23) % 100;
+						const top = (i * 31) % 100;
+						const duration = ((i * 13) % 8) + 12;
 
-					return (
-						<motion.div
-							key={i}
-							className={`absolute rounded-full blur-sm ${
-								theme === "dark" ? "bg-sky-300/10" : "bg-white/40"
-							}`}
-							style={{
-								width: size,
-								height: size,
-								left: `${left}%`,
-								top: `${top}%`,
-							}}
-							animate={{
-								y: [0, -100, 0],
-								x: [0, xOffset, 0],
-								opacity: [0.2, 0.6, 0.2],
-							}}
-							transition={{
-								duration,
-								repeat: Infinity,
-								ease: "easeInOut",
-							}}
-						/>
-					);
-				})}
+						return (
+							<div
+								key={generateParticleId(i, left, top)}
+								className={`absolute rounded-full blur-sm particle-float ${
+									theme === "dark" ? "bg-sky-300/10" : "bg-white/40"
+								}`}
+								style={{
+									width: size,
+									height: size,
+									left: `${left}%`,
+									top: `${top}%`,
+									animationDuration: `${duration}s`,
+									animationDelay: `${i * 0.8}s`,
+								}}
+							/>
+						);
+					})}
+				</div>
 			</div>
 
 			<header className={`absolute top-0 left-0 right-0 z-10 flex h-14 items-center justify-between px-5 ${
@@ -185,13 +189,12 @@ export function LauncherShell({
 					{apps.map((app, index) => (
 						<motion.div
 							key={app.id}
-							initial={{ opacity: 0, scale: 0.8, y: 20 }}
-							animate={{ opacity: 1, scale: 1, y: 0 }}
+							initial={{ opacity: 0, scale: 0.95 }}
+							animate={{ opacity: 1, scale: 1 }}
 							transition={{
-								delay: index * 0.05,
-								type: "spring",
-								stiffness: 200,
-								damping: 15,
+								delay: index * 0.04,
+								duration: 0.35,
+								ease: "easeOut",
 							}}
 							className="group relative flex cursor-pointer flex-col items-center"
 						>
@@ -267,6 +270,7 @@ export function LauncherShell({
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
+						transition={{ duration: 0.2 }}
 						className={`fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-6 lg:p-8 ${
 							theme === "dark"
 								? "bg-black/90"
@@ -275,10 +279,10 @@ export function LauncherShell({
 						onClick={onCloseApp}
 					>
 						<motion.div
-							initial={{ scale: 0.9, y: 20, opacity: 0 }}
-							animate={{ scale: 1, y: 0, opacity: 1 }}
-							exit={{ scale: 0.9, y: 20, opacity: 0 }}
-							transition={{ type: "spring", stiffness: 300, damping: 25 }}
+							initial={{ scale: 0.96, opacity: 0 }}
+							animate={{ scale: 1, opacity: 1 }}
+							exit={{ scale: 0.96, opacity: 0 }}
+							transition={{ duration: 0.25, ease: "easeOut" }}
 							className={`relative flex h-full w-full flex-col overflow-hidden sm:inset-auto sm:h-[88vh] sm:min-h-[720px] sm:w-full sm:max-w-[1480px] sm:rounded-[34px] border-2 ${
 								theme === "dark" ? "bg-slate-900 border-slate-700" : "bg-white border-gray-200"
 							} sm:wii-u-window`}

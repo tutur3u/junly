@@ -8,6 +8,11 @@ import { GAME_PREVIEWS } from "@/components/launcher/content-data";
 import type { ThemeMode } from "@/components/launcher/types";
 import type { GamePreview } from "@/components/launcher/content-data";
 
+// Global flag to track if escape was handled by a modal (shared across content files)
+declare global {
+  var escapeHandledByModal: boolean;
+}
+
 function VideoEmbed({ videoUrl }: { videoUrl: string }) {
 	return (
 		<div className="relative overflow-hidden rounded-[22px] border border-white/15 bg-slate-900/60 shadow-xl">
@@ -39,7 +44,15 @@ function ScreenshotLightbox({
 }) {
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
-			if (e.key === "Escape") onClose();
+			if (e.key === "Escape") {
+				// Mark that modal handled this escape
+				globalThis.escapeHandledByModal = true;
+				onClose();
+				// Reset flag after other handlers have had a chance to check it
+				setTimeout(() => {
+					globalThis.escapeHandledByModal = false;
+				}, 50);
+			}
 			if (e.key === "ArrowRight") onNext();
 			if (e.key === "ArrowLeft") onPrev();
 		};
@@ -53,6 +66,7 @@ function ScreenshotLightbox({
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
 			className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/95 backdrop-blur-md"
+			data-lightbox-open="true"
 		>
 			<button
 				type="button"
@@ -172,12 +186,9 @@ function ScreenshotStrip({ screenshots, gameTab, setGameTab }: { screenshots: { 
 					</button>
 					<div ref={scrollRef} className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
 						{images.map((src, index) => (
-							<motion.button
+							<button
 								type="button"
 								key={src}
-								initial={{ opacity: 0, x: 20 }}
-								animate={{ opacity: 1, x: 0 }}
-								transition={{ delay: index * 0.05 }}
 								onClick={() => openLightbox(index)}
 								className="group relative flex-shrink-0 h-44 w-80 overflow-hidden rounded-[18px] border border-white/10 bg-slate-800/50 transition-all hover:border-emerald-400/40 hover:shadow-lg hover:shadow-emerald-500/20"
 							>
@@ -190,7 +201,7 @@ function ScreenshotStrip({ screenshots, gameTab, setGameTab }: { screenshots: { 
 								<div className="absolute inset-0 flex items-center justify-center bg-slate-950/0 transition-colors group-hover:bg-slate-950/40">
 									<Expand className="h-8 w-8 text-white opacity-0 transition-opacity group-hover:opacity-100" />
 								</div>
-							</motion.button>
+							</button>
 						))}
 					</div>
 					<button
@@ -222,12 +233,30 @@ function ScreenshotStrip({ screenshots, gameTab, setGameTab }: { screenshots: { 
 function PdfModal({ pdfUrl, onClose }: { pdfUrl: string; onClose: () => void }) {
 	const [isLoading, setIsLoading] = useState(true);
 
+	// Handle Escape key to close PDF modal
+	useEffect(() => {
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key === "Escape") {
+				// Mark that modal handled this escape
+				globalThis.escapeHandledByModal = true;
+				onClose();
+				// Reset flag after other handlers have had a chance to check it
+				setTimeout(() => {
+					globalThis.escapeHandledByModal = false;
+				}, 50);
+			}
+		};
+		window.addEventListener("keydown", handleKeyDown);
+		return () => window.removeEventListener("keydown", handleKeyDown);
+	}, [onClose]);
+
 	return (
 		<motion.div
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
 			className="fixed inset-0 z-50 flex items-center justify-center p-4"
+			data-pdf-open="true"
 		>
 			<button
 				type="button"
@@ -258,20 +287,12 @@ function PdfModal({ pdfUrl, onClose }: { pdfUrl: string; onClose: () => void }) 
 				<div className="relative flex-1">
 					{isLoading && (
 						<div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-slate-900/95">
-							<motion.div
-								animate={{ rotate: 360 }}
-								transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-							>
+							<div className="animate-spin">
 								<Loader className="h-10 w-10 text-emerald-400" />
-							</motion.div>
+							</div>
 							<span className="text-slate-400">Loading document...</span>
 							<div className="h-1 w-48 overflow-hidden rounded-full bg-slate-800">
-								<motion.div
-									className="h-full bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500"
-									initial={{ width: "0%" }}
-									animate={{ width: "100%" }}
-									transition={{ duration: 3, repeat: Infinity }}
-								/>
+								<div className="h-full bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 animate-[width_2s_ease-in-out_infinite]" style={{ width: "100%" }} />
 							</div>
 						</div>
 					)}
@@ -303,23 +324,38 @@ function GameDetailView({
 	const [showPdf, setShowPdf] = useState(false);
 	const isDark = theme === "dark";
 
+	useEffect(() => {
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key === "Escape") {
+				// Check if a modal already handled this escape
+				if (globalThis.escapeHandledByModal) return;
+				// Only go back if no modal is open (check for lightbox or PDF)
+				const isModalOpen = document.querySelector('[data-lightbox-open="true"]') !== null;
+				const isPdfOpen = document.querySelector('[data-pdf-open="true"]') !== null;
+				if (!isModalOpen && !isPdfOpen) {
+					onBack();
+				}
+			}
+		};
+		window.addEventListener("keydown", handleKeyDown);
+		return () => window.removeEventListener("keydown", handleKeyDown);
+	}, [onBack]);
+
 	return (
 		<>
 			<AnimatePresence mode="wait">
 				<motion.div
 					key="detail"
-					initial={{ opacity: 0, x: 30 }}
-					animate={{ opacity: 1, x: 0 }}
-					exit={{ opacity: 0, x: -30 }}
-					transition={{ duration: 0.3 }}
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+					transition={{ duration: 0.2 }}
 					className="h-full overflow-y-auto wii-u-scrollbar"
 				>
 					<div className="space-y-6 p-6">
-						<motion.button
+						<button
 							type="button"
 							onClick={onBack}
-							initial={{ opacity: 0, x: -20 }}
-							animate={{ opacity: 1, x: 0 }}
 							className={`group inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold transition-all ${
 								isDark
 									? "bg-slate-800/70 text-slate-300 hover:bg-slate-800 hover:text-white border border-white/10"
@@ -328,11 +364,9 @@ function GameDetailView({
 						>
 							<ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
 							Back to Games
-						</motion.button>
+						</button>
 
-						<motion.div
-							initial={{ opacity: 0, y: 20 }}
-							animate={{ opacity: 1, y: 0 }}
+						<div
 							className={`relative overflow-hidden rounded-[30px] border ${
 								isDark
 									? "border-emerald-900/30 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950"
@@ -461,16 +495,12 @@ function GameDetailView({
 											</button>
 										)}
 									</div>
+									</div>
 								</div>
-							</div>
-						</motion.div>
+						</div>
 
 						{game.videoUrl && (
-							<motion.div
-								initial={{ opacity: 0, y: 20 }}
-								animate={{ opacity: 1, y: 0 }}
-								transition={{ delay: 0.15 }}
-							>
+							<div>
 								<div className="mb-3 flex items-center gap-3">
 									<h3 className={`text-lg font-bold ${isDark ? "text-white" : "text-slate-800"}`}>
 										Gameplay
@@ -478,15 +508,11 @@ function GameDetailView({
 									<div className={`h-px flex-1 bg-gradient-to-r ${isDark ? "from-slate-700" : "from-slate-200"} to-transparent`} />
 								</div>
 								<VideoEmbed videoUrl={game.videoUrl} />
-							</motion.div>
+							</div>
 						)}
 
 						{game.screenshots && (
-							<motion.div
-								initial={{ opacity: 0, y: 20 }}
-								animate={{ opacity: 1, y: 0 }}
-								transition={{ delay: 0.25 }}
-							>
+							<div>
 								<div className="mb-3 flex items-center gap-3">
 									<h3 className={`text-lg font-bold ${isDark ? "text-white" : "text-slate-800"}`}>
 										Gallery
@@ -497,7 +523,7 @@ function GameDetailView({
 									</span>
 								</div>
 								<ScreenshotStrip screenshots={game.screenshots} gameTab={gameTab} setGameTab={setGameTab} />
-							</motion.div>
+							</div>
 						)}
 
 						<div className="h-8" />
@@ -529,9 +555,10 @@ function GameCard({
 		<motion.button
 			type="button"
 			onClick={onClick}
-			initial={{ opacity: 0, y: 16 }}
-			animate={{ opacity: 1, y: 0 }}
-			className={`group relative cursor-pointer overflow-hidden rounded-[28px] border p-4 text-left transition-all ${
+			initial={{ opacity: 0, scale: 0.98 }}
+			animate={{ opacity: 1, scale: 1 }}
+			transition={{ duration: 0.3, ease: "easeOut" }}
+			className={`group relative cursor-pointer overflow-hidden rounded-[28px] border p-4 text-left transition-all hover:-translate-y-1 active:scale-[0.99] ${
 				isSelected
 					? isDark
 						? "border-emerald-400/25 bg-slate-900/80 shadow-[0_18px_36px_rgba(0,0,0,0.28)]"
@@ -540,8 +567,6 @@ function GameCard({
 						? "border-white/8 bg-slate-900/55 hover:border-sky-200/15 hover:bg-slate-900/72"
 						: "border-white/80 bg-white/58 hover:bg-white/74"
 			}`}
-			whileHover={{ y: -3 }}
-			whileTap={{ scale: 0.99 }}
 		>
 			<div className="grid gap-4 md:grid-cols-[220px_1fr]">
 				<div className="relative h-40 overflow-hidden rounded-[22px]">

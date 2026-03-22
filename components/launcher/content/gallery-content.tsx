@@ -1,7 +1,15 @@
+"use client";
+
 import { Cancel, Expand } from "pixelarticons/react";
 import Image from "next/image";
+import { useEffect } from "react";
 import { ARTWORKS } from "@/components/launcher/content-data";
 import type { ThemeMode } from "@/components/launcher/types";
+
+// Global flag to track if escape was handled by a modal (shared with games-content)
+declare global {
+  var escapeHandledByModal: boolean;
+}
 
 type GalleryContentProps = {
 	theme: ThemeMode;
@@ -15,6 +23,23 @@ export function GalleryContent({ theme, selectedArtwork, setSelectedArtwork }: G
 		selectedArtwork !== null
 			? ARTWORKS.find((artwork) => artwork.id === Number(selectedArtwork)) ?? null
 			: null;
+
+	// Handle Escape key to close fullscreen view
+	useEffect(() => {
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key === "Escape" && artworkData) {
+				// Mark that modal handled this escape
+				globalThis.escapeHandledByModal = true;
+				setSelectedArtwork(null);
+				// Reset flag after other handlers have had a chance to check it
+				setTimeout(() => {
+					globalThis.escapeHandledByModal = false;
+				}, 50);
+			}
+		};
+		window.addEventListener("keydown", handleKeyDown);
+		return () => window.removeEventListener("keydown", handleKeyDown);
+	}, [artworkData, setSelectedArtwork]);
 
 	return (
 		<div className="h-full overflow-y-auto p-6 wii-u-scrollbar">
@@ -48,10 +73,11 @@ export function GalleryContent({ theme, selectedArtwork, setSelectedArtwork }: G
 			</div>
 
 			{artworkData && (
-				<div
-					className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/88 p-6 backdrop-blur-xl"
-					onClick={() => setSelectedArtwork(null)}
-				>
+			<div
+				className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/88 p-6 backdrop-blur-xl"
+				data-lightbox-open="true"
+				onClick={() => setSelectedArtwork(null)}
+			>
 					<div className="relative w-full max-w-6xl" onClick={(event) => event.stopPropagation()}>
 						<button
 							type="button"

@@ -37,12 +37,9 @@ export function InitialBootOverlay({ theme }: { theme: ThemeMode }) {
 								: "border-white/95 bg-gradient-to-b from-white/95 via-white/80 to-sky-100/70"
 						}`}
 					>
-						<motion.div
-							animate={{ scale: [1, 1.06, 1], rotate: [0, -1.5, 1.5, 0] }}
-							transition={{ duration: 1.1, repeat: Infinity, ease: "easeInOut" }}
-						>
+						<div className="animate-pulse">
 							<User className="h-16 w-16 text-sky-500" />
-						</motion.div>
+						</div>
 					</div>
 
 					<div
@@ -57,17 +54,15 @@ export function InitialBootOverlay({ theme }: { theme: ThemeMode }) {
 					</p>
 
 					<div
-						className={`mt-8 h-4 rounded-full border p-1 ${
+						className={`mt-8 h-4 rounded-full border p-1 overflow-hidden ${
 							theme === "dark"
 								? "border-sky-200/10 bg-slate-950/65 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
 								: "border-white/80 bg-white/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.95)]"
 						}`}
 					>
-						<motion.div
-							className="h-full rounded-full bg-gradient-to-r from-sky-300 via-sky-400 to-blue-500"
-							initial={{ width: "10%" }}
-							animate={{ width: ["10%", "38%", "68%", "100%"] }}
-							transition={{ duration: 1.35, ease: "easeInOut" }}
+						<div
+							className="h-full rounded-full bg-gradient-to-r from-sky-300 via-sky-400 to-blue-500 animate-[width_1.5s_ease-in-out_forwards]"
+							style={{ width: "100%" }}
 						/>
 					</div>
 
@@ -76,21 +71,9 @@ export function InitialBootOverlay({ theme }: { theme: ThemeMode }) {
 							theme === "dark" ? "text-slate-500" : "text-slate-400"
 						}`}
 					>
-						<motion.span
-							className="h-2.5 w-2.5 rounded-full bg-sky-300"
-							animate={{ opacity: [0.25, 1, 0.25] }}
-							transition={{ duration: 0.9, repeat: Infinity, delay: 0 }}
-						/>
-						<motion.span
-							className="h-2.5 w-2.5 rounded-full bg-sky-400"
-							animate={{ opacity: [0.25, 1, 0.25] }}
-							transition={{ duration: 0.9, repeat: Infinity, delay: 0.14 }}
-						/>
-						<motion.span
-							className="h-2.5 w-2.5 rounded-full bg-blue-500"
-							animate={{ opacity: [0.25, 1, 0.25] }}
-							transition={{ duration: 0.9, repeat: Infinity, delay: 0.28 }}
-						/>
+						<span className="h-2.5 w-2.5 rounded-full bg-sky-300 loading-dot" />
+						<span className="h-2.5 w-2.5 rounded-full bg-sky-400 loading-dot" />
+						<span className="h-2.5 w-2.5 rounded-full bg-blue-500 loading-dot" />
 						<span>booting system</span>
 					</div>
 				</motion.div>
@@ -123,12 +106,9 @@ export function LoadingContent({
 								: "border-white/90 bg-gradient-to-b from-white/95 via-white/80 to-sky-100/70"
 						}`}
 					>
-						<motion.div
-							animate={{ scale: [1, 1.08, 1], rotate: [0, -2, 2, 0] }}
-							transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
-						>
+						<div className="animate-pulse">
 							{app.icon}
-						</motion.div>
+						</div>
 					</div>
 
 					<div
@@ -143,17 +123,15 @@ export function LoadingContent({
 					</p>
 
 					<div
-						className={`mt-8 h-4 rounded-full border p-1 ${
+						className={`mt-8 h-4 rounded-full border p-1 overflow-hidden ${
 							theme === "dark"
 								? "border-sky-200/10 bg-slate-950/65 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
 								: "border-white/80 bg-white/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.95)]"
 						}`}
 					>
-						<motion.div
-							className="h-full rounded-full bg-gradient-to-r from-sky-300 via-sky-400 to-blue-500"
-							initial={{ width: "18%" }}
-							animate={{ width: ["18%", "52%", "86%"] }}
-							transition={{ duration: 0.9, ease: "easeInOut" }}
+						<div
+							className="h-full rounded-full bg-gradient-to-r from-sky-300 via-sky-400 to-blue-500 animate-[width_1s_ease-in-out_forwards]"
+							style={{ width: "100%" }}
 						/>
 					</div>
 
@@ -162,21 +140,9 @@ export function LoadingContent({
 							theme === "dark" ? "text-slate-500" : "text-slate-400"
 						}`}
 					>
-						<motion.span
-							className="h-2.5 w-2.5 rounded-full bg-sky-300"
-							animate={{ opacity: [0.25, 1, 0.25] }}
-							transition={{ duration: 0.9, repeat: Infinity, delay: 0 }}
-						/>
-						<motion.span
-							className="h-2.5 w-2.5 rounded-full bg-sky-400"
-							animate={{ opacity: [0.25, 1, 0.25] }}
-							transition={{ duration: 0.9, repeat: Infinity, delay: 0.14 }}
-						/>
-						<motion.span
-							className="h-2.5 w-2.5 rounded-full bg-blue-500"
-							animate={{ opacity: [0.25, 1, 0.25] }}
-							transition={{ duration: 0.9, repeat: Infinity, delay: 0.28 }}
-						/>
+						<span className="h-2.5 w-2.5 rounded-full bg-sky-300 loading-dot" />
+						<span className="h-2.5 w-2.5 rounded-full bg-sky-400 loading-dot" />
+						<span className="h-2.5 w-2.5 rounded-full bg-blue-500 loading-dot" />
 						<span>loading assets</span>
 					</div>
 				</motion.div>
