@@ -1,3 +1,18 @@
+export type ContentLink = {
+	label: string;
+	url: string;
+	action?: "modal" | "external";
+};
+
+export type ContentSection = {
+	title: string;
+	body?: string;
+	items?: string[];
+	links?: ContentLink[];
+	layout?: "default" | "wide";
+	tone?: "default" | "highlight";
+};
+
 export type ProjectRecord = {
 	id: string;
 	title: string;
@@ -6,18 +21,17 @@ export type ProjectRecord = {
 	status: string;
 	stack: string[];
 	summary: string;
-	details: string[];
-	features: string[];
 	seed: string;
 	nominated?: boolean;
+	contentSections: ContentSection[];
 	researchDocs?: {
 		poster?: string;
 		paper?: string;
 		fieldNotes?: string;
 		proposal?: string;
 		thumbnail?: string;
-		documents?: { label: string; url: string }[];
-		interviews?: { label: string; url: string }[];
+		documents?: ContentLink[];
+		interviews?: ContentLink[];
 	};
 };
 
@@ -45,11 +59,10 @@ export type GamePreview = {
 	accent: string;
 	seed: string;
 	description: string;
-	features: string[];
 	genres: string[];
 	videoUrl?: string;
 	gddUrl?: string;
-	documents?: { label: string; url: string }[];
+	documents?: ContentLink[];
 	screenshots?: {
 		gameplay: string[];
 		bts?: string[];
@@ -59,11 +72,7 @@ export type GamePreview = {
 	role?: string;
 	year?: string;
 	nominated?: boolean;
-	projectGoals?: string[];
-	contribution?: {
-		title: string;
-		items: string[];
-	};
+	contentSections: ContentSection[];
 };
 
 export type MusicTrack = {
@@ -80,28 +89,35 @@ export const PROJECTS: ProjectRecord[] = [
 	{
 		id: "cozy-games-market-force",
 		title: "The Rise of Cozy Games as a Market Force",
-		kicker: "Market Research, Solo Project",
+		kicker: "Market Research",
 		year: "July 2025",
 		status: "Completed",
 		stack: ["Market Research", "Quantitative", "PowerPoint", "Word"],
 		summary:
-			"This project examines the rise of cozy games as a commercial force and uses Spry Fox Studio as a case study to understand what the genre reveals about player engagement today.",
-		details: [
 			"This project explores the rise of cozy games and examines how the genre sheds light on complex issues surrounding player engagement in today's gaming landscape, using Spry Fox Studio as a primary case study.",
-			"The work combines market-focused analysis with quantitative framing to position cozy games as both a cultural and commercial shift in the current games industry.",
-		],
-		features: [
-			"Market-focused analysis of cozy games as a growing genre category",
-			"Spry Fox Studio case study",
-			"Quantitative framing for engagement and audience trends",
-			"Presentation and written research package",
-		],
 		seed: "cozy-games-market-force",
+		contentSections: [
+			{
+				title: "Project Info",
+				body: "Role: Solo Project\nResearch Type: Market Research\nMethodologies: Quantitative\nTools Used: PowerPoint, Word",
+			},
+			{
+				title: "About",
+				body: "This project explores the rise of cozy games and examines how the genre sheds light on complex issues surrounding player engagement in today's gaming landscape, using Spry Fox Studio as a primary case study.",
+				layout: "wide",
+			},
+		],
 		researchDocs: {
 			thumbnail: "/media/portfolio/research/cozy-games-trend/thumbnail.png",
 			documents: [
-				{ label: "Pitch Presentation", url: "https://drive.google.com/file/d/15lIrHAqQbBuSl68C_ZxVrlolyAJ9EVI1/view?usp=drive_link" },
-				{ label: "Research Paper", url: "https://drive.google.com/file/d/1FqRrrlJsWJkfw86PDCTnbijq8guEXJEx/view?usp=drive_link" },
+				{
+					label: "Pitch Presentation",
+					url: "https://drive.google.com/file/d/15lIrHAqQbBuSl68C_ZxVrlolyAJ9EVI1/view?usp=drive_link",
+				},
+				{
+					label: "Research Paper",
+					url: "https://drive.google.com/file/d/1FqRrrlJsWJkfw86PDCTnbijq8guEXJEx/view?usp=drive_link",
+				},
 			],
 		},
 	},
@@ -113,23 +129,32 @@ export const PROJECTS: ProjectRecord[] = [
 		status: "Completed",
 		stack: ["Ethnography", "Secondary Research", "Remote Observation", "Gameplay Systems Analysis"],
 		summary:
-			"This zine traces how split-screen play evolved between Super Mario Kart (1992) and Mario Kart 8 Deluxe (2017), focusing on the technical and experiential shifts that reshaped local multiplayer.",
-		details: [
-			"Imagine huddling on the couch in 1992, elbows bumping, SNES controllers in hand, racing on pixelated tracks. Fast forward to 2017 and you're dodging red shells on the go with a Joy-Con in hand.",
 			"This zine explores the technical journey of split-screen gameplay through two titles in the Mario Kart series: Super Mario Kart (1992) and Mario Kart 8 Deluxe (2017).",
-		],
-		features: [
-			"Comparative analysis across two generations of Mario Kart split-screen design",
-			"Technical research into how hardware shifts changed local multiplayer play",
-			"Ethnographic framing grounded in player experience and observation",
-			"Team-led synthesis across creative direction, systems analysis, and research",
-		],
 		seed: "mario-kart-split-screen",
 		nominated: true,
+		contentSections: [
+			{
+				title: "Recognition",
+				items: ["RMIT Showcase Nomination"],
+				tone: "highlight",
+			},
+			{
+				title: "Project Info",
+				body: "Role:\n- Creative Director\n- Technical Researcher\n- Gameplay Systems Analyst\nResearch Type: Ethnography\nMethodologies: Secondary Research, Remote Observation",
+			},
+			{
+				title: "About",
+				body: "Imagine huddling on the couch in 1992, elbows bumping, SNES controllers in hand, racing on pixelated tracks. Fast forward to 2017 - you're dodging red shells on the go with a Joy-Con in hand.\n\nThis zine explores the technical journey of split-screen gameplay through two titles in the Mario Kart series: Super Mario Kart (1992) and Mario Kart 8 Deluxe (2017).",
+				layout: "wide",
+			},
+		],
 		researchDocs: {
 			thumbnail: "/media/portfolio/research/split-screen/thumbnail.png",
 			documents: [
-				{ label: "Research Zine", url: "https://drive.google.com/file/d/1G6rHOE0NV63yBCCoiUaieGAacntAxXcj/view?usp=drive_link" },
+				{
+					label: "Research Zine",
+					url: "https://drive.google.com/file/d/1G6rHOE0NV63yBCCoiUaieGAacntAxXcj/view?usp=drive_link",
+				},
 			],
 		},
 	},
@@ -137,22 +162,23 @@ export const PROJECTS: ProjectRecord[] = [
 		id: "ace-attorney-research",
 		title: "Player Engagement in Narrative Games (Ace Attorney Case Study)",
 		kicker: "Game Culture Research, Solo Project",
-		year: "July 2024 – September 2024",
+		year: "July 2024 - September 2024",
 		status: "Completed",
 		stack: ["Ethnography", "Surveys", "Interviews", "Mixed Methods"],
 		summary:
 			"This project investigates how narrative design can drive long-term player engagement. By analyzing Ace Attorney through player research and community behavior, I translated findings into practical design insights for retention, replayability, and player-driven content.",
-		details: [
-			"This project investigates how narrative design can drive long-term player engagement through a case study of the Ace Attorney series.",
-			"By analyzing the game through player research and community behavior, I translated findings into practical design insights for retention, replayability, and player-driven content.",
-		],
-		features: [
-			"Mixed methodology combining surveys and interviews",
-			"Ethnographic approach to player community analysis",
-			"Practical design insights for narrative-driven games",
-			"Focus on retention and replayability strategies",
-		],
 		seed: "ace-attorney-research",
+		contentSections: [
+			{
+				title: "Project Info",
+				body: "Role: Researcher\nResearch Type: Ethnography\nMethodologies: Mixed (Included surveys, interviews)",
+			},
+			{
+				title: "About",
+				body: "This project investigates how narrative design can drive long-term player engagement. By analyzing Ace Attorney through player research and community behavior, I translated findings into practical design insights for retention, replayability, and player-driven content.",
+				layout: "wide",
+			},
+		],
 		researchDocs: {
 			thumbnail: "/media/portfolio/research/ace-attorney-research/thumbnail.png",
 			poster: "https://drive.google.com/file/d/1Qu90jFLhe0Vl1mnHpITOEPAK2BdYmg-r/view?usp=drive_link",
@@ -160,8 +186,14 @@ export const PROJECTS: ProjectRecord[] = [
 			fieldNotes: "https://drive.google.com/file/d/123mM1tJghAydT1iq7jC8TXIyG_aRKF31/view?usp=drive_link",
 			proposal: "https://drive.google.com/file/d/1QX7Rxv3VE7vb_H_uUO3J5L1E8e4ISU0u/view?usp=drive_link",
 			interviews: [
-				{ label: "Interview 1", url: "https://drive.google.com/file/d/1ZSS2dIVhzeWfu4fD-xb1i26gysoQ4MuV/view?usp=drive_link" },
-				{ label: "Interview 2", url: "https://drive.google.com/file/d/1KpocJ1D74Kr3TmFOV2z-sys8KHgcCJ6R/view?usp=drive_link" },
+				{
+					label: "Interview 1",
+					url: "https://drive.google.com/file/d/1ZSS2dIVhzeWfu4fD-xb1i26gysoQ4MuV/view?usp=drive_link",
+				},
+				{
+					label: "Interview 2",
+					url: "https://drive.google.com/file/d/1KpocJ1D74Kr3TmFOV2z-sys8KHgcCJ6R/view?usp=drive_link",
+				},
 			],
 		},
 	},
@@ -222,14 +254,7 @@ export const GAME_PREVIEWS: GamePreview[] = [
 		accent: "from-pink-400 via-rose-500 to-purple-600",
 		seed: "magi-girl",
 		description:
-			"MAGI-GIRL.EXE is a 2D story-driven, turn-based RPG developed solo over the span of three months. You play as Arthur, an aspiring romance novelist, helping him gather advice to improve his manuscript and finally publish it. However, in the midst of what seems like an ordinary daily life, Arthur is suddenly pulled into an event that transforms his life forever. Now, against his will, he has been transformed… into a magical girl?! This is a singleplayer demo covering the prologue of a larger story.",
-		features: [
-			"Turn-based battle system",
-			"Unique 'Novelize' mechanic tied to story",
-			"Game-in-Game gimmick",
-			"Story-driven RPG experience",
-			"Vertical slice with expansion potential",
-		],
+			"MAGI-GIRL.EXE is a 2D story-driven, turn-based RPG developed solo over the span of three months. You play as Arthur, an aspiring romance novelist, helping him gather advice to improve his manuscript and finally publish it. However, in the midst of what seems like an ordinary daily life, Arthur is suddenly pulled into an event that transforms his life forever. Now, against his will, he has been transformed... into a magical girl?!",
 		genres: ["Vertical Slice", "Turn-based", "Experimental", "Solo Dev"],
 		screenshots: {
 			gameplay: [
@@ -249,8 +274,37 @@ export const GAME_PREVIEWS: GamePreview[] = [
 		},
 		tools: ["RPG Maker MZ", "Aseprite", "Clip Studio Paint", "Miro", "Photoshop", "Premiere Pro"],
 		role: "Game Designer, Game Developer, Artist",
-		year: "July 2025 - Sep 2025",
+		year: "July 2025-Sep 2025",
 		nominated: true,
+		contentSections: [
+			{
+				title: "Recognition",
+				items: ["RMIT Showcase Nomination"],
+				tone: "highlight",
+			},
+			{
+				title: "Project Info",
+				body: "Full name: MAGI-GIRL.EXE: That One Time I Was Just Looking for Romance Novel Ideas and Accidentally Saved the World\nTime: July 2025-Sep 2025\nRole: Game Designer, Game Developer, Artist\nTools: RPG Maker MZ, Aseprite, Clip Studio Paint, Miro, Photoshop, Premiere Pro",
+			},
+			{
+				title: "About",
+				body: "MAGI-GIRL.EXE is a 2D story-driven, turn-based RPG developed solo over the span of three months. You play as Arthur, an aspiring romance novelist, helping him gather advice to improve his manuscript and finally publish it. However, in the midst of what seems like an ordinary daily life, Arthur is suddenly pulled into an event that transforms his life forever.\nNow, against his will, he has been transformed... into a magical girl?!\n\nThis is a singleplayer demo covering the prologue of a larger story.",
+				layout: "wide",
+			},
+			{
+				title: "Project Achievement",
+				items: [
+					"Experimented with developing a turn-based battle system.",
+					"Explored core design elements of the turn-based RPG genre.",
+					'Designed a unique mechanic, "Novelize," (Game-in-Game gimmick) closely tied to the story and the main character\'s identity.',
+					"Developed a vertical slice demonstrating strong potential for future expansion.",
+				],
+			},
+			{
+				title: "Notes",
+				body: "P.S: Please click on Game.exe in the folder to play\nPlay: to be upload later",
+			},
+		],
 	},
 	{
 		id: "remedy",
@@ -260,13 +314,7 @@ export const GAME_PREVIEWS: GamePreview[] = [
 		accent: "from-violet-400 via-purple-500 to-indigo-600",
 		seed: "remedy",
 		description:
-			"Remedy is a puzzle adventure game where a teacher and a mysterious young high school student find themselves waking up in an unknown room. The narrative delves into themes of loss and the journey of moving on. Made for a 3-week game jam with the theme Chain Reaction.",
-		features: [
-			"Experimenting with RPG Maker MZ",
-			"Puzzle genre exploration",
-			"Chain Reaction game jam theme",
-			"Narrative-driven experience",
-		],
+			"Remedy is a puzzle adventure game where a teacher and a mysterious young high school student find themselves waking up in an unknown room. The narrative delves into themes of loss and the journey of moving on.",
 		genres: ["Prototype", "Puzzle", "Experimental", "Jam", "Solo Dev"],
 		videoUrl: "https://www.youtube.com/embed/lFhr36BS3LY",
 		screenshots: {
@@ -285,10 +333,29 @@ export const GAME_PREVIEWS: GamePreview[] = [
 		role: "Game Designer, Game Developer, Artist",
 		year: "March 2024 - April 2024",
 		nominated: true,
-		projectGoals: [
-			"Experimenting with new engine.",
-			"Experimenting with the puzzle genre.",
-			"Develop a prototype that has potential for future development.",
+		contentSections: [
+			{
+				title: "Recognition",
+				items: ["RMIT Showcase Nomination"],
+				tone: "highlight",
+			},
+			{
+				title: "Project Info",
+				body: "Time: March 2024 - April 2024\nRole: Game Designer, Game Developer, Artist\nTools: RPG Maker MZ, Aseprite",
+			},
+			{
+				title: "About",
+				body: "Remedy is a puzzle adventure game where a teacher and a mysterious young high school student find themselves waking up in an unknown room. The narrative delves into themes of loss and the journey of moving on.\n\nMade for 3-week game jam with the theme Chain Reaction.",
+				layout: "wide",
+			},
+			{
+				title: "Project Goals",
+				items: [
+					"Experimenting with new engine.",
+					"Experimenting with the puzzle genre.",
+					"Develop a prototype that has potential for future development.",
+				],
+			},
 		],
 	},
 	{
@@ -298,15 +365,8 @@ export const GAME_PREVIEWS: GamePreview[] = [
 		state: "Completed",
 		accent: "from-fuchsia-400 via-pink-400 to-rose-300",
 		seed: "kawaii-mario",
-		description:
-			"Mamma mia — a 1 week game jam adventure with the theme: 10-second game. Help Mario navigate this kawaii sweet treat journey in this point-and-click fangame.",
-		features: [
-			"Point and click gameplay",
-			"Mario fangame",
-			"1-week jam project",
-			"Solo developed",
-		],
-		genres: ["Prototype", "Point and Click", "Fangame", "Jam"],
+		description: "Mamma mia",
+		genres: ["Prototype", "Point and Click", "Fangame", "Jam", "Solo Dev"],
 		screenshots: {
 			gameplay: [
 				"/media/portfolio/games/mario/gameplay/1.png",
@@ -319,6 +379,17 @@ export const GAME_PREVIEWS: GamePreview[] = [
 		tools: ["Unity", "Procreate"],
 		role: "Game Designer, Game Developer, Artist",
 		year: "March 2024",
+		contentSections: [
+			{
+				title: "Project Info",
+				body: "Time: March 2024\nRole: Game Designer, Game Developer, Artist\nTools: Unity, Procreate",
+			},
+			{
+				title: "About",
+				body: "Mamma mia\n1 week game jam made for the theme 10-second game",
+				layout: "wide",
+			},
+		],
 	},
 	{
 		id: "athena-cykes-ace-attorney",
@@ -328,18 +399,18 @@ export const GAME_PREVIEWS: GamePreview[] = [
 		accent: "from-sky-400 via-cyan-500 to-blue-600",
 		seed: "athena-cykes-ace-attorney",
 		description:
-			"Inspired by the Ace Attorney series, this sequel concept explores how strong narration, sound design, and simple point-and-click interactions can still produce a memorable visual novel experience. The project focused on translating that admiration into a team-led concept package and playable prototype direction.",
-		features: [
-			"Visual novel sequel concept rooted in Ace Attorney design language",
-			"Team-authored game design document and concept presentation",
-			"Point-and-click investigation inspiration",
-			"Prototype materials with process documentation",
-		],
+			'"The Ace Attorney" game series has been a great movement for the Visual Novel genre and the Game Design field.',
 		genres: ["Ace Attorney sequel project", "GDD", "Team Project"],
 		videoUrl: "https://www.youtube.com/embed/w751CvzhmlM",
 		documents: [
-			{ label: "Game Design Document", url: "https://drive.google.com/file/d/11tVohiGnNHUsDB102S3wbEUyUSJkFw9c/view?usp=drive_link" },
-			{ label: "Introduction, Game Idea, Work Process", url: "https://drive.google.com/file/d/110xyBRT64j4Ldv96FTaFbl4OO5-O073U/view?usp=drive_link" },
+			{
+				label: "GDD",
+				url: "https://drive.google.com/file/d/11tVohiGnNHUsDB102S3wbEUyUSJkFw9c/view?usp=drive_link",
+			},
+			{
+				label: "Introduction, Game Idea, Work Process",
+				url: "https://drive.google.com/file/d/110xyBRT64j4Ldv96FTaFbl4OO5-O073U/view?usp=drive_link",
+			},
 		],
 		screenshots: {
 			gameplay: [
@@ -357,6 +428,22 @@ export const GAME_PREVIEWS: GamePreview[] = [
 		role: "Game Writer, Gameplay Design, Team Leader",
 		year: "Aug-Sep 2023",
 		nominated: true,
+		contentSections: [
+			{
+				title: "Recognition",
+				items: ["RMIT Showcase Nomination"],
+				tone: "highlight",
+			},
+			{
+				title: "Project Info",
+				body: "Time: Aug-Sep 2023\nRole: Game Writer, Gameplay Design, Team Leader",
+			},
+			{
+				title: "About",
+				body: "\"The Ace Attorney\" game series has been a great movement for the Visual Novel genre and the Game Design field. With ingenuity, clever sound design and narration, the series has brought the best game experience to the players with simple gameplay.\n\nOur team is not an exception. We have been impressed by how well the game experience that this series has brought, despite point-and-click gameplay. Therefore, we chose this series for our project.",
+				layout: "wide",
+			},
+		],
 	},
 	{
 		id: "ghostly-wok",
@@ -365,14 +452,7 @@ export const GAME_PREVIEWS: GamePreview[] = [
 		state: "Completed",
 		accent: "from-emerald-400 via-teal-500 to-cyan-500",
 		seed: "ghostly-wok",
-		description:
-			"A cooking game where you try to make a delicious dish for the ghost! Made for a 1-month game jam.",
-		features: [
-			"Restaurant simulator gameplay",
-			"Ghost-themed cooking mechanics",
-			"1-month game jam project",
-			"Experimental cooking interactions",
-		],
+		description: "A cooking game where you try to make a delicious dish for the ghost!",
 		genres: ["Prototype", "Restaurant Simulator", "Experimental", "Jam", "Team Project"],
 		screenshots: {
 			gameplay: [
@@ -385,7 +465,18 @@ export const GAME_PREVIEWS: GamePreview[] = [
 		playUrl: "https://hoanglan.itch.io/ghostly-wok-wonders",
 		tools: ["Unity", "Aseprite"],
 		role: "Game Designer, Artist",
-		year: "April 2024 - May 2024",
+		year: "April 2024-May 2024",
+		contentSections: [
+			{
+				title: "Project Info",
+				body: "Time: April 2024-May 2024\nRole: Game Designer, Artist\nTools: Unity, Aseprite",
+			},
+			{
+				title: "About",
+				body: "A cooking game where you try to make a delicious dish for the ghost!\n\nMade for a 1-month game jam.",
+				layout: "wide",
+			},
+		],
 	},
 	{
 		id: "asphyxiated",
@@ -394,12 +485,16 @@ export const GAME_PREVIEWS: GamePreview[] = [
 		state: "Completed",
 		accent: "from-emerald-400 via-teal-500 to-cyan-500",
 		seed: "asphyxiated",
-		description:
-			"A platformer game made based on the theme of Serious Game: Games for Environment. The game features a post-apocalypse world where you're the keeper of the Seed Vault, trying to recover the green planet you used to live.",
-		features: ["Environmental narrative", "Post-apocalypse world", "Seed Vault progression", "Atmospheric platforming"],
+		description: "A platformer made for the message of saving the environment.",
 		genres: ["2D Platformer", "Team Project"],
 		videoUrl: "https://www.youtube.com/embed/nlDw83RSUSU",
-		gddUrl: "https://drive.google.com/uc?export=download&id=1OisrUjFteUwJYaQ_UhtHfs2yeAvwNCEF",
+		documents: [
+			{
+				label: "Open GDD PDF",
+				url: "https://drive.google.com/uc?export=download&id=1OisrUjFteUwJYaQ_UhtHfs2yeAvwNCEF",
+				action: "external",
+			},
+		],
 		screenshots: {
 			gameplay: [
 				"/media/portfolio/games/asphyxiated/gameplay/1.png",
@@ -418,6 +513,21 @@ export const GAME_PREVIEWS: GamePreview[] = [
 		tools: ["Unity", "Aseprite"],
 		role: "Game Designer, Game Artist",
 		year: "May 2023 - June 2023",
+		contentSections: [
+			{
+				title: "Overview",
+				body: "A platformer made for the message of saving the environment.",
+			},
+			{
+				title: "Project Info",
+				body: "Time: May 2023 - June 2023\nRole: Game Designer, Game Artist\nTools: Unity, Aseprite",
+			},
+			{
+				title: "About",
+				body: "A platformer game made based on the theme of Serious Game: Games for Environment, the game feature a post apocalypse world where you're the keeper of the Seed Vault, trying to recover the green planet you used to live.",
+				layout: "wide",
+			},
+		],
 	},
 	{
 		id: "atelier",
@@ -427,16 +537,13 @@ export const GAME_PREVIEWS: GamePreview[] = [
 		accent: "from-amber-300 via-orange-400 to-rose-500",
 		seed: "atelier",
 		description:
-			"In Atelier, rival potion factories race to advertise cures for the current ailment while hiding the downsides their own lab staff uncovered. The catch is that the factories are so large that creators and promoters barely communicate, so every pitch can reveal a surprising truth about the potion being sold.",
-		features: [
-			"Competitive board game concept",
-			"Potion advertising and bluffing dynamic",
-			"Factory-scale communication twist",
-			"Solo-designed ruleset and brief",
-		],
+			"In Atelier, you and your opponents are from different prestigious Potions Factories that compete with one another.",
 		genres: ["Board Game", "Project Brief", "Rulebook", "Solo Project"],
 		documents: [
-			{ label: "Project Brief", url: "https://drive.google.com/file/d/1fKjz51zj7lND7ZKsML19cDBR0h-Ds_2f/view?usp=sharing" },
+			{
+				label: "Project Brief",
+				url: "https://drive.google.com/file/d/1fKjz51zj7lND7ZKsML19cDBR0h-Ds_2f/view?usp=sharing",
+			},
 		],
 		screenshots: {
 			gameplay: [
@@ -458,6 +565,17 @@ export const GAME_PREVIEWS: GamePreview[] = [
 		tools: [],
 		role: "Game Designer",
 		year: "Nov 2022",
+		contentSections: [
+			{
+				title: "Project Info",
+				body: "Time: Nov 2022\nRole: Game Designer",
+			},
+			{
+				title: "About",
+				body: "In Atelier, you and your opponents are from different prestigious Potions Factories that compete with one another. Your mission is to advertise new potions that will cure the current Ailment while downplaying any negative effects that the lab staff may have identified.\n\nBy the way your Factory is massive!\nIt's so large that the people who create the potions and those who promote them don't really talk to one other. So, like everyone else, you might be astonished when you promote your Factory's product and learn what it actually does ...",
+				layout: "wide",
+			},
+		],
 	},
 	{
 		id: "xavier",
@@ -467,16 +585,16 @@ export const GAME_PREVIEWS: GamePreview[] = [
 		accent: "from-amber-400 via-orange-500 to-rose-600",
 		seed: "xavier",
 		description:
-			"In Xavier The Explorer, you guide Xavier, a secondary school student, as he navigates through everyday challenges related to mobility and social responsibility. The game consists of three key types of levels: organizing road systems, managing interactions on public transport, and navigating to various destinations on foot. Each scenario helps Xavier understand the importance of mobility in daily life, from arranging traffic to assisting others on the bus. As players progress, they help Xavier grow into a responsible, informed citizen, learning key lessons about independence and community.",
-		features: [
-			"Road system organization",
-			"Public transport management",
-			"Pedestrian navigation",
-			"Citizenship growth system",
-		],
+			"In Xavier The Explorer, you guide Xavier, a secondary school student, as he navigates through everyday challenges related to mobility and social responsibility.",
 		genres: ["3D Puzzle Game", "Mini-game Compilation", "Team Project"],
 		videoUrl: "https://www.youtube.com/embed/EgwJ16ZPhCQ",
-		gddUrl: "https://drive.google.com/uc?export=download&id=12Hvkym3n3nOO67nbHpQ2wi3WrwGJSFI1",
+		documents: [
+			{
+				label: "GDD",
+				url: "https://drive.google.com/file/d/12Hvkym3n3nOO67nbHpQ2wi3WrwGJSFI1/view",
+				action: "external",
+			},
+		],
 		screenshots: {
 			gameplay: [
 				"/media/portfolio/games/xavier/gameplay/1.png",
@@ -492,20 +610,35 @@ export const GAME_PREVIEWS: GamePreview[] = [
 		tools: ["Unity"],
 		role: "Game Designer, Narrative Director",
 		year: "Nov 2023 - Jan 2024",
-		projectGoals: [
-			"Raise awareness about safe mobility and its importance in everyday commuting.",
-			"Promote green and sustainable transportation methods, such as biking and public transport, to reduce pollution.",
-			"Offer engaging levels that mirror real-life transportation challenges, from organizing roadways to creating safe commuting environments for work and school.",
-			"Working with a real client.",
+		contentSections: [
+			{
+				title: "Project Info",
+				body: "Time: Nov 2023 - Jan 2024\nRole: Game Designer, Narrative Director\nTools: Unity",
+			},
+			{
+				title: "About",
+				body: "In Xavier The Explorer, you guide Xavier, a secondary school student, as he navigates through everyday challenges related to mobility and social responsibility. The game consists of three key types of levels: organizing road systems, managing interactions on public transport, and navigating to various destinations on foot. Each scenario helps Xavier understand the importance of mobility in daily life, from arranging traffic to assisting others on the bus. As players progress, they help Xavier grow into a responsible, informed citizen, learning key lessons about independence and community.",
+				layout: "wide",
+			},
+			{
+				title: "Project Goals",
+				items: [
+					"Raise awareness about safe mobility and its importance in everyday commuting.",
+					"Promote green and sustainable transportation methods, such as biking and public transport, to reduce pollution.",
+					"Offer engaging levels that mirror real-life transportation challenges, from organizing roadways to creating safe commuting environments for work and school.",
+					"Working with a real client.",
+				],
+			},
+			{
+				title: "Contribution",
+				body: "Gameplay Designer",
+				items: [
+					"Gameplay Flow Design: Developed the overall gameplay and narrative flow.",
+					"Level Design: Designed the overall gameplay and context for all levels (3 levels in total), ensuring they fit the game's theme and narrative.",
+					"Detailed Level Design: Took charge of designing and developing one specific level, providing a detailed layout and structure to guide its development.",
+				],
+			},
 		],
-		contribution: {
-			title: "Gameplay Designer",
-			items: [
-				"Gameplay Flow Design: Developed the overall gameplay and narrative flow.",
-				"Level Design: Designed the overall gameplay and context for all levels (3 levels in total), ensuring they fit the game's theme and narrative.",
-				"Detailed Level Design: Took charge of designing and developing one specific level, providing a detailed layout and structure to guide its development.",
-			],
-		},
 	},
 ];
 

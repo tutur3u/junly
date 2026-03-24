@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { PROJECTS } from "@/components/launcher/content-data";
+import type { ContentLink, ContentSection } from "@/components/launcher/content-data";
 import type { ThemeMode } from "@/components/launcher/types";
 
 const SHOWCASE_LABEL = "RMIT Showcase Nomination";
@@ -25,6 +26,180 @@ function getGoogleDriveEmbedUrl(url: string): string {
 		return `https://drive.google.com/file/d/${match[1]}/preview`;
 	}
 	return url;
+}
+
+function useCanExpand<T extends HTMLElement>(text: string) {
+	const [canExpand, setCanExpand] = useState(false);
+	const elementRef = useRef<T>(null);
+
+	useEffect(() => {
+		const element = elementRef.current;
+		if (!element) return;
+
+		const updateOverflow = () => {
+			const computedStyle = window.getComputedStyle(element);
+			const lineHeight = Number.parseFloat(computedStyle.lineHeight);
+			if (!Number.isFinite(lineHeight)) {
+				setCanExpand(false);
+				return;
+			}
+			setCanExpand(element.scrollHeight > lineHeight * 3 + 1);
+		};
+
+		updateOverflow();
+		const observer = new ResizeObserver(updateOverflow);
+		observer.observe(element);
+
+		return () => observer.disconnect();
+	}, [text]);
+
+	return { canExpand, elementRef };
+}
+
+function ExpandableBody({ text, isDark }: { text: string; isDark: boolean }) {
+	const [expanded, setExpanded] = useState(false);
+	const { canExpand, elementRef } = useCanExpand<HTMLParagraphElement>(text);
+
+	return (
+		<div>
+			<p
+				ref={elementRef}
+				className={`text-sm leading-7 ${isDark ? "text-slate-300" : "text-slate-600"}`}
+				style={
+					!expanded && canExpand
+						? {
+								display: "-webkit-box",
+								WebkitBoxOrient: "vertical",
+								WebkitLineClamp: 3,
+								overflow: "hidden",
+								whiteSpace: "pre-line",
+							}
+						: {
+								whiteSpace: "pre-line",
+							}
+				}
+			>
+				{text}
+			</p>
+			{canExpand && (
+				<button
+					type="button"
+					onClick={() => setExpanded((current) => !current)}
+					className={`mt-3 text-sm font-bold transition-colors ${
+						isDark ? "text-sky-300 hover:text-sky-200" : "text-sky-700 hover:text-sky-800"
+					}`}
+				>
+					{expanded ? "See less" : "See more..."}
+				</button>
+			)}
+			</div>
+	);
+}
+
+function ExpandableHeading({ text, isDark, className }: { text: string; isDark: boolean; className: string }) {
+	const [expanded, setExpanded] = useState(false);
+	const { canExpand, elementRef } = useCanExpand<HTMLHeadingElement>(text);
+
+	return (
+		<div>
+			<h2
+				ref={elementRef}
+				className={className}
+				style={
+					!expanded && canExpand
+						? {
+								display: "-webkit-box",
+								WebkitBoxOrient: "vertical",
+								WebkitLineClamp: 3,
+								overflow: "hidden",
+								whiteSpace: "pre-line",
+							}
+						: {
+								whiteSpace: "pre-line",
+							}
+				}
+			>
+				{text}
+			</h2>
+			{canExpand && (
+				<button
+					type="button"
+					onClick={() => setExpanded((current) => !current)}
+					className={`mt-3 text-sm font-bold transition-colors ${
+						isDark ? "text-sky-300 hover:text-sky-200" : "text-sky-700 hover:text-sky-800"
+					}`}
+				>
+					{expanded ? "See less" : "See more..."}
+				</button>
+			)}
+		</div>
+	);
+}
+
+function DocumentChip({
+	link,
+	isDark,
+	onOpen,
+}: {
+	link: ContentLink;
+	isDark: boolean;
+	onOpen: (link: ContentLink) => void;
+}) {
+	return (
+		<button
+			type="button"
+			onClick={() => onOpen(link)}
+			className={`inline-flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-sm font-bold transition-all hover:-translate-y-0.5 ${
+				isDark
+					? "border-sky-200/20 text-sky-200 hover:bg-sky-400/10"
+					: "border-sky-200 text-sky-700 hover:bg-sky-50"
+			}`}
+		>
+			<svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-label={link.label}>
+				<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+			</svg>
+			{link.label}
+		</button>
+	);
+}
+
+function ProjectSectionCard({
+	section,
+	isDark,
+}: {
+	section: ContentSection;
+	isDark: boolean;
+}) {
+	return (
+		<div
+			className={`rounded-2xl border p-4 sm:p-5 ${
+				section.tone === "highlight"
+					? isDark
+						? "border-amber-400/30 bg-gradient-to-br from-amber-500/10 via-slate-900/70 to-slate-950"
+						: "border-amber-200 bg-gradient-to-br from-amber-50 via-white to-orange-50"
+					: isDark
+						? "bg-slate-900/55 border-white/8"
+						: "bg-white/65 border-white"
+			} mb-4 break-inside-avoid`}
+		>
+			<h3 className={`text-base sm:text-lg font-bold ${isDark ? "text-white" : "text-slate-800"}`}>{section.title}</h3>
+			{section.body && (
+				<div className="mt-3 sm:mt-4">
+					<ExpandableBody text={section.body} isDark={isDark} />
+				</div>
+			)}
+			{section.items && section.items.length > 0 && (
+				<ul className={`mt-3 sm:mt-4 space-y-2 sm:space-y-3 ${isDark ? "text-slate-300" : "text-slate-600"}`}>
+					{section.items.map((item) => (
+						<li key={item} className="flex items-start gap-3">
+							<span className={`mt-1.5 h-2 w-2 flex-shrink-0 rounded-full ${section.tone === "highlight" ? "bg-amber-400" : "bg-sky-400"}`} />
+							<span className="text-sm">{item}</span>
+						</li>
+					))}
+				</ul>
+			)}
+		</div>
+	);
 }
 
 export function ProjectsContent({ theme, selectedProject, setSelectedProject }: ProjectsContentProps) {
@@ -100,12 +275,16 @@ export function ProjectsContent({ theme, selectedProject, setSelectedProject }: 
 									)}
 								</div>
 							</div>
-							<h2 className={`mt-2 text-2xl sm:text-3xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>
-								{projectData.title}
-							</h2>
-							<p className={`mt-2 sm:mt-3 max-w-2xl ${isDark ? "text-slate-400" : "text-slate-500"}`}>
-								{projectData.summary}
-							</p>
+							<div className="mt-2">
+								<ExpandableHeading
+									text={projectData.title}
+									isDark={isDark}
+									className={`text-2xl sm:text-3xl font-bold leading-tight ${isDark ? "text-white" : "text-slate-800"}`}
+								/>
+							</div>
+							<div className="mt-2 sm:mt-3 max-w-2xl">
+								<ExpandableBody text={projectData.summary} isDark={isDark} />
+							</div>
 						</div>
 						<div className={`grid grid-cols-2 gap-x-4 gap-y-1 text-sm sm:min-w-[180px] ${isDark ? "text-slate-400" : "text-slate-500"}`}>
 							<div>Year</div>
@@ -180,32 +359,35 @@ export function ProjectsContent({ theme, selectedProject, setSelectedProject }: 
 					)}
 
 					<div className="grid gap-4 lg:grid-cols-[1.25fr_0.85fr]">
-						<div
-							className={`rounded-2xl border p-4 sm:p-5 ${
-								isDark ? "bg-slate-900/55 border-white/8" : "bg-white/65 border-white"
-							}`}
-						>
-							<h3 className={`text-base sm:text-lg font-bold ${isDark ? "text-white" : "text-slate-800"}`}>Overview</h3>
-							<div className={`mt-3 sm:mt-4 space-y-3 sm:space-y-4 text-sm ${isDark ? "text-slate-300" : "text-slate-600"}`}>
-								{projectData.details.map((paragraph) => (
-									<p key={paragraph}>{paragraph}</p>
-								))}
-							</div>
+						<div className="lg:col-span-2 lg:columns-2 lg:gap-4">
+							{projectData.contentSections.map((section) => (
+								<ProjectSectionCard
+									key={`${projectData.id}-${section.title}`}
+									section={section}
+									isDark={isDark}
+								/>
+							))}
 						</div>
 						<div
-							className={`rounded-2xl border p-4 sm:p-5 ${
+							className={`rounded-2xl border p-4 sm:p-5 lg:col-span-2 ${
 								isDark ? "bg-slate-900/55 border-white/8" : "bg-white/65 border-white"
 							}`}
 						>
 							<h3 className={`text-base sm:text-lg font-bold ${isDark ? "text-white" : "text-slate-800"}`}>Key Features</h3>
-							<ul className={`mt-3 sm:mt-4 space-y-2 sm:space-y-3 ${isDark ? "text-slate-300" : "text-slate-600"}`}>
-								{projectData.features.map((feature) => (
-									<li key={feature} className="flex items-start gap-3">
-										<span className="mt-1 h-2 w-2 rounded-full bg-sky-400 flex-shrink-0" />
-										<span className="text-sm">{feature}</span>
-									</li>
+							<div className="mt-3 sm:mt-4 flex flex-wrap gap-2">
+								{projectData.stack.map((item) => (
+									<span
+										key={item}
+										className={`rounded-full border px-3 py-1 text-sm ${
+											isDark
+												? "bg-slate-950/65 text-sky-100 border-sky-200/10"
+												: "bg-white/90 text-slate-700 border-white/90"
+										}`}
+									>
+										{item}
+									</span>
 								))}
-							</ul>
+							</div>
 						{projectData.researchDocs && (
 							<div className="mt-4 sm:mt-6 space-y-3">
 								<h4 className={`text-sm font-bold uppercase tracking-[0.12em] ${isDark ? "text-slate-400" : "text-slate-500"}`}>
@@ -213,102 +395,22 @@ export function ProjectsContent({ theme, selectedProject, setSelectedProject }: 
 								</h4>
 								<div className="flex flex-wrap gap-2">
 									{projectData.researchDocs.poster && (
-										<button
-											type="button"
-											onClick={() => setPreviewPdf({ label: "Research Poster", url: projectData.researchDocs!.poster! })}
-											className={`inline-flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-sm font-bold transition-all hover:-translate-y-0.5 ${
-												isDark
-													? "border-sky-200/20 text-sky-200 hover:bg-sky-400/10"
-													: "border-sky-200 text-sky-700 hover:bg-sky-50"
-											}`}
-										>
-											<svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-label="Poster">
-												<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-											</svg>
-											Research Poster
-										</button>
+										<DocumentChip link={{ label: "Research Poster", url: projectData.researchDocs.poster }} isDark={isDark} onOpen={(link) => setPreviewPdf(link)} />
 									)}
 									{projectData.researchDocs.paper && (
-										<button
-											type="button"
-											onClick={() => setPreviewPdf({ label: "Research Paper", url: projectData.researchDocs!.paper! })}
-											className={`inline-flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-sm font-bold transition-all hover:-translate-y-0.5 ${
-												isDark
-													? "border-sky-200/20 text-sky-200 hover:bg-sky-400/10"
-													: "border-sky-200 text-sky-700 hover:bg-sky-50"
-											}`}
-										>
-											<svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-label="Paper">
-												<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-											</svg>
-											Research Paper
-										</button>
+										<DocumentChip link={{ label: "Research Paper", url: projectData.researchDocs.paper }} isDark={isDark} onOpen={(link) => setPreviewPdf(link)} />
 									)}
 									{projectData.researchDocs.fieldNotes && (
-										<button
-											type="button"
-											onClick={() => setPreviewPdf({ label: "Field Notes", url: projectData.researchDocs!.fieldNotes! })}
-											className={`inline-flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-sm font-bold transition-all hover:-translate-y-0.5 ${
-												isDark
-													? "border-sky-200/20 text-sky-200 hover:bg-sky-400/10"
-													: "border-sky-200 text-sky-700 hover:bg-sky-50"
-											}`}
-										>
-											<svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-label="Notes">
-												<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-											</svg>
-											Field Notes
-										</button>
+										<DocumentChip link={{ label: "Field Notes", url: projectData.researchDocs.fieldNotes }} isDark={isDark} onOpen={(link) => setPreviewPdf(link)} />
 									)}
 									{projectData.researchDocs.proposal && (
-										<button
-											type="button"
-											onClick={() => setPreviewPdf({ label: "Research Proposal", url: projectData.researchDocs!.proposal! })}
-											className={`inline-flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-sm font-bold transition-all hover:-translate-y-0.5 ${
-												isDark
-													? "border-sky-200/20 text-sky-200 hover:bg-sky-400/10"
-													: "border-sky-200 text-sky-700 hover:bg-sky-50"
-											}`}
-										>
-											<svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-label="Proposal">
-												<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-											</svg>
-											Research Proposal
-										</button>
+										<DocumentChip link={{ label: "Research Proposal", url: projectData.researchDocs.proposal }} isDark={isDark} onOpen={(link) => setPreviewPdf(link)} />
 									)}
 									{projectData.researchDocs.interviews?.map((interview) => (
-										<button
-											type="button"
-											key={interview.label}
-											onClick={() => setPreviewPdf({ label: interview.label, url: interview.url })}
-											className={`inline-flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-sm font-bold transition-all hover:-translate-y-0.5 ${
-												isDark
-													? "border-sky-200/20 text-sky-200 hover:bg-sky-400/10"
-													: "border-sky-200 text-sky-700 hover:bg-sky-50"
-											}`}
-										>
-											<svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-label="Interview">
-												<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-											</svg>
-											{interview.label}
-										</button>
+										<DocumentChip key={interview.label} link={interview} isDark={isDark} onOpen={(link) => setPreviewPdf(link)} />
 									))}
 									{projectData.researchDocs.documents?.map((document) => (
-										<button
-											type="button"
-											key={document.label}
-											onClick={() => setPreviewPdf({ label: document.label, url: document.url })}
-											className={`inline-flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-sm font-bold transition-all hover:-translate-y-0.5 ${
-												isDark
-													? "border-sky-200/20 text-sky-200 hover:bg-sky-400/10"
-													: "border-sky-200 text-sky-700 hover:bg-sky-50"
-											}`}
-										>
-											<svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-label={document.label}>
-												<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-											</svg>
-											{document.label}
-										</button>
+										<DocumentChip key={document.label} link={document} isDark={isDark} onOpen={(link) => setPreviewPdf(link)} />
 									))}
 								</div>
 							</div>
@@ -391,7 +493,7 @@ export function ProjectsContent({ theme, selectedProject, setSelectedProject }: 
 				<div>
 					<h2 className={`text-xl sm:text-2xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>Research</h2>
 					<p className={`mt-1 sm:mt-2 max-w-2xl text-sm sm:text-base ${isDark ? "text-slate-400" : "text-slate-500"}`}>
-						Open a project to view its full presentation, stack, and experience notes.
+						Open a project to view the full write-up, research documents, and original sectioned content.
 					</p>
 				</div>
 				<div className={`text-sm ${isDark ? "text-slate-500" : "text-slate-400"}`}>{PROJECTS.length} projects</div>

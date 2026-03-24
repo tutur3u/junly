@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useState, useCallback, useEffect, useRef } from "react";
 import { GAME_PREVIEWS } from "@/components/launcher/content-data";
 import type { ThemeMode } from "@/components/launcher/types";
-import type { GamePreview } from "@/components/launcher/content-data";
+import type { ContentLink, ContentSection, GamePreview } from "@/components/launcher/content-data";
 
 const SHOWCASE_LABEL = "RMIT Showcase Nomination";
 
@@ -35,6 +35,203 @@ function VideoEmbed({ videoUrl }: { videoUrl: string }) {
 					className="absolute inset-0 h-full w-full rounded-[22px]"
 				/>
 			</div>
+		</div>
+	);
+}
+
+function useCanExpand<T extends HTMLElement>(text: string) {
+	const [canExpand, setCanExpand] = useState(false);
+	const elementRef = useRef<T>(null);
+
+	useEffect(() => {
+		const element = elementRef.current;
+		if (!element) return;
+
+		const updateOverflow = () => {
+			const computedStyle = window.getComputedStyle(element);
+			const lineHeight = Number.parseFloat(computedStyle.lineHeight);
+			if (!Number.isFinite(lineHeight)) {
+				setCanExpand(false);
+				return;
+			}
+			setCanExpand(element.scrollHeight > lineHeight * 3 + 1);
+		};
+
+		updateOverflow();
+		const observer = new ResizeObserver(updateOverflow);
+		observer.observe(element);
+
+		return () => observer.disconnect();
+	}, [text]);
+
+	return { canExpand, elementRef };
+}
+
+function ExpandableBody({ text, isDark }: { text: string; isDark: boolean }) {
+	const [expanded, setExpanded] = useState(false);
+	const { canExpand, elementRef } = useCanExpand<HTMLParagraphElement>(text);
+
+	return (
+		<div>
+			<p
+				ref={elementRef}
+				className={`text-sm leading-7 ${isDark ? "text-slate-300" : "text-slate-600"}`}
+				style={
+					!expanded && canExpand
+						? {
+								display: "-webkit-box",
+								WebkitBoxOrient: "vertical",
+								WebkitLineClamp: 3,
+								overflow: "hidden",
+								whiteSpace: "pre-line",
+							}
+						: {
+								whiteSpace: "pre-line",
+							}
+				}
+			>
+				{text}
+			</p>
+			{canExpand && (
+				<button
+					type="button"
+					onClick={() => setExpanded((current) => !current)}
+					className={`mt-3 text-sm font-bold transition-colors ${
+						isDark ? "text-emerald-300 hover:text-emerald-200" : "text-emerald-700 hover:text-emerald-800"
+					}`}
+				>
+					{expanded ? "See less" : "See more..."}
+				</button>
+			)}
+			</div>
+	);
+}
+
+function ExpandableHeading({ text, isDark, className }: { text: string; isDark: boolean; className: string }) {
+	const [expanded, setExpanded] = useState(false);
+	const { canExpand, elementRef } = useCanExpand<HTMLHeadingElement>(text);
+
+	return (
+		<div>
+			<h2
+				ref={elementRef}
+				className={className}
+				style={
+					!expanded && canExpand
+						? {
+								display: "-webkit-box",
+								WebkitBoxOrient: "vertical",
+								WebkitLineClamp: 3,
+								overflow: "hidden",
+								whiteSpace: "pre-line",
+							}
+						: {
+								whiteSpace: "pre-line",
+							}
+				}
+			>
+				{text}
+			</h2>
+			{canExpand && (
+				<button
+					type="button"
+					onClick={() => setExpanded((current) => !current)}
+					className={`mt-3 text-sm font-bold transition-colors ${
+						isDark ? "text-emerald-300 hover:text-emerald-200" : "text-emerald-700 hover:text-emerald-800"
+					}`}
+				>
+					{expanded ? "See less" : "See more..."}
+				</button>
+			)}
+		</div>
+	);
+}
+
+function DocumentAction({
+	document,
+	isDark,
+	onPreview,
+}: {
+	document: ContentLink;
+	isDark: boolean;
+	onPreview: (document: ContentLink) => void;
+}) {
+	const baseClassName = `inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3 font-bold transition-all hover:scale-105 ${
+		isDark
+			? "bg-slate-800/80 text-white hover:bg-slate-700/90 border border-white/15"
+			: "bg-white/90 text-slate-700 hover:bg-white border border-white/80 shadow-sm"
+	}`;
+
+	if (document.action === "external") {
+		return (
+			<a
+				href={document.url}
+				target="_blank"
+				rel="noopener noreferrer"
+				className={baseClassName}
+			>
+				<FileText className="h-4 w-4" />
+				{document.label}
+			</a>
+		);
+	}
+
+	return (
+		<button
+			type="button"
+			onClick={() => onPreview(document)}
+			className={baseClassName}
+		>
+			<FileText className="h-4 w-4" />
+			{document.label}
+		</button>
+	);
+}
+
+function DetailSectionCard({
+	section,
+	isDark,
+	onPreview,
+}: {
+	section: ContentSection;
+	isDark: boolean;
+	onPreview: (document: ContentLink) => void;
+}) {
+	return (
+		<div
+			className={`rounded-2xl border p-4 sm:p-5 ${
+				section.tone === "highlight"
+					? isDark
+						? "border-amber-400/30 bg-gradient-to-br from-amber-500/10 via-slate-900/70 to-slate-950"
+						: "border-amber-200 bg-gradient-to-br from-amber-50 via-white to-orange-50"
+					: isDark
+						? "bg-slate-900/55 border-white/8"
+						: "bg-white/65 border-white"
+			} mb-4 break-inside-avoid`}
+		>
+			<h3 className={`text-base sm:text-lg font-bold ${isDark ? "text-white" : "text-slate-800"}`}>{section.title}</h3>
+			{section.body && (
+				<div className="mt-3 sm:mt-4">
+					<ExpandableBody text={section.body} isDark={isDark} />
+				</div>
+			)}
+			{section.items && section.items.length > 0 && (
+				<ul className={`mt-3 sm:mt-4 space-y-2 sm:space-y-3 ${isDark ? "text-slate-300" : "text-slate-600"}`}>
+					{section.items.map((item) => (
+						<li key={item} className="flex items-start gap-3">
+							<span className={`mt-1.5 h-2 w-2 flex-shrink-0 rounded-full ${section.tone === "highlight" ? "bg-amber-400" : "bg-emerald-400"}`} />
+							<span className="text-sm">{item}</span>
+						</li>
+					))}
+				</ul>
+			)}
+			{section.links && section.links.length > 0 && (
+				<div className="mt-4 flex flex-wrap gap-2">
+					{section.links.map((link) => (
+						<DocumentAction key={`${section.title}-${link.label}`} document={link} isDark={isDark} onPreview={onPreview} />
+					))}
+				</div>
+			)}
 		</div>
 	);
 }
@@ -333,7 +530,7 @@ function GameDetailView({
 }) {
 	const [activeDocument, setActiveDocument] = useState<{ label: string; url: string } | null>(null);
 	const isDark = theme === "dark";
-	const documents = game.documents ?? (game.gddUrl ? [{ label: "Game Design Document", url: game.gddUrl }] : []);
+	const documents = game.documents ?? (game.gddUrl ? [{ label: "Game Design Document", url: game.gddUrl, action: "modal" }] : []);
 
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
@@ -413,9 +610,11 @@ function GameDetailView({
 											{game.tagline}
 										</div>
 
-										<h2 className={`text-5xl font-bold tracking-tight ${isDark ? "text-white" : "text-slate-800"}`}>
-											{game.title}
-										</h2>
+										<ExpandableHeading
+											text={game.title}
+											isDark={isDark}
+											className={`text-5xl font-bold tracking-tight leading-[1.05] ${isDark ? "text-white" : "text-slate-800"}`}
+										/>
 
 										<div className="flex flex-wrap items-center gap-4 text-sm">
 											{game.role && (
@@ -447,12 +646,12 @@ function GameDetailView({
 										)}
 									</div>
 
-										<p className={`max-w-2xl leading-relaxed ${isDark ? "text-slate-300" : "text-slate-600"}`}>
-											{game.description}
-										</p>
+										<div className="max-w-2xl">
+											<ExpandableBody text={game.description} isDark={isDark} />
+										</div>
 
 										<div className="flex flex-wrap gap-2">
-											{game.features.map((feature) => (
+											{game.genres.map((feature) => (
 												<span
 													key={feature}
 													className={`rounded-full px-3 py-1 text-sm ${
@@ -502,33 +701,33 @@ function GameDetailView({
 											</a>
 										)}
 										{documents.map((document) => (
-											<button
-												type="button"
+											<DocumentAction
 												key={document.label}
-												onClick={() => setActiveDocument(document)}
-												className={`inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3 font-bold transition-all hover:scale-105 ${
-													isDark
-														? "bg-slate-800/80 text-white hover:bg-slate-700/90 border border-white/15"
-														: "bg-white/90 text-slate-700 hover:bg-white border border-white/80 shadow-sm"
-												}`}
-											>
-												<FileText className="h-4 w-4" />
-												{document.label}
-											</button>
+												document={document}
+												isDark={isDark}
+												onPreview={(selectedDocument) => setActiveDocument(selectedDocument)}
+											/>
 										))}
 									</div>
 									</div>
 								</div>
 						</div>
 
+						{game.contentSections.length > 0 && (
+							<div className="lg:columns-2 lg:gap-4">
+								{game.contentSections.map((section) => (
+									<DetailSectionCard
+										key={`${game.id}-${section.title}`}
+										section={section}
+										isDark={isDark}
+										onPreview={(selectedDocument) => setActiveDocument(selectedDocument)}
+									/>
+								))}
+							</div>
+						)}
+
 						{game.videoUrl && (
-							<div>
-								<div className="mb-3 flex items-center gap-3">
-									<h3 className={`text-lg font-bold ${isDark ? "text-white" : "text-slate-800"}`}>
-										Gameplay
-									</h3>
-									<div className={`h-px flex-1 bg-gradient-to-r ${isDark ? "from-slate-700" : "from-slate-200"} to-transparent`} />
-								</div>
+							<div className="pt-1">
 								<VideoEmbed videoUrl={game.videoUrl} />
 							</div>
 						)}
@@ -715,10 +914,10 @@ export function GamesContent({ theme, selectedGame, setSelectedGame, gameFilter,
 							Game Center
 						</div>
 						<h2 className={`mt-4 text-3xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>
-							Playable Ideas, Parked Here
+							Games, Prototypes, and Playable Archives
 						</h2>
 						<p className={`mt-3 max-w-2xl ${isDark ? "text-slate-400" : "text-slate-500"}`}>
-							The games tab is now a staged placeholder hub: concept cards, status signals, and a preview desk for ideas that are still in production.
+							Open a game to read the full write-up, launch its materials, and browse the in-game gallery without losing the original project wording.
 						</p>
 					</div>
 

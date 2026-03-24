@@ -20,6 +20,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - Monogram font is loaded locally from `public/fonts/monogram/ttf` via `next/font/local`; keep that local setup instead of swapping to hosted fonts.
 - The current visual direction is a polished Wii U-inspired launcher with authored light and dark themes, not a generic modern dashboard.
 - When adding new app experiences, prefer fully themed placeholders with motion and status surfaces rather than plain “coming soon” text.
+- Portfolio game/research entries work better as authored `contentSections` with preserved line breaks and explicit document actions than as derived summary/feature arrays.
 
 ## What Does Not Work Well
 
