@@ -4,34 +4,14 @@ import { NuqsAdapter } from "nuqs/adapters/next";
 import localFont from "next/font/local";
 import "./globals.css";
 
-const monogram = localFont({
-	src: [
-		{
-			path: "../public/fonts/monogram/ttf/monogram.ttf",
-			weight: "400",
-			style: "normal",
-		},
-		{
-			path: "../public/fonts/monogram/ttf/monogram-extended.ttf",
-			weight: "400",
-			style: "normal",
-		},
-		{
-			path: "../public/fonts/monogram/ttf/monogram-extended-italic.ttf",
-			weight: "400",
-			style: "italic",
-		},
-	],
+const clarity = localFont({
+	src: "../public/fonts/clarity/clarity.ttf",
+	weight: "400",
+	style: "normal",
 	variable: "--font-varela",
 	display: "swap",
-	fallback: ["monospace"],
+	fallback: ["ui-sans-serif", "system-ui", "sans-serif"],
 	adjustFontFallback: false,
-	declarations: [
-		{
-			prop: "size-adjust",
-			value: "150%",
-		},
-	],
 });
 
 export const metadata: Metadata = {
@@ -45,7 +25,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" className={monogram.variable}>
+		<html lang="en" className={clarity.variable}>
 			<body
 				className="font-sans text-[21px] md:text-[22px] antialiased overflow-hidden bg-[#e6f3ff]"
 				suppressHydrationWarning
