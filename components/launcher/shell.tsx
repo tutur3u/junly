@@ -156,15 +156,17 @@ export function LauncherShell({
 							<Moon className="h-5 w-5 text-slate-700" />
 						)}
 					</button>
-					<div className="flex items-center gap-4">
+					<div className="flex items-center gap-2 sm:gap-4">
 						<div
-							className={`text-[1rem] font-medium tracking-wide ${
+							className={`hidden text-[1rem] font-medium tracking-wide sm:block ${
 								theme === "dark" ? "text-slate-400" : "text-slate-500"
 							}`}
 						>
 							{currentDate}
 						</div>
-						<AnimatedSeparator />
+						<div className="hidden sm:block">
+							<AnimatedSeparator />
+						</div>
 						<div
 							className={`text-[1rem] font-medium tracking-wide ${
 								theme === "dark" ? "text-slate-400" : "text-slate-500"
@@ -172,9 +174,11 @@ export function LauncherShell({
 						>
 							{currentTime}
 						</div>
-						<AnimatedSeparator />
+						<div className="hidden sm:block">
+							<AnimatedSeparator />
+						</div>
 						<div
-							className={`text-[0.85rem] font-medium tracking-wide ${
+							className={`hidden text-[0.85rem] font-medium tracking-wide sm:block ${
 								theme === "dark" ? "text-slate-500" : "text-slate-400"
 							}`}
 						>
