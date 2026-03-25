@@ -1,6 +1,6 @@
 # Chunli
 
-A Nintendo Wii U-inspired portfolio, customized and designed especially for Chunli (Junly). Built with Next.js 16, React 19, Tailwind CSS v4, Motion, Bun, and the local Monogram font.
+A Nintendo Wii U-inspired portfolio, customized and designed especially for Chunli. Built with Next.js 16, React 19, Tailwind CSS v4, Motion, Bun, and the local Monogram font.
 
 ## Overview
 

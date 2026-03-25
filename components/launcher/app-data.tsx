@@ -4,7 +4,7 @@ import {
 	FileText,
 	Comment,
 	Gamepad,
-	Image,
+	Image as ImageIcon,
 	Mail,
 	Music,
 	Settings2,
@@ -15,7 +15,7 @@ import type { AppData } from "@/components/launcher/types";
 export const apps: AppData[] = [
 	{
 		id: "about",
-		title: "About me",
+		title: "About",
 		icon: <User className="w-12 h-12 text-green-500" />,
 		color: "bg-green-100",
 	},
@@ -33,13 +33,13 @@ export const apps: AppData[] = [
 	},
 	{
 		id: "gallery",
-		title: "Art",
-		icon: <Image className="w-12 h-12 text-yellow-500" />,
+		title: "Gallery",
+		icon: <ImageIcon className="w-12 h-12 text-yellow-500" />,
 		color: "bg-yellow-100",
 	},
 	{
 		id: "blog",
-		title: "Blog",
+		title: "Posts",
 		icon: <Comment className="w-12 h-12 text-green-600" />,
 		color: "bg-green-50",
 	},

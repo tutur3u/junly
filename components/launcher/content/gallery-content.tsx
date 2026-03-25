@@ -1,6 +1,6 @@
 "use client";
 
-import { Cancel, Expand } from "pixelarticons/react";
+import { Cancel, Expand, Image as ImageIcon, Sparkles } from "pixelarticons/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import type { ThemeMode } from "@/components/launcher/types";
@@ -147,7 +147,37 @@ export function GalleryContent({ theme, setSelectedArtwork }: GalleryContentProp
 
 	return (
 		<div className="h-full overflow-y-auto p-6 wii-u-scrollbar">
-			<h2 className={`mb-6 text-2xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>Art Gallery</h2>
+			<div className="launcher-soft-hero mb-6">
+				<div className="pointer-events-none absolute inset-0 bg-stripes opacity-10" />
+				<div className="relative flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+					<div>
+						<div className="launcher-mini-tab">
+							<ImageIcon className="h-4 w-4" />
+							Gallery Archive
+						</div>
+						<h2 className={`mt-4 text-3xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>Screenshots, artwork, and visual souvenirs.</h2>
+						<p className={`mt-3 max-w-2xl text-sm leading-7 ${isDark ? "text-slate-400" : "text-slate-500"}`}>
+							A swipeable wall of game captures, artwork, and mood-heavy fragments.
+							Open any frame and flip through it like a tiny handheld album.
+						</p>
+					</div>
+					<div className="grid grid-cols-3 gap-3">
+						{[
+							{ label: "Frames", value: String(PORTFOLIO_IMAGES.length).padStart(2, "0"), icon: <ImageIcon className="h-4 w-4" /> },
+							{ label: "Spark", value: "A+" , icon: <Sparkles className="h-4 w-4" /> },
+							{ label: "Mode", value: "Flip", icon: <Expand className="h-4 w-4" /> },
+						].map((item) => (
+							<div key={item.label} className="launcher-stat-tile min-w-[108px]">
+								<div className={`flex items-center gap-2 text-xs uppercase tracking-[0.16em] ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+									{item.icon}
+									{item.label}
+								</div>
+								<div className="mt-2 text-xl font-bold">{item.value}</div>
+							</div>
+						))}
+					</div>
+				</div>
+			</div>
 			<div className="columns-2 space-y-4 gap-4 md:columns-3">
 				{PORTFOLIO_IMAGES.map((src, index) => (
 					<button
@@ -156,7 +186,7 @@ export function GalleryContent({ theme, setSelectedArtwork }: GalleryContentProp
 						onClick={() => openLightbox(index)}
 						onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(index); } }}
 						className={`group relative block w-full cursor-pointer break-inside-avoid overflow-hidden rounded-xl border-4 shadow-sm transition-shadow hover:shadow-lg ${
-							isDark ? "bg-slate-900/50 border-slate-700" : "bg-white border-white"
+							isDark ? "bg-slate-900/50 border-slate-700" : "bg-[#ebfdff] border-[#daf7fc]"
 						}`}
 					>
 						<Image

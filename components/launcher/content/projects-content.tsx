@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { FileText, Sparkles, Trophy } from "pixelarticons/react";
 import { useEffect, useRef, useState } from "react";
 import { PROJECTS } from "@/components/launcher/content-data";
 import type { ContentLink, ContentSection } from "@/components/launcher/content-data";
@@ -152,7 +153,7 @@ function DocumentChip({
 			className={`inline-flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-sm font-bold transition-all hover:-translate-y-0.5 ${
 				isDark
 					? "border-sky-200/20 text-sky-200 hover:bg-sky-400/10"
-					: "border-sky-200 text-sky-700 hover:bg-sky-50"
+					: "border-[#d6f6fb] bg-[#e1f9fd]/88 text-sky-800 hover:bg-[#ebfdff]"
 			}`}
 		>
 			<svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-label={link.label}>
@@ -176,10 +177,10 @@ function ProjectSectionCard({
 				section.tone === "highlight"
 					? isDark
 						? "border-amber-400/30 bg-gradient-to-br from-amber-500/10 via-slate-900/70 to-slate-950"
-						: "border-amber-200 bg-gradient-to-br from-amber-50 via-white to-orange-50"
+						: "border-cyan-200/80 bg-gradient-to-br from-[#e8fcff] via-[#d8f7fd] to-[#caf0f8]"
 					: isDark
 						? "bg-slate-900/55 border-white/8"
-						: "bg-white/65 border-white"
+						: "border-[#daf7fc] bg-[linear-gradient(180deg,rgba(223,249,253,0.9),rgba(203,240,247,0.84))]"
 			} mb-4 break-inside-avoid`}
 		>
 			<h3 className={`text-base sm:text-lg font-bold ${isDark ? "text-white" : "text-slate-800"}`}>{section.title}</h3>
@@ -254,26 +255,27 @@ export function ProjectsContent({ theme, selectedProject, setSelectedProject }: 
 								className={`mb-3 sm:mb-4 inline-flex cursor-pointer items-center rounded-full border px-3 py-1.5 text-sm transition-colors ${
 									isDark
 										? "border-sky-200/15 text-sky-200 hover:bg-sky-400/10"
-										: "border-sky-100 text-sky-700 hover:bg-sky-50"
+										: "border-[#d6f6fb] bg-[#e1f9fd]/88 text-sky-800 hover:bg-[#ebfdff]"
 								}`}
 							>
 								← Back
 							</button>
-							<div className={`text-xs sm:text-sm uppercase tracking-[0.18em] ${isDark ? "text-sky-300" : "text-sky-700"}`}>
-								<div className="flex flex-wrap items-center gap-2">
+							<div className="flex flex-wrap items-center gap-2">
+								<div className="launcher-mini-tab">
+									<FileText className="h-4 w-4" />
 									<span>{projectData.kicker}</span>
-									{projectData.nominated && (
-										<span
-											className={`inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-bold tracking-[0.12em] normal-case ${
-												isDark
-													? "bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg shadow-amber-500/20"
-													: "bg-gradient-to-r from-amber-400 to-orange-400 text-white shadow-md"
-											}`}
-										>
-											{SHOWCASE_LABEL}
-										</span>
-									)}
 								</div>
+								{projectData.nominated && (
+									<span
+										className={`inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-bold tracking-[0.12em] normal-case ${
+											isDark
+												? "bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg shadow-amber-500/20"
+												: "bg-gradient-to-r from-amber-400 to-orange-400 text-white shadow-md"
+										}`}
+									>
+										{SHOWCASE_LABEL}
+									</span>
+								)}
 							</div>
 							<div className="mt-2">
 								<ExpandableHeading
@@ -297,7 +299,7 @@ export function ProjectsContent({ theme, selectedProject, setSelectedProject }: 
 					{projectData.researchDocs?.thumbnail ? (
 						<div
 							className={`relative overflow-hidden rounded-2xl sm:rounded-[28px] border p-2 sm:p-3 ${
-								isDark ? "bg-slate-950/45 border-sky-200/10" : "bg-white/70 border-white/80"
+								isDark ? "bg-slate-950/45 border-sky-200/10" : "border-[#daf7fc] bg-[#e0f9fd]/86"
 							}`}
 						>
 							<div className="relative w-full overflow-hidden rounded-xl sm:rounded-[22px]">
@@ -317,7 +319,7 @@ export function ProjectsContent({ theme, selectedProject, setSelectedProject }: 
 										className={`rounded-full border px-2 sm:px-3 py-0.5 sm:py-1 text-xs sm:text-sm ${
 											isDark
 												? "bg-slate-950/65 text-sky-100 border-sky-200/10"
-												: "bg-white/90 text-slate-700 border-white/90"
+												: "bg-[#ebfdff]/94 text-sky-900 border-[#daf7fc]"
 										}`}
 									>
 										{item}
@@ -328,7 +330,7 @@ export function ProjectsContent({ theme, selectedProject, setSelectedProject }: 
 					) : (
 						<div
 							className={`relative overflow-hidden rounded-2xl sm:rounded-[28px] border p-2 sm:p-3 ${
-								isDark ? "bg-slate-950/45 border-sky-200/10" : "bg-white/70 border-white/80"
+								isDark ? "bg-slate-950/45 border-sky-200/10" : "border-[#daf7fc] bg-[#e0f9fd]/86"
 							}`}
 						>
 							<div className="relative h-48 sm:h-64 overflow-hidden rounded-xl sm:rounded-[22px]">
@@ -347,7 +349,7 @@ export function ProjectsContent({ theme, selectedProject, setSelectedProject }: 
 											className={`rounded-full border px-2 sm:px-3 py-0.5 sm:py-1 text-xs sm:text-sm ${
 												isDark
 													? "bg-slate-950/65 text-sky-100 border-sky-200/10"
-													: "bg-white/90 text-slate-700 border-white/90"
+													: "bg-[#ebfdff]/94 text-sky-900 border-[#daf7fc]"
 											}`}
 										>
 											{item}
@@ -370,10 +372,10 @@ export function ProjectsContent({ theme, selectedProject, setSelectedProject }: 
 						</div>
 						<div
 							className={`rounded-2xl border p-4 sm:p-5 lg:col-span-2 ${
-								isDark ? "bg-slate-900/55 border-white/8" : "bg-white/65 border-white"
+								isDark ? "bg-slate-900/55 border-white/8" : "border-[#daf7fc] bg-[linear-gradient(180deg,rgba(223,249,253,0.92),rgba(203,240,247,0.84))]"
 							}`}
 						>
-							<h3 className={`text-base sm:text-lg font-bold ${isDark ? "text-white" : "text-slate-800"}`}>Key Features</h3>
+							<h3 className={`text-base sm:text-lg font-bold ${isDark ? "text-white" : "text-slate-800"}`}>Methods & Deliverables</h3>
 							<div className="mt-3 sm:mt-4 flex flex-wrap gap-2">
 								{projectData.stack.map((item) => (
 									<span
@@ -381,7 +383,7 @@ export function ProjectsContent({ theme, selectedProject, setSelectedProject }: 
 										className={`rounded-full border px-3 py-1 text-sm ${
 											isDark
 												? "bg-slate-950/65 text-sky-100 border-sky-200/10"
-												: "bg-white/90 text-slate-700 border-white/90"
+												: "bg-[#ebfdff]/94 text-sky-900 border-[#daf7fc]"
 										}`}
 									>
 										{item}
@@ -431,7 +433,7 @@ export function ProjectsContent({ theme, selectedProject, setSelectedProject }: 
 					<div className={`absolute inset-0 ${isDark ? "bg-black/80" : "bg-black/60"}`} />
 					<div
 						className={`relative w-full max-w-6xl max-h-[90vh] rounded-2xl overflow-hidden shadow-2xl ${
-							isDark ? "bg-slate-900 border border-white/10" : "bg-white border border-slate-200"
+							isDark ? "bg-slate-900 border border-white/10" : "bg-[#e3fbfe] border border-[#c8eff8]"
 						}`}
 						onClick={(e) => e.stopPropagation()}
 						onKeyDown={(e) => e.stopPropagation()}
@@ -439,7 +441,7 @@ export function ProjectsContent({ theme, selectedProject, setSelectedProject }: 
 						aria-modal="true"
 						aria-labelledby="pdf-preview-title"
 					>
-						<div className={`flex items-center justify-between px-4 sm:px-6 py-3 border-b ${isDark ? "border-white/10" : "border-slate-200"}`}>
+						<div className={`flex items-center justify-between px-4 sm:px-6 py-3 border-b ${isDark ? "border-white/10" : "border-[#c8eff8]"}`}>
 							<h3 className={`font-bold text-sm sm:text-base ${isDark ? "text-white" : "text-slate-800"}`}>
 								{previewPdf.label}
 							</h3>
@@ -451,7 +453,7 @@ export function ProjectsContent({ theme, selectedProject, setSelectedProject }: 
 									className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
 										isDark
 										? "text-sky-300 hover:bg-sky-400/10"
-										: "text-sky-700 hover:bg-sky-50"
+										: "text-sky-800 hover:bg-[#d7f6fc]"
 									}`}
 								>
 									Open Document
@@ -462,7 +464,7 @@ export function ProjectsContent({ theme, selectedProject, setSelectedProject }: 
 									className={`rounded-lg p-1.5 transition-colors ${
 										isDark
 											? "text-slate-400 hover:text-white hover:bg-white/10"
-											: "text-slate-500 hover:text-slate-800 hover:bg-slate-100"
+											: "text-sky-700 hover:text-sky-950 hover:bg-[#d2f2f8]"
 									}`}
 									aria-label="Close PDF preview"
 								>
@@ -489,14 +491,38 @@ export function ProjectsContent({ theme, selectedProject, setSelectedProject }: 
 
 	return (
 		<div className={`h-full overflow-y-auto p-4 sm:p-6 wii-u-scrollbar`}>
-			<div className="mb-4 sm:mb-6 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-				<div>
-					<h2 className={`text-xl sm:text-2xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>Research</h2>
-					<p className={`mt-1 sm:mt-2 max-w-2xl text-sm sm:text-base ${isDark ? "text-slate-400" : "text-slate-500"}`}>
-						Open a project to view the full write-up, research documents, and original sectioned content.
-					</p>
+			<div className="launcher-soft-hero mb-4 sm:mb-6">
+				<div className="pointer-events-none absolute inset-0 bg-stripes opacity-10" />
+				<div className="relative flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+					<div>
+						<div className="launcher-mini-tab">
+							<FileText className="h-4 w-4" />
+							Research Deck
+						</div>
+						<h2 className={`mt-4 text-3xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>
+							Case studies, curiosity quests, and well-labeled rabbit holes.
+						</h2>
+						<p className={`mt-3 max-w-2xl text-sm sm:text-base leading-7 ${isDark ? "text-slate-400" : "text-slate-500"}`}>
+							Open a study to browse the full write-up, attached docs, and the original
+							thinking without sanding off the project&apos;s personality.
+						</p>
+					</div>
+					<div className="grid grid-cols-3 gap-3">
+						{[
+							{ label: "Studies", value: String(PROJECTS.length).padStart(2, "0"), icon: <FileText className="h-4 w-4" /> },
+							{ label: "Notes", value: "Deep", icon: <Sparkles className="h-4 w-4" /> },
+							{ label: "Badges", value: String(PROJECTS.filter((project) => project.nominated).length), icon: <Trophy className="h-4 w-4" /> },
+						].map((item) => (
+							<div key={item.label} className="launcher-stat-tile min-w-[112px]">
+								<div className={`flex items-center gap-2 text-xs uppercase tracking-[0.16em] ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+									{item.icon}
+									{item.label}
+								</div>
+								<div className="mt-2 text-xl font-bold">{item.value}</div>
+							</div>
+						))}
+					</div>
 				</div>
-				<div className={`text-sm ${isDark ? "text-slate-500" : "text-slate-400"}`}>{PROJECTS.length} projects</div>
 			</div>
 			<div className="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2">
 				{PROJECTS.map((project) => (
@@ -507,7 +533,7 @@ export function ProjectsContent({ theme, selectedProject, setSelectedProject }: 
 						className={`group cursor-pointer rounded-2xl border p-3 sm:p-4 text-left transition-all hover:-translate-y-1 ${
 							isDark
 								? "bg-slate-900/45 border-white/8 shadow-[0_10px_24px_rgba(0,0,0,0.22)] hover:border-sky-200/20 hover:shadow-[0_16px_30px_rgba(0,0,0,0.3)]"
-								: "bg-white/60 border-white shadow-sm hover:shadow-md"
+								: "border-[#daf7fc] bg-[linear-gradient(180deg,rgba(222,249,253,0.88),rgba(201,239,247,0.82))] shadow-[0_14px_30px_rgba(67,152,184,0.12)] hover:shadow-[0_18px_36px_rgba(67,152,184,0.18)]"
 						}`}
 					>
 						<div className={`relative mb-2 sm:mb-3 h-32 sm:h-40 overflow-hidden rounded-xl ${isDark ? "bg-slate-800" : "bg-slate-200"}`}>
@@ -540,7 +566,7 @@ export function ProjectsContent({ theme, selectedProject, setSelectedProject }: 
 							</div>
 						</div>
 						<h3 className={`mt-1 sm:mt-2 font-bold text-sm sm:text-base ${isDark ? "text-slate-100" : "text-slate-700"}`}>{project.title}</h3>
-						<p className={`mt-1 text-xs sm:text-sm ${isDark ? "text-slate-400" : "text-slate-500"}`}>{project.summary}</p>
+						<p className={`mt-1 text-xs sm:text-sm leading-6 ${isDark ? "text-slate-400" : "text-slate-500"}`}>{project.summary}</p>
 					</button>
 				))}
 			</div>

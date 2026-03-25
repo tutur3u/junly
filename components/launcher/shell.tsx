@@ -4,22 +4,12 @@ import { useEffect } from "react";
 import { InitialBootOverlay } from "@/components/launcher/overlays";
 import type { AppData, AppId, ThemeMode } from "@/components/launcher/types";
 import { Sun } from "lucide-react";
-import { Cancel, Moon, User } from "pixelarticons/react";
+import { Cancel, Moon } from "pixelarticons/react";
 import { AnimatePresence, motion } from "motion/react";
 import type { ReactNode } from "react";
 
 function generateParticleId(index: number, left: number, top: number): string {
 	return `particle-${index}-${left}-${top}`;
-}
-
-function AnimatedSeparator() {
-	return (
-		<div className="flex items-center gap-1">
-			<div className="h-1 w-1 rotate-45 bg-current opacity-40" />
-			<div className="h-1 w-1 rotate-45 bg-current opacity-60" />
-			<div className="h-1 w-1 rotate-45 bg-current opacity-40" />
-		</div>
-	);
 }
 
 type LauncherShellProps = {
@@ -75,16 +65,24 @@ export function LauncherShell({
 			className={`theme-shell theme-${theme} relative min-h-screen w-full overflow-hidden transition-colors duration-500 ${
 				theme === "dark"
 					? "bg-gradient-to-br from-[#03111d] via-[#0c2032] to-[#163553]"
-					: "bg-gradient-to-br from-[#e0f2fe] via-[#bae6fd] to-[#e0f2fe]"
+					: "bg-gradient-to-br from-[#d4f0f7] via-[#bce8f4] to-[#9fdcf0]"
 			}`}
 		>
-			<div className="pointer-events-none absolute inset-0 bg-stripes opacity-30" />
-			{theme === "dark" && (
-				<>
-					<div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_30%,rgba(103,232,249,0.12),transparent_22%),radial-gradient(circle_at_78%_22%,rgba(125,211,252,0.12),transparent_24%),radial-gradient(circle_at_50%_70%,rgba(59,130,246,0.08),transparent_30%)]" />
-					<div className="pointer-events-none absolute inset-x-0 bottom-0 h-[28vh] bg-gradient-to-t from-[#06111e]/70 via-[#06111e]/10 to-transparent" />
-				</>
-			)}
+			<div className="pointer-events-none absolute inset-0 bg-stripes opacity-25" />
+			<div
+				className={`pointer-events-none absolute inset-0 ${
+					theme === "dark"
+						? "bg-[radial-gradient(circle_at_18%_30%,rgba(103,232,249,0.12),transparent_22%),radial-gradient(circle_at_78%_22%,rgba(125,211,252,0.12),transparent_24%),radial-gradient(circle_at_50%_70%,rgba(59,130,246,0.08),transparent_30%)]"
+						: "bg-[radial-gradient(circle_at_12%_14%,rgba(233,252,255,0.62),transparent_22%),radial-gradient(circle_at_84%_18%,rgba(34,211,238,0.24),transparent_24%),radial-gradient(circle_at_24%_88%,rgba(56,189,248,0.18),transparent_22%),radial-gradient(circle_at_76%_78%,rgba(103,232,249,0.18),transparent_26%)]"
+				}`}
+			/>
+			<div
+				className={`pointer-events-none absolute inset-x-0 bottom-0 h-[28vh] ${
+					theme === "dark"
+						? "bg-gradient-to-t from-[#06111e]/70 via-[#06111e]/10 to-transparent"
+						: "bg-gradient-to-t from-[#d6f7fd]/18 via-[#d6f7fd]/4 to-transparent"
+				}`}
+			/>
 
 			<div className="pointer-events-none absolute inset-0 overflow-hidden">
 				<div className="absolute inset-0 particles-container">
@@ -98,7 +96,7 @@ export function LauncherShell({
 							<div
 								key={generateParticleId(i, left, top)}
 								className={`absolute rounded-full blur-sm particle-float ${
-									theme === "dark" ? "bg-sky-300/10" : "bg-white/40"
+									theme === "dark" ? "bg-sky-300/10" : "bg-cyan-100/38"
 								}`}
 								style={{
 									width: size,
@@ -114,30 +112,62 @@ export function LauncherShell({
 				</div>
 			</div>
 
-			<header className={`absolute top-0 left-0 right-0 z-10 flex h-14 items-center justify-between px-5 ${
-				theme === "dark" 
-					? "bg-gradient-to-b from-slate-900/95 to-slate-900/80 border-b border-slate-800/50" 
-					: "bg-white/90 border-b border-gray-200/80"
-			}`}>
-				<div className="flex items-center gap-3">
-					<div className={`flex h-10 w-10 items-center justify-center rounded-full ${
-						theme === "dark" ? "bg-slate-800 border border-slate-700" : "bg-gray-100 border border-gray-200"
-					}`}>
-						<User
-							className={`h-5 w-5 ${
-								theme === "dark" ? "text-slate-300" : "text-slate-500"
+			<header className="absolute left-4 right-4 top-4 z-20">
+				<div
+					className={`wii-u-topbar relative mx-auto flex h-16 max-w-[1480px] items-center justify-between rounded-full border px-4 sm:px-6 ${
+						theme === "dark"
+							? "border-sky-200/10"
+							: "border-[#d5f4fb]"
+					}`}
+				>
+					<div className="flex min-w-0 items-center gap-3">
+						<div
+							className={`wii-u-user-badge flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full border ${
+								theme === "dark"
+									? "border-slate-700 bg-slate-800"
+									: "border-[#d5f4fb]"
 							}`}
-						/>
+						>
+							<span className={`text-sm font-bold ${theme === "dark" ? "text-sky-200" : "text-sky-700"}`}>J</span>
+						</div>
+						<div className="min-w-0">
+							<div className={`truncate text-[0.92rem] font-bold uppercase tracking-[0.22em] ${theme === "dark" ? "text-slate-100" : "text-slate-700"}`}>
+								CHUNLI
+							</div>
+							<div className={`truncate text-[0.62rem] uppercase tracking-[0.2em] ${theme === "dark" ? "text-slate-500" : "text-slate-500"}`}>
+								Personal Console Web
+							</div>
+						</div>
 					</div>
-					<span
-						className={`text-[1rem] font-bold tracking-wide ${
-							theme === "dark" ? "text-slate-100" : "text-slate-700"
-						}`}
-					>
-						Chunli
-					</span>
-				</div>
-				<div className="flex items-center gap-3">
+					<div className="flex items-center gap-2 sm:gap-3">
+						<div
+							className={`wii-u-status-pill hidden items-center gap-2 rounded-full border px-3 py-1.5 text-[0.72rem] font-bold uppercase tracking-[0.18em] sm:inline-flex ${
+								theme === "dark"
+									? "border-slate-700 text-slate-300"
+									: "border-[#d5f4fb] text-sky-800"
+							}`}
+						>
+							<span className="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.7)]" />
+							Online
+						</div>
+						<div
+							className={`wii-u-status-pill hidden rounded-full border px-3 py-1.5 text-[0.72rem] font-bold uppercase tracking-[0.18em] md:inline-flex ${
+								theme === "dark"
+									? "border-slate-700 text-slate-400"
+									: "border-[#d5f4fb] text-sky-700"
+							}`}
+						>
+							{currentDate}
+						</div>
+						<div
+							className={`wii-u-status-pill rounded-full border px-3 py-1.5 text-[0.72rem] font-bold uppercase tracking-[0.18em] ${
+								theme === "dark"
+									? "border-slate-700 text-slate-300"
+									: "border-[#d5f4fb] text-sky-800"
+							}`}
+						>
+							{currentTime}
+						</div>
 					<button
 						type="button"
 						onClick={onQuickThemeToggle}
@@ -145,50 +175,22 @@ export function LauncherShell({
 							theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
 						}
 						className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-full transition-all ${
-							theme === "dark" 
-								? "bg-slate-800 border border-slate-700 hover:bg-slate-700 text-slate-300" 
-								: "bg-gray-100 border border-gray-200 hover:bg-gray-200 text-slate-600"
+							theme === "dark"
+								? "border border-slate-700 bg-slate-800 text-slate-300 hover:bg-slate-700"
+								: "wii-u-round-button border border-[#d5f4fb] text-sky-800 hover:bg-[#d8f6fc]"
 						}`}
 					>
 						{theme === "dark" ? (
 							<Sun className="h-5 w-5 text-amber-400" />
 						) : (
-							<Moon className="h-5 w-5 text-slate-700" />
+							<Moon className="h-5 w-5 text-sky-800" />
 						)}
 					</button>
-					<div className="flex items-center gap-2 sm:gap-4">
-						<div
-							className={`hidden text-[1rem] font-medium tracking-wide sm:block ${
-								theme === "dark" ? "text-slate-400" : "text-slate-500"
-							}`}
-						>
-							{currentDate}
-						</div>
-						<div className="hidden sm:block">
-							<AnimatedSeparator />
-						</div>
-						<div
-							className={`text-[1rem] font-medium tracking-wide ${
-								theme === "dark" ? "text-slate-400" : "text-slate-500"
-							}`}
-						>
-							{currentTime}
-						</div>
-						<div className="hidden sm:block">
-							<AnimatedSeparator />
-						</div>
-						<div
-							className={`hidden text-[0.85rem] font-medium tracking-wide sm:block ${
-								theme === "dark" ? "text-slate-500" : "text-slate-400"
-							}`}
-						>
-							{new Date().getFullYear()}
-						</div>
-					</div>
+				</div>
 				</div>
 			</header>
 
-			<div className="absolute inset-0 overflow-y-auto px-6 pt-20 pb-24 md:overflow-hidden md:flex md:items-center md:justify-center md:px-20">
+			<div className="absolute inset-0 overflow-y-auto px-6 pt-28 pb-24 md:flex md:items-center md:justify-center md:overflow-hidden md:px-20">
 				<div className="grid w-full max-w-6xl grid-cols-3 place-items-center gap-x-6 gap-y-6 sm:grid-cols-3 md:grid-cols-4 md:gap-x-24 md:gap-y-12">
 					{apps.map((app, index) => (
 						<motion.div
@@ -222,7 +224,7 @@ export function LauncherShell({
 								className={`absolute left-1/2 top-full mt-3 z-20 -translate-x-1/2 rounded-full border px-3 py-1.5 text-sm font-bold whitespace-nowrap opacity-0 shadow-md transition-opacity backdrop-blur-sm hidden md:block group-hover:opacity-100 ${
 									theme === "dark"
 										? "bg-slate-950/90 text-slate-100 border-sky-100/20"
-										: "bg-white/95 text-slate-700 border-white/60 shadow-lg"
+										: "bg-[#cbf0f7]/94 text-sky-900 border-[#d9f7fc] shadow-[0_12px_28px_rgba(67,152,184,0.16)]"
 								}`}
 							>
 								{app.title}
@@ -233,35 +235,16 @@ export function LauncherShell({
 			</div>
 
 			<div
-				className={`absolute right-0 bottom-0 left-0 z-10 flex h-14 items-center justify-center gap-6 ${
+				className={`absolute right-0 bottom-0 left-0 z-10 flex h-14 items-center justify-center ${
 					theme === "dark"
 						? "bg-gradient-to-t from-slate-950/50 to-transparent"
-						: "bg-gradient-to-t from-white/30 to-transparent"
+						: "bg-gradient-to-t from-[#d6f7fd]/22 to-transparent"
 				}`}
 			>
-				<div
-					className={`flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium ${
-						theme === "dark" 
-							? "bg-slate-800/80 border border-slate-700/50 text-slate-300" 
-							: "bg-white/80 border border-white/80 text-slate-600"
-					}`}
-				>
-					<span className="h-2 w-2 animate-pulse rounded-full bg-green-400" />
-					System Online
-				</div>
 				<div
 					className={`text-xs ${theme === "dark" ? "text-slate-500" : "text-slate-400"}`}
 				>
 					v1.0.0
-				</div>
-				<div
-					className={`flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium ${
-						theme === "dark" 
-							? "bg-slate-800/80 border border-slate-700/50 text-slate-300" 
-							: "bg-white/80 border border-white/80 text-slate-600"
-					}`}
-				>
-					{new Date().getFullYear()}
 				</div>
 			</div>
 
@@ -278,7 +261,7 @@ export function LauncherShell({
 						className={`fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-6 lg:p-8 ${
 							theme === "dark"
 								? "bg-black/90"
-								: "bg-black/70"
+								: "bg-[rgba(86,114,136,0.32)] backdrop-blur-sm"
 						}`}
 						onClick={onCloseApp}
 					>
@@ -288,15 +271,15 @@ export function LauncherShell({
 							exit={{ scale: 0.96, opacity: 0 }}
 							transition={{ duration: 0.25, ease: "easeOut" }}
 							className={`relative flex h-full w-full flex-col overflow-hidden sm:inset-auto sm:h-[88vh] sm:min-h-[720px] sm:w-full sm:max-w-[1480px] sm:rounded-[34px] border-2 ${
-								theme === "dark" ? "bg-slate-900 border-slate-700" : "bg-white border-gray-200"
+								theme === "dark" ? "bg-slate-900 border-slate-700" : "border-[#d5f4fb] bg-[#c4ecf5]/86"
 							} sm:wii-u-window`}
 							onClick={(event) => event.stopPropagation()}
 						>
-							<div className="pointer-events-none absolute inset-[10px] rounded-[26px] border border-white/10 opacity-70 hidden sm:block" />
+							<div className="pointer-events-none absolute inset-[10px] rounded-[26px] border border-[#dcf8fd]/70 opacity-70 hidden sm:block" />
 							<div className={`relative flex flex-shrink-0 items-center justify-between px-4 py-3 sm:px-6 sm:py-4 ${
-								theme === "dark" 
-									? "bg-slate-900 sm:bg-slate-800/95 border-b border-slate-800 sm:border-b-0" 
-									: "bg-white sm:bg-white/95 border-b border-gray-200 sm:border-b-0"
+								theme === "dark"
+									? "border-b border-slate-800 bg-slate-900 sm:bg-slate-800/95 sm:border-b-0"
+									: "border-b border-[#cceff7] bg-[#d3f3f9]/95 sm:wii-u-titlebar sm:border-b-0"
 							}`}>
 								<div className="flex items-center gap-3">
 									<div className={`flex h-10 w-10 items-center justify-center ${
@@ -318,7 +301,7 @@ export function LauncherShell({
 									className={`flex h-10 w-10 items-center justify-center rounded-full transition-colors ${
 										theme === "dark" 
 											? "bg-slate-800 text-slate-300 hover:bg-red-500/90 hover:text-white" 
-											: "bg-gray-100 text-gray-600 hover:bg-red-500 hover:text-white"
+											: "bg-[#b9e6f0] text-sky-800 hover:bg-red-500 hover:text-white"
 									}`}
 								>
 									<Cancel className="h-5 w-5" />

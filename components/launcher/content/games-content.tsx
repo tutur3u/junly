@@ -159,7 +159,7 @@ function DocumentAction({
 	const baseClassName = `inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3 font-bold transition-all hover:scale-105 ${
 		isDark
 			? "bg-slate-800/80 text-white hover:bg-slate-700/90 border border-white/15"
-			: "bg-white/90 text-slate-700 hover:bg-white border border-white/80 shadow-sm"
+			: "bg-[#def8fd]/94 text-sky-900 hover:bg-[#e9fcff] border border-[#daf7fc] shadow-[0_10px_18px_rgba(67,152,184,0.12)]"
 	}`;
 
 	if (document.action === "external") {
@@ -203,10 +203,10 @@ function DetailSectionCard({
 				section.tone === "highlight"
 					? isDark
 						? "border-amber-400/30 bg-gradient-to-br from-amber-500/10 via-slate-900/70 to-slate-950"
-						: "border-amber-200 bg-gradient-to-br from-amber-50 via-white to-orange-50"
+						: "border-cyan-200/80 bg-gradient-to-br from-[#e6fbff] via-[#d7f7fd] to-[#c9eef8]"
 					: isDark
 						? "bg-slate-900/55 border-white/8"
-						: "bg-white/65 border-white"
+						: "bg-[#e1f9fd]/78 border-[#daf7fc]"
 			} mb-4 break-inside-avoid`}
 		>
 			<h3 className={`text-base sm:text-lg font-bold ${isDark ? "text-white" : "text-slate-800"}`}>{section.title}</h3>
@@ -567,7 +567,7 @@ function GameDetailView({
 							className={`group inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold transition-all ${
 								isDark
 									? "bg-slate-800/70 text-slate-300 hover:bg-slate-800 hover:text-white border border-white/10"
-									: "bg-white/80 text-slate-600 hover:bg-white hover:text-slate-900 border border-white/80 shadow-sm"
+									: "bg-[#def8fd]/90 text-sky-800 hover:bg-[#e9fcff] hover:text-sky-950 border border-[#daf7fc] shadow-[0_10px_18px_rgba(67,152,184,0.12)]"
 							}`}
 						>
 							<ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
@@ -578,7 +578,7 @@ function GameDetailView({
 							className={`relative overflow-hidden rounded-[30px] border ${
 								isDark
 									? "border-emerald-900/30 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950"
-									: "border-white/85 bg-gradient-to-br from-white via-white to-emerald-50/30"
+									: "border-[#daf7fc] bg-gradient-to-br from-[#eefeff] via-[#e2fbff] to-[#cff2fa]"
 							}`}
 						>
 							{game.screenshots?.gameplay?.[0] && (
@@ -590,7 +590,7 @@ function GameDetailView({
 										className="object-cover opacity-20 blur-sm"
 										priority
 									/>
-									<div className={`absolute inset-0 bg-gradient-to-t ${isDark ? "from-slate-950 via-slate-900/80 to-slate-900/30" : "from-white via-white/80 to-white/30"}`} />
+									<div className={`absolute inset-0 bg-gradient-to-t ${isDark ? "from-slate-950 via-slate-900/80 to-slate-900/30" : "from-[#c5eaf3] via-[#d4f5fb]/80 to-[#effdff]/22"}`} />
 								</div>
 							)}
 
@@ -600,11 +600,7 @@ function GameDetailView({
 								<div className="relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
 									<div className="flex-1 space-y-4">
 										<div
-											className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-bold uppercase tracking-[0.18em] ${
-												isDark
-													? "bg-emerald-500/20 text-emerald-300 border border-emerald-400/30"
-													: "bg-emerald-100/90 text-emerald-700 border border-emerald-200/80"
-											}`}
+											className="launcher-mini-tab"
 										>
 											<Gamepad className="h-4 w-4" />
 											{game.tagline}
@@ -657,7 +653,7 @@ function GameDetailView({
 													className={`rounded-full px-3 py-1 text-sm ${
 														isDark
 															? "bg-slate-800/60 text-slate-300 border border-white/10"
-															: "bg-slate-100/80 text-slate-600 border border-white/70"
+															: "bg-[#dcf7fc]/90 text-sky-800 border border-[#daf7fc]"
 													}`}
 												>
 													{feature}
@@ -675,7 +671,7 @@ function GameDetailView({
 															className={`rounded-lg px-2.5 py-1 text-xs font-medium ${
 																isDark
 																	? "bg-emerald-500/15 text-emerald-300 border border-emerald-400/20"
-																	: "bg-emerald-50 text-emerald-700 border border-emerald-200"
+																	: "bg-cyan-100/65 text-cyan-800 border border-cyan-200/80"
 															}`}
 														>
 															{tool}
@@ -783,10 +779,10 @@ function GameCard({
 				isSelected
 					? isDark
 						? "border-emerald-400/25 bg-slate-900/80 shadow-[0_18px_36px_rgba(0,0,0,0.28)]"
-						: "border-emerald-300 bg-white/80 shadow-[0_14px_30px_rgba(133,178,211,0.18)]"
+						: "border-cyan-300/80 bg-[#e2fbfe]/92 shadow-[0_14px_30px_rgba(67,152,184,0.16)]"
 					: isDark
 						? "border-white/8 bg-slate-900/55 hover:border-sky-200/15 hover:bg-slate-900/72"
-						: "border-white/80 bg-white/58 hover:bg-white/74"
+						: "border-[#daf7fc] bg-[#ddf8fc]/74 hover:bg-[#e9fcff]/86"
 			}`}
 		>
 			<div className="grid gap-4 md:grid-cols-[220px_1fr]">
@@ -836,7 +832,7 @@ function GameCard({
 								className={`rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap ${
 									isDark
 										? "bg-emerald-500/15 text-emerald-300 border border-emerald-400/20"
-										: "bg-emerald-50 text-emerald-700 border border-emerald-200"
+										: "bg-emerald-100/55 text-emerald-800 border border-emerald-200/80"
 								}`}
 							>
 								{genre}
@@ -893,31 +889,20 @@ export function GamesContent({ theme, selectedGame, setSelectedGame, gameFilter,
 
 	return (
 		<div className="h-full overflow-y-auto p-6 wii-u-scrollbar">
-			<div
-				className={`relative overflow-hidden rounded-[30px] border p-6 ${
-					isDark
-						? "border-sky-200/10 bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.16),transparent_24%),linear-gradient(180deg,rgba(10,20,31,0.95),rgba(7,15,24,0.98))]"
-						: "border-white/85 bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.12),transparent_20%),linear-gradient(180deg,rgba(255,255,255,0.92),rgba(236,246,255,0.78))]"
-				}`}
-			>
+			<div className="launcher-soft-hero">
 				<div className="pointer-events-none absolute inset-0 bg-stripes opacity-10" />
 				<div className="relative flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
 					<div>
-						<div
-							className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-bold uppercase tracking-[0.18em] ${
-								isDark
-									? "bg-sky-400/10 text-sky-200 border border-sky-200/10"
-									: "bg-sky-100/80 text-sky-700 border border-white/80"
-							}`}
-						>
+						<div className="launcher-mini-tab">
 							<Gamepad className="h-4 w-4" />
 							Game Center
 						</div>
 						<h2 className={`mt-4 text-3xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>
 							Games, Prototypes, and Playable Archives
 						</h2>
-						<p className={`mt-3 max-w-2xl ${isDark ? "text-slate-400" : "text-slate-500"}`}>
-							Open a game to read the full write-up, launch its materials, and browse the in-game gallery without losing the original project wording.
+						<p className={`mt-3 max-w-2xl leading-7 ${isDark ? "text-slate-400" : "text-slate-500"}`}>
+							Open a game to read the full write-up, peek behind the scenes, launch the
+							materials, and browse the in-game gallery without flattening the original tone.
 						</p>
 					</div>
 
@@ -927,12 +912,7 @@ export function GamesContent({ theme, selectedGame, setSelectedGame, gameFilter,
 							{ label: "Badges", value: "12", icon: <Trophy className="h-4 w-4" /> },
 							{ label: "Power", value: "89%", icon: <Zap className="h-4 w-4" /> },
 						].map((item) => (
-							<div
-								key={item.label}
-								className={`rounded-2xl border px-4 py-3 ${
-									isDark ? "border-white/8 bg-slate-950/35 text-slate-200" : "border-white/80 bg-white/70 text-slate-700"
-								}`}
-							>
+							<div key={item.label} className="launcher-stat-tile">
 								<div className="flex items-center gap-2 text-xs uppercase tracking-[0.18em] opacity-70">
 									{item.icon}
 									{item.label}
@@ -960,18 +940,18 @@ export function GamesContent({ theme, selectedGame, setSelectedGame, gameFilter,
 									gameFilter === filter
 										? "bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 text-white shadow-lg shadow-emerald-500/20"
 										: isDark
-											? "bg-slate-800/60 text-slate-400 hover:text-white border border-white/10"
-											: "bg-white/70 text-slate-600 hover:text-slate-900 border border-white/80"
+										? "bg-slate-800/60 text-slate-400 hover:text-white border border-white/10"
+										: "bg-[#e1f9fd]/86 text-sky-800 hover:text-sky-950 border border-[#daf7fc]"
 								}`}
 							>
 								{filter}
 								{filter === "Completed" && (
-									<span className={`ml-1.5 rounded-full px-1.5 py-0.5 text-xs ${isDark ? "bg-emerald-500/30" : "bg-emerald-100 text-emerald-700"}`}>
+									<span className={`ml-1.5 rounded-full px-1.5 py-0.5 text-xs ${isDark ? "bg-emerald-500/30" : "bg-emerald-100/65 text-emerald-800"}`}>
 										{GAME_PREVIEWS.filter((g) => g.state === "Completed").length}
 									</span>
 								)}
 								{filter === "In Progress" && (
-									<span className={`ml-1.5 rounded-full px-1.5 py-0.5 text-xs ${isDark ? "bg-sky-500/30" : "bg-sky-100 text-sky-700"}`}>
+									<span className={`ml-1.5 rounded-full px-1.5 py-0.5 text-xs ${isDark ? "bg-sky-500/30" : "bg-sky-100/65 text-sky-800"}`}>
 										{GAME_PREVIEWS.filter((g) => g.state !== "Completed").length}
 									</span>
 								)}
@@ -987,8 +967,8 @@ export function GamesContent({ theme, selectedGame, setSelectedGame, gameFilter,
 									gameFilter === genre
 										? "bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 text-white shadow-lg shadow-emerald-500/20"
 										: isDark
-											? "bg-slate-800/60 text-slate-400 hover:text-white border border-white/10"
-											: "bg-white/70 text-slate-600 hover:text-slate-900 border border-white/80"
+										? "bg-slate-800/60 text-slate-400 hover:text-white border border-white/10"
+										: "bg-[#e1f9fd]/86 text-sky-800 hover:text-sky-950 border border-[#daf7fc]"
 								}`}
 							>
 								{genre}
@@ -1000,7 +980,7 @@ export function GamesContent({ theme, selectedGame, setSelectedGame, gameFilter,
 
 			<div className="mt-6 grid gap-5 md:grid-cols-2">
 				{filteredGames.length === 0 ? (
-					<div className={`col-span-2 rounded-[28px] border p-12 text-center ${isDark ? "border-white/10 bg-slate-900/40 text-slate-500" : "border-white/80 bg-white/40 text-slate-400"}`}>
+					<div className={`col-span-2 rounded-[28px] border p-12 text-center ${isDark ? "border-white/10 bg-slate-900/40 text-slate-500" : "border-[#daf7fc] bg-[#e2fbfe]/68 text-sky-800"}`}>
 						<Gamepad className="mx-auto h-12 w-12 opacity-30" />
 						<p className="mt-4 font-bold">No games match this filter</p>
 						<button

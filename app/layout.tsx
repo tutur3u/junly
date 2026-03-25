@@ -35,8 +35,9 @@ const monogram = localFont({
 });
 
 export const metadata: Metadata = {
-	title: "Chunli's Portfolio",
-	description: "A Nintendo Wii U inspired portfolio website for Chunli.",
+	title: "Chunli",
+	description:
+		"A Wii U-inspired personal console for Chunli's frontend, interface, and research work.",
 };
 
 export default function RootLayout({
@@ -47,7 +48,7 @@ export default function RootLayout({
 	return (
 		<html lang="en" className={monogram.variable}>
 			<body
-				className="font-sans text-[21px] md:text-[22px] antialiased overflow-hidden bg-[#e6f3ff]"
+				className="overflow-hidden bg-[#d4f0f7] font-sans text-[21px] antialiased md:text-[22px]"
 				suppressHydrationWarning
 			>
 				<Analytics />

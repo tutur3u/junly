@@ -22,7 +22,7 @@
   }
 
   .wii-u-icon {
-    @apply relative overflow-hidden rounded-[32px] border-[5px] border-white/95 bg-gradient-to-b from-white/95 via-white/80 to-sky-100/70 backdrop-blur-xl shadow-[0_18px_40px_rgba(120,170,205,0.22),0_0_0_1px_rgba(255,255,255,0.45),inset_0_2px_18px_rgba(255,255,255,0.95),inset_0_-18px_28px_rgba(121,175,210,0.18)] cursor-pointer;
+    @apply relative cursor-pointer overflow-hidden rounded-[32px] border-[5px] border-[#d5f4fb] bg-gradient-to-b from-[#dcf8fd] via-[#bdeaf5] to-[#8fd4eb] backdrop-blur-xl shadow-[0_22px_48px_rgba(82,165,197,0.16),0_0_0_1px_rgba(229,252,255,0.24),inset_0_2px_18px_rgba(235,252,255,0.54),inset_0_-18px_28px_rgba(80,166,198,0.16)];
     transition:
       transform 0.22s cubic-bezier(0.25, 0.8, 0.25, 1),
       box-shadow 0.22s cubic-bezier(0.25, 0.8, 0.25, 1),
@@ -31,28 +31,28 @@
 
   .wii-u-icon::before {
     content: '';
-    @apply absolute top-0 left-0 right-0 h-[52%] bg-gradient-to-b from-white/95 via-white/45 to-transparent rounded-t-[28px] pointer-events-none;
+    @apply pointer-events-none absolute top-0 left-0 right-0 h-[52%] rounded-t-[28px] bg-gradient-to-b from-[#effcff]/62 via-[#dff8ff]/18 to-transparent;
   }
 
   .wii-u-icon::after {
     content: '';
-    @apply absolute inset-x-4 bottom-3 h-8 rounded-full bg-sky-300/20 blur-xl pointer-events-none;
+    @apply pointer-events-none absolute inset-x-4 bottom-3 h-8 rounded-full bg-sky-200/20 blur-xl;
   }
 
   .wii-u-icon:hover {
-    @apply scale-[1.045] border-white shadow-[0_24px_44px_rgba(116,178,219,0.28),0_0_0_1px_rgba(255,255,255,0.55),inset_0_2px_22px_rgba(255,255,255,1),inset_0_-18px_30px_rgba(115,173,209,0.2)];
+    @apply scale-[1.045] border-[#e7fbff] shadow-[0_24px_48px_rgba(80,166,198,0.18),0_0_0_1px_rgba(235,252,255,0.3),inset_0_2px_22px_rgba(235,252,255,0.62),inset_0_-18px_30px_rgba(94,181,211,0.16)];
   }
 
   .wii-u-icon:active {
-    @apply scale-[0.985] shadow-[0_8px_18px_rgba(120,170,205,0.2),inset_0_2px_10px_rgba(255,255,255,0.8),inset_0_-10px_20px_rgba(121,175,210,0.14)];
+    @apply scale-[0.985] shadow-[0_10px_20px_rgba(120,170,205,0.16),inset_0_2px_10px_rgba(255,255,255,0.84),inset_0_-10px_20px_rgba(121,175,210,0.16)];
   }
 
   .wii-u-window {
-    @apply bg-white/88 backdrop-blur-2xl border-[4px] border-white/90 rounded-[30px] shadow-[0_36px_88px_rgba(66,108,139,0.3),0_0_0_1px_rgba(255,255,255,0.22),inset_0_2px_20px_rgba(255,255,255,0.94),inset_0_-24px_34px_rgba(176,215,238,0.17)];
+    @apply rounded-[30px] border-[4px] border-[#d5f4fb] bg-[#bfe8f2]/84 backdrop-blur-2xl shadow-[0_34px_86px_rgba(69,151,184,0.18),0_0_0_1px_rgba(227,251,255,0.14),inset_0_2px_20px_rgba(231,252,255,0.48),inset_0_-24px_34px_rgba(103,187,216,0.14)];
   }
 
   .wii-u-titlebar {
-    @apply bg-gradient-to-b from-white/95 via-sky-50/95 to-white/72 border-b border-white/70 rounded-t-[26px] px-6 py-4 flex items-center justify-between shadow-[inset_0_1px_0_rgba(255,255,255,0.98),inset_0_-1px_0_rgba(168,203,226,0.16)];
+    @apply flex items-center justify-between rounded-t-[26px] border-b border-[#cef1f8] bg-gradient-to-b from-[#d9f6fb] via-[#c4edf6] to-[#b8e6f1] px-6 py-4 shadow-[inset_0_1px_0_rgba(233,252,255,0.62),inset_0_-1px_0_rgba(73,163,194,0.16)];
   }
 
   .wii-u-scrollbar::-webkit-scrollbar {
@@ -73,6 +73,18 @@
   .wii-u-scrollbar::-webkit-scrollbar-thumb:hover {
     background: rgba(150, 190, 230, 0.9);
   }
+
+  .launcher-soft-hero {
+    @apply relative overflow-hidden rounded-[32px] border border-[#d5f4fb] bg-[radial-gradient(circle_at_10%_12%,rgba(241,254,255,0.58),transparent_22%),radial-gradient(circle_at_88%_20%,rgba(103,232,249,0.22),transparent_22%),linear-gradient(180deg,rgba(219,248,252,0.96),rgba(196,237,245,0.92))] p-6 shadow-[0_18px_36px_rgba(67,152,183,0.12)];
+  }
+
+  .launcher-mini-tab {
+    @apply inline-flex items-center gap-2 rounded-full border border-[#d5f4fb] bg-[#d7f6fc]/95 px-4 py-2 text-[0.9rem] font-bold uppercase tracking-[0.18em] text-sky-800 shadow-[inset_0_1px_0_rgba(235,253,255,0.48),0_8px_16px_rgba(69,152,184,0.08)];
+  }
+
+  .launcher-stat-tile {
+    @apply rounded-[24px] border border-[#d5f4fb] bg-[#d9f7fc]/95 px-4 py-3 text-slate-700 shadow-[0_12px_24px_rgba(69,152,184,0.1)];
+  }
 }
 
 .bg-stripes {
@@ -86,7 +98,7 @@
 }
 
 .theme-shell {
-  color: rgb(51 65 85);
+  color: rgb(56 71 85);
 }
 
 .theme-dark {
@@ -107,35 +119,35 @@
 
 .wii-u-topbar {
   background:
-    linear-gradient(180deg, rgba(245, 251, 255, 0.94), rgba(228, 241, 250, 0.9)),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.75), transparent);
+    radial-gradient(circle at 15% 0%, rgba(234, 252, 255, 0.38), transparent 24%),
+    linear-gradient(180deg, rgba(194, 238, 247, 0.94), rgba(164, 221, 236, 0.9));
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.95),
-    0 10px 24px rgba(135, 178, 210, 0.12);
+    inset 0 1px 0 rgba(231, 252, 255, 0.4),
+    0 16px 36px rgba(59, 146, 179, 0.12);
 }
 
 .wii-u-topbar::after {
   content: "";
   position: absolute;
   inset: auto 0 0;
-  height: 1px;
-  background: rgba(170, 198, 219, 0.55);
+  height: 0;
+  background: transparent;
 }
 
 .wii-u-user-badge {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 249, 253, 0.94));
+    linear-gradient(180deg, rgba(228, 251, 255, 0.98), rgba(185, 233, 244, 0.94));
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    0 6px 14px rgba(127, 164, 192, 0.12);
+    inset 0 1px 0 rgba(231, 252, 255, 0.72),
+    0 8px 18px rgba(67, 152, 184, 0.12);
 }
 
 .wii-u-status-pill {
   background:
-    linear-gradient(180deg, rgba(250, 252, 255, 0.92), rgba(235, 244, 250, 0.88));
+    linear-gradient(180deg, rgba(220, 248, 253, 0.94), rgba(189, 232, 243, 0.9));
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.95),
-    0 8px 20px rgba(126, 165, 193, 0.12);
+    inset 0 1px 0 rgba(231, 252, 255, 0.64),
+    0 10px 22px rgba(59, 146, 179, 0.12);
 }
 
 .wii-u-home-button {
@@ -166,24 +178,24 @@
 
 .wii-u-dialog-surface {
   background:
-    radial-gradient(circle at top, rgba(255, 255, 255, 0.38), transparent 28%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(244, 249, 252, 0.76));
+    radial-gradient(circle at top, rgba(103, 232, 249, 0.16), transparent 26%),
+    linear-gradient(180deg, rgba(206, 243, 249, 0.76), rgba(188, 232, 242, 0.88));
 }
 
 .wii-u-soft-panel {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(247, 250, 253, 0.66));
+    linear-gradient(180deg, rgba(216, 247, 252, 0.9), rgba(191, 233, 243, 0.8));
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.92),
-    0 14px 28px rgba(130, 169, 196, 0.1);
+    inset 0 1px 0 rgba(231, 252, 255, 0.68),
+    0 18px 34px rgba(67, 152, 184, 0.12);
 }
 
 .wii-u-round-button {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(244, 249, 253, 0.86));
+    linear-gradient(180deg, rgba(223, 249, 253, 0.98), rgba(191, 235, 244, 0.92));
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    0 10px 18px rgba(130, 169, 196, 0.12);
+    inset 0 1px 0 rgba(231, 252, 255, 0.7),
+    0 12px 22px rgba(67, 152, 184, 0.12);
 }
 
 .wii-u-primary-button {
@@ -205,10 +217,10 @@
 
 .wii-u-field {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(250, 252, 255, 0.92));
+    linear-gradient(180deg, rgba(226, 250, 254, 0.98), rgba(201, 239, 247, 0.96));
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    0 6px 12px rgba(130, 169, 196, 0.08);
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 8px 16px rgba(109, 144, 170, 0.1);
 }
 
 .theme-dark .wii-u-icon {
@@ -287,7 +299,7 @@
 }
 
 .theme-dark .wii-u-topbar::after {
-  background: rgba(186, 230, 253, 0.16);
+  background: transparent;
 }
 
 .theme-dark .wii-u-user-badge {
@@ -353,6 +365,30 @@
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.08),
     0 8px 16px rgba(0, 0, 0, 0.14);
+}
+
+.theme-dark .launcher-soft-hero {
+  border-color: rgba(186, 230, 253, 0.12);
+  background:
+    radial-gradient(circle at 12% 14%, rgba(56, 189, 248, 0.16), transparent 26%),
+    linear-gradient(180deg, rgba(11, 20, 32, 0.98), rgba(8, 16, 27, 0.98));
+  box-shadow: 0 22px 42px rgba(0, 0, 0, 0.22);
+}
+
+.theme-dark .launcher-mini-tab {
+  border-color: rgba(186, 230, 253, 0.1);
+  background: rgba(56, 189, 248, 0.1);
+  color: rgb(186 230 253);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+.theme-dark .launcher-stat-tile {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(2, 6, 23, 0.34);
+  color: rgb(226 232 240);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.16);
 }
 
 /* Simplified Animations for Performance */

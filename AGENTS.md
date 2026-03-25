@@ -19,6 +19,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - `useSyncExternalStore` is the safest pattern here for local-storage-backed theme and preference state when hydration has been fragile.
 - Monogram font is loaded locally from `public/fonts/monogram/ttf` via `next/font/local`; keep that local setup instead of swapping to hosted fonts.
 - The current visual direction is a polished Wii U-inspired launcher with authored light and dark themes, not a generic modern dashboard.
+- Light mode styling is split between shared chrome in `app/globals.css` and per-panel surface classes in launcher content files; palette refreshes need both layers updated together.
 - When adding new app experiences, prefer fully themed placeholders with motion and status surfaces rather than plain “coming soon” text.
 - Portfolio game/research entries work better as authored `contentSections` with preserved line breaks and explicit document actions than as derived summary/feature arrays.
 

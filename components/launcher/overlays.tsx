@@ -50,7 +50,7 @@ export function InitialBootOverlay({ theme }: { theme: ThemeMode }) {
 						Chunli
 					</div>
 					<p className={`mt-3 ${theme === "dark" ? "text-slate-400" : "text-slate-500"}`}>
-						Starting up the Wii U-style portfolio system.
+						Starting the personal console and syncing the launcher shell.
 					</p>
 
 					<div
@@ -119,7 +119,7 @@ export function LoadingContent({
 						Launching {app.title}
 					</div>
 					<p className={`mt-3 ${theme === "dark" ? "text-slate-400" : "text-slate-500"}`}>
-						Preparing the interface and loading the window shell.
+						Preparing the panel layout, motion layers, and system chrome.
 					</p>
 
 					<div
@@ -167,7 +167,7 @@ export function ThemePickerOverlay({
 		{
 			id: "light",
 			title: "Light",
-			description: "Bright dashboard with the classic clean Wii U feel.",
+			description: "Pearl-white glass, soft blue haze, and a brighter tablet feel.",
 			icon: <Sun className="h-6 w-6 text-amber-400" />,
 		},
 		{
@@ -215,7 +215,7 @@ export function ThemePickerOverlay({
 							theme === "dark" ? "text-slate-400" : "text-slate-500"
 						}`}
 					>
-						Pick how the launcher should look. You can change this later from
+						Pick the shell mood for the launcher. You can switch it any time from
 						System Settings.
 					</p>
 				</div>
