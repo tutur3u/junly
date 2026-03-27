@@ -10,6 +10,8 @@ declare global {
   var escapeHandledByModal: boolean;
 }
 
+const ENABLE_ART_GALLERY = false;
+
 // All images from public/media/portfolio folder
 const PORTFOLIO_IMAGES = [
 	"/media/portfolio/games/atelier/1.png",
@@ -41,6 +43,7 @@ const PORTFOLIO_IMAGES = [
 	"/media/portfolio/games/remedy/gameplay/5.png",
 	"/media/portfolio/games/remedy/gameplay/6.png",
 	"/media/portfolio/games/remedy/gameplay/7.png",
+	"/media/portfolio/games/remedy/gameplay/8.png",
 	"/media/portfolio/games/wok/gameplay/1.png",
 	"/media/portfolio/games/wok/gameplay/2.png",
 	"/media/portfolio/games/wok/gameplay/3.png",
@@ -72,6 +75,8 @@ const PORTFOLIO_IMAGES = [
 	"/media/portfolio/games/magi/gameplay/10.png",
 	"/media/portfolio/games/magi/gameplay/11.png",
 	"/media/portfolio/games/magi/gameplay/12.png",
+	"/media/portfolio/games/magi/gameplay/13.png",
+	"/media/portfolio/games/magi/gameplay/14.png",
 	"/media/portfolio/games/mario/gameplay/1.png",
 	"/media/portfolio/games/mario/gameplay/2.png",
 	"/media/portfolio/games/mario/gameplay/3.png",
@@ -84,7 +89,76 @@ type GalleryContentProps = {
 	setSelectedArtwork: (value: string | null) => void;
 };
 
-export function GalleryContent({ theme, setSelectedArtwork }: GalleryContentProps) {
+function GalleryComingSoon({ theme }: Pick<GalleryContentProps, "theme">) {
+	const isDark = theme === "dark";
+
+	return (
+		<div className="h-full overflow-y-auto p-6 wii-u-scrollbar">
+			<div className="launcher-soft-hero">
+				<div className="pointer-events-none absolute inset-0 bg-stripes opacity-10" />
+				<div className="relative flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+					<div>
+						<div className="launcher-mini-tab">
+							<ImageIcon className="h-4 w-4" />
+							Art Archive
+						</div>
+						<h2 className={`mt-4 text-3xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>
+							Art tab coming soon.
+						</h2>
+						<p className={`mt-3 max-w-2xl text-sm leading-7 ${isDark ? "text-slate-400" : "text-slate-500"}`}>
+							The current art gallery is still in the launcher, but it is intentionally hidden behind a feature flag while this section gets a cleaner dedicated pass.
+						</p>
+					</div>
+					<div className="grid grid-cols-3 gap-3">
+						{[
+							{ label: "Status", value: "Soon", icon: <Sparkles className="h-4 w-4" /> },
+							{ label: "Archive", value: "Hidden", icon: <ImageIcon className="h-4 w-4" /> },
+							{ label: "Mode", value: "Standby", icon: <Expand className="h-4 w-4" /> },
+						].map((item) => (
+							<div key={item.label} className="launcher-stat-tile min-w-[108px]">
+								<div className={`flex items-center gap-2 text-xs uppercase tracking-[0.16em] ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+									{item.icon}
+									{item.label}
+								</div>
+								<div className="mt-2 text-xl font-bold">{item.value}</div>
+							</div>
+						))}
+					</div>
+				</div>
+			</div>
+
+			<div
+				className={`mt-6 rounded-[28px] border p-6 sm:p-8 ${
+					isDark
+						? "border-white/10 bg-slate-900/65"
+						: "border-[#daf7fc] bg-[#e8fcff]/90 shadow-[0_18px_36px_rgba(67,152,184,0.12)]"
+				}`}
+			>
+				<div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+					<div className="max-w-2xl">
+						<h3 className={`text-xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>
+							A dedicated art surface is in progress.
+						</h3>
+						<p className={`mt-3 text-sm leading-7 ${isDark ? "text-slate-300" : "text-slate-600"}`}>
+							For now, this tab stays as a placeholder instead of exposing the existing mixed gallery. When the flag flips back on, the archived images and fullscreen browser are still ready underneath.
+						</p>
+					</div>
+					<div
+						className={`rounded-[24px] border px-5 py-4 text-sm font-bold ${
+							isDark
+								? "border-emerald-400/20 bg-emerald-500/10 text-emerald-300"
+								: "border-cyan-200/80 bg-cyan-100/70 text-cyan-800"
+						}`}
+					>
+						Coming Soon
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+}
+
+function GalleryArchive({ theme, setSelectedArtwork }: Pick<GalleryContentProps, "theme" | "setSelectedArtwork">) {
 	const isDark = theme === "dark";
 	const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
@@ -270,4 +344,12 @@ export function GalleryContent({ theme, setSelectedArtwork }: GalleryContentProp
 			)}
 		</div>
 	);
+}
+
+export function GalleryContent({ theme, setSelectedArtwork }: GalleryContentProps) {
+	if (!ENABLE_ART_GALLERY) {
+		return <GalleryComingSoon theme={theme} />;
+	}
+
+	return <GalleryArchive theme={theme} setSelectedArtwork={setSelectedArtwork} />;
 }

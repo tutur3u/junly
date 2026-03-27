@@ -21,6 +21,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - The current visual direction is a polished Wii U-inspired launcher with authored light and dark themes, not a generic modern dashboard.
 - Light mode styling is split between shared chrome in `app/globals.css` and per-panel surface classes in launcher content files; palette refreshes need both layers updated together.
 - When adding new app experiences, prefer fully themed placeholders with motion and status surfaces rather than plain “coming soon” text.
+- For launcher tabs that are not ready, prefer a local feature flag in the content component so the authored experience can stay hidden without deleting its data or interaction code.
 - Portfolio game/research entries work better as authored `contentSections` with preserved line breaks and explicit document actions than as derived summary/feature arrays.
 
 ## What Does Not Work Well
