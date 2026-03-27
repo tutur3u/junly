@@ -103,17 +103,18 @@ function GalleryComingSoon({ theme }: Pick<GalleryContentProps, "theme">) {
 							Art Archive
 						</div>
 						<h2 className={`mt-4 text-3xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>
-							Art tab coming soon.
+							Art gallery coming soon.
 						</h2>
 						<p className={`mt-3 max-w-2xl text-sm leading-7 ${isDark ? "text-slate-400" : "text-slate-500"}`}>
-							The current art gallery is still in the launcher, but it is intentionally hidden behind a feature flag while this section gets a cleaner dedicated pass.
+							A dedicated space for illustrations, experiments, and visual studies is on the way.
+							This tab will open into a curated art collection built for slower browsing.
 						</p>
 					</div>
 					<div className="grid grid-cols-3 gap-3">
 						{[
 							{ label: "Status", value: "Soon", icon: <Sparkles className="h-4 w-4" /> },
-							{ label: "Archive", value: "Hidden", icon: <ImageIcon className="h-4 w-4" /> },
-							{ label: "Mode", value: "Standby", icon: <Expand className="h-4 w-4" /> },
+							{ label: "Focus", value: "Art", icon: <ImageIcon className="h-4 w-4" /> },
+							{ label: "Format", value: "Curated", icon: <Expand className="h-4 w-4" /> },
 						].map((item) => (
 							<div key={item.label} className="launcher-stat-tile min-w-[108px]">
 								<div className={`flex items-center gap-2 text-xs uppercase tracking-[0.16em] ${isDark ? "text-slate-500" : "text-slate-400"}`}>
@@ -137,10 +138,10 @@ function GalleryComingSoon({ theme }: Pick<GalleryContentProps, "theme">) {
 				<div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
 					<div className="max-w-2xl">
 						<h3 className={`text-xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>
-							A dedicated art surface is in progress.
+							New work is being prepared for display.
 						</h3>
 						<p className={`mt-3 text-sm leading-7 ${isDark ? "text-slate-300" : "text-slate-600"}`}>
-							For now, this tab stays as a placeholder instead of exposing the existing mixed gallery. When the flag flips back on, the archived images and fullscreen browser are still ready underneath.
+							Expect a full-screen gallery with finished pieces, sketchbook fragments, and mood-heavy visual experiments gathered into one place.
 						</p>
 					</div>
 					<div
