@@ -5,12 +5,12 @@ import type { ThemeMode } from "@/components/launcher/types";
 const CONTACT_MODULES = [
 	{
 		title: "Best For",
-		value: "Frontend builds, interface direction, portfolio refreshes",
+		value: "Game ideas, prototypes, demos, and game art collaborations",
 		icon: <Mail className="h-5 w-5" />,
 	},
 	{
 		title: "Working Style",
-		value: "Async-friendly, collaborative, and detail-obsessed",
+		value: "Collaborative, experiment-friendly, and detail-focused",
 		icon: <Comment className="h-5 w-5" />,
 	},
 	{
@@ -21,10 +21,10 @@ const CONTACT_MODULES = [
 ] as const;
 
 const EMAIL_GUIDE = [
-	"Who you are and what you are building",
-	"The goal, audience, and launch timing",
-	"Any links, references, or visual directions to keep or avoid",
-	"Budget range if you already have one",
+	"Who you are and what kind of game or project you are building",
+	"The design, art, or prototype support you need",
+	"The audience, platform, and timing if those are already defined",
+	"Any references, documents, or visual directions worth sharing",
 ] as const;
 
 export function ContactContent({ theme }: { theme: ThemeMode }) {
@@ -42,13 +42,13 @@ export function ContactContent({ theme }: { theme: ThemeMode }) {
 							Contact Console
 						</div>
 						<h2 className={`mt-5 max-w-2xl text-4xl font-bold leading-[1.15] md:text-5xl ${isDark ? "text-white" : "text-slate-800"}`}>
-							Fun briefs, cool product ideas, and weird little internet worlds are all welcome here.
+							Game pitches, prototype briefs, and art-heavy collaborations are all welcome here.
 						</h2>
 						<p className={`mt-5 max-w-2xl text-[1.02rem] leading-8 ${isDark ? "text-slate-300" : "text-slate-600"}`}>
-							If a site or interface needs more charm, more personality, or just a
-							better sense of itself, that is the sweet spot. The most useful emails
-							usually mention the goal, the audience, the timing, and the vibe the
-							finished thing should leave behind.
+							If a project needs design support, visual development, or a prototype that
+							helps the idea become playable, that is the right kind of email to send.
+							The most useful notes usually mention the project itself, the kind of help
+							needed, and any timing or references already in place.
 						</p>
 
 						<div className="mt-6 grid gap-3 md:grid-cols-3">
@@ -109,8 +109,8 @@ export function ContactContent({ theme }: { theme: ThemeMode }) {
 
 						<p className={`mt-4 text-sm leading-7 ${isDark ? "text-slate-400" : "text-slate-500"}`}>
 							Skip the form and send a note straight to the inbox instead. A clear email
-							is the fastest route to a real conversation, especially if it includes the
-							basics of the project and the feeling the final work should leave behind.
+							is the fastest route to a real conversation, especially when it explains
+							the project, the support needed, and what stage the work is currently in.
 						</p>
 
 						<div
@@ -127,8 +127,9 @@ export function ContactContent({ theme }: { theme: ThemeMode }) {
 								hi@chunli.space
 							</div>
 							<p className={`mt-3 max-w-lg text-sm leading-7 ${isDark ? "text-slate-300" : "text-sky-900/76"}`}>
-								Use this address for collaboration inquiries, portfolio work, UI design
-								help, and any project that needs stronger presence and cleaner execution.
+								Use this address for collaboration inquiries, prototype work, game design
+								support, game art, and student or indie projects that need an extra set
+								of hands.
 							</p>
 
 							<div className="mt-5 flex flex-col gap-3 sm:flex-row">

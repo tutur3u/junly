@@ -214,23 +214,23 @@ export const POSTS: FeedPost[] = [
 	{
 		id: 1,
 		user: "User_1",
-		copy: "Spent the afternoon tuning panel shadows so the light mode feels more like pearl plastic than flat white. Worth it.",
+		copy: "Been sketching game ideas that start sweet, then take one weird left turn halfway through.",
 		seed: "user1",
 		initialYeahs: 14,
-		initialComments: ["The softer glass look reads way better now."],
+		initialComments: ["That sounds like the exact right amount of trouble."],
 	},
 	{
 		id: 2,
 		user: "User_2",
-		copy: "Still chasing that feeling where a portfolio behaves more like a handheld OS than a scrolling document.",
+		copy: "Prototypes keep teaching me more than polished docs do. I like finding the feeling of a game early.",
 		seed: "user2",
 		initialYeahs: 21,
-		initialComments: ["That is exactly why the launcher framing works here."],
+		initialComments: ["A rough playable build answers so many questions fast."],
 	},
 	{
 		id: 3,
 		user: "User_3",
-		copy: "Current obsession: interfaces that feel collectible before the user even reads the first paragraph.",
+		copy: "Pixel art day. Tiny props and little environment details can do so much heavy lifting for a scene.",
 		seed: "user3",
 		initialYeahs: 9,
 		initialComments: [],
@@ -238,10 +238,10 @@ export const POSTS: FeedPost[] = [
 	{
 		id: 4,
 		user: "User_4",
-		copy: "Trying to make every route feel like it belongs to the same little machine, not just the same site.",
+		copy: "I like jumping genres on purpose. Every project gets more interesting when it is allowed to misbehave a little.",
 		seed: "user4",
 		initialYeahs: 17,
-		initialComments: ["The shared shell language really sells that idea."],
+		initialComments: ["Genre hopping keeps the ideas sharp."],
 	},
 ];
 

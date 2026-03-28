@@ -1,64 +1,71 @@
-import { Heart, Link, Sparkles, Zap } from "pixelarticons/react";
+import { Gamepad, Heart, Link, Sparkles, Trophy } from "pixelarticons/react";
 import { motion } from "motion/react";
 import type { ThemeMode } from "@/components/launcher/types";
 
 const PROFILE_FACTS = [
-	["Name", "Chunli"],
-	["Alias", "Chunli.exe"],
-	["Base", "Online, bouncing between design systems, ideas, and dreamy UI experiments"],
-	["Status", "Open to select freelance, design direction, and frontend collaborations"],
+	["Name", "Cat Tuong"],
+	["Call Me", "Chunli"],
+	["Role", "Game Designer and Game Artist"],
+	["Degree", "Bachelor of Design in Games, graduated with Distinction in 2026"],
 ] as const;
 
 const PROFILE_CHIPS = [
-	"Interface art direction",
-	"Frontend systems and component architecture",
-	"Motion-led product presentation",
-	"Playful product polish",
+	"Brainstorming fun and unusual game ideas",
+	"Experimenting across different genres",
+	"Designing experiences that feel a little unconventional",
+	"Building prototypes and demos",
+	"Drawing pixel art",
+	"Creating game assets",
 ] as const;
 
 const ABOUT_TRAITS = [
 	{
-		title: "Interface Direction",
+		title: "Idea Playground",
 		description:
-			"I like screens that feel staged, tactile, and a little collectible. The goal is never just utility. It is utility with a point of view.",
+			"I like concepts that start with a strong player feeling and then twist into something a little unexpected. The fun usually lives in that strange extra step.",
 		icon: <Sparkles className="h-5 w-5" />,
 		accent: "from-cyan-300 via-sky-400 to-blue-500",
 	},
 	{
-		title: "Build Practice",
+		title: "Prototype First",
 		description:
-			"The code side focuses on reusable systems, responsive behavior, and motion that helps the interface feel alive instead of merely animated.",
-		icon: <Zap className="h-5 w-5" />,
+			"Prototypes and demos help me test tone, mechanics, and pacing early. I would rather learn from a rough playable build than over-polish a document in isolation.",
+		icon: <Gamepad className="h-5 w-5" />,
 		accent: "from-emerald-300 via-lime-400 to-yellow-300",
 	},
 	{
-		title: "Taste Profile",
+		title: "Art and Assets",
 		description:
-			"Soft hardware cues, toy-like clarity, and a little weirdness. Enough charm to stay memorable, enough structure to stay useful.",
+			"Pixel art, mockups, and supporting assets are part of how I shape a world. The visual side is not decoration after the fact. It is part of the design language.",
 		icon: <Heart className="h-5 w-5" />,
 		accent: "from-pink-400 via-fuchsia-500 to-orange-400",
 	},
 ] as const;
 
-const ABOUT_SIGNALS = [
-	{ label: "Frontend Craft", value: "94%", width: "94%" },
-	{ label: "Visual Systems", value: "92%", width: "92%" },
-	{ label: "Interaction Polish", value: "96%", width: "96%" },
-	{ label: "Playful Restraint", value: "89%", width: "89%" },
-] as const;
-
 const CURRENT_ROTATION = [
-	"Launcher shells and console-inspired UI framing",
-	"Component systems that keep their personality",
-	"Motion timing that feels sweet instead of noisy",
-	"Interfaces that read like tiny worlds with their own rules",
+	"Brainstorming game ideas that feel playful, weird, or slightly off-center",
+	"Trying different genres until the concept finds the right shape",
+	"Turning early concepts into fast prototypes and small demos",
+	"Building pixel-art details and assets that make a world feel lived in",
 ] as const;
 
-const STUDIO_NOTES = [
-	"Build the design language from the interaction model outward.",
-	"Treat every panel like a product surface, not a plain content box.",
-	"Keep whimsy visible, but never at the expense of hierarchy.",
-	"Make the interface memorable before it becomes familiar.",
+const TOOL_GROUPS = [
+	{
+		title: "Game Engine",
+		items: ["Unity", "Unreal Engine", "RPG Maker", "Twine"],
+	},
+	{
+		title: "Production Planning",
+		items: ["Trello", "Excel", "Miro", "Notion", "Word"],
+	},
+	{
+		title: "Game Mockup",
+		items: ["Photoshop", "PowerPoint"],
+	},
+	{
+		title: "Game Art",
+		items: ["Clip Studio Paint", "Photoshop", "Aseprite", "Procreate"],
+	},
 ] as const;
 
 const FEATURED_LINK = {
@@ -66,7 +73,7 @@ const FEATURED_LINK = {
 	href: "https://chunlii.itch.io",
 	title: "Play Space",
 	description:
-		"Playable experiments, game builds, and tiny worlds that show another side of the work.",
+		"Playable prototypes, experiments, and finished game work that show how the ideas hold up once they are in motion.",
 } as const;
 
 export function AboutContent({ theme }: { theme: ThemeMode }) {
@@ -87,24 +94,37 @@ export function AboutContent({ theme }: { theme: ThemeMode }) {
 							<Sparkles className="h-4 w-4" />
 							Identity Module
 						</div>
-						<h2 className={`mt-4 max-w-3xl text-4xl font-bold leading-[1.08] md:text-6xl ${isDark ? "text-white" : "text-slate-800"}`}>
-							Chunli, translated into panels, presets, and a slightly over-loved UI brain.
+						<h2
+							className={`mt-4 max-w-3xl text-4xl font-bold leading-[1.08] md:text-6xl ${
+								isDark ? "text-white" : "text-slate-800"
+							}`}
+						>
+							Hi! I&apos;m Cat Tuong, but please call me Chunli.
 						</h2>
-						<p className={`mt-5 max-w-3xl text-[1.02rem] leading-8 ${isDark ? "text-slate-300" : "text-sky-900/80"}`}>
-							This page works like a cheerful operator card instead of a formal bio. It
-							packs the who, what, and why into soft console panels so the introduction
-							feels more like opening a favorite device than reading a resume block.
+						<p
+							className={`mt-5 max-w-3xl text-[1.02rem] leading-8 ${
+								isDark ? "text-slate-300" : "text-sky-900/80"
+							}`}
+						>
+							My role is primarily game design and game art. This page keeps the intro in
+							the same soft-console language as the rest of the launcher, but the core of
+							it is simple: I like making games that feel fun, curious, and a little
+							unconventional.
 						</p>
 					</div>
 
 					<div className="grid grid-cols-3 gap-3">
 						{[
-							{ label: "Mode", value: "Playful" },
-							{ label: "Focus", value: "UI" },
-							{ label: "Signal", value: "Live" },
+							{ label: "Role", value: "Design + Art" },
+							{ label: "Degree", value: "Distinction '26" },
+							{ label: "Focus", value: "Prototypes" },
 						].map((item) => (
 							<div key={item.label} className="launcher-stat-tile min-w-[112px]">
-								<div className={`text-xs uppercase tracking-[0.16em] ${isDark ? "text-slate-500" : "text-sky-700/80"}`}>
+								<div
+									className={`text-xs uppercase tracking-[0.16em] ${
+										isDark ? "text-slate-500" : "text-sky-700/80"
+									}`}
+								>
 									{item.label}
 								</div>
 								<div className="mt-2 text-xl font-bold">{item.value}</div>
@@ -125,24 +145,31 @@ export function AboutContent({ theme }: { theme: ThemeMode }) {
 							: "border-[#daf7fc] bg-[linear-gradient(180deg,rgba(232,252,255,0.96),rgba(214,246,251,0.88))] shadow-[0_18px_36px_rgba(67,152,184,0.1)]"
 					}`}
 				>
-					<div className={`text-xs uppercase tracking-[0.18em] ${isDark ? "text-slate-500" : "text-cyan-700"}`}>
+					<div
+						className={`text-xs uppercase tracking-[0.18em] ${
+							isDark ? "text-slate-500" : "text-cyan-700"
+						}`}
+					>
 						Bio
 					</div>
-					<div className={`mt-4 space-y-4 text-[0.98rem] leading-8 ${isDark ? "text-slate-300" : "text-sky-900/78"}`}>
+					<div
+						className={`mt-4 space-y-4 text-[0.98rem] leading-8 ${
+							isDark ? "text-slate-300" : "text-sky-900/78"
+						}`}
+					>
 						<p>
-							Chunli builds frontend work that feels intentional from the first glance.
-							The sweet spot is where interface design, motion, and system thinking all
-							click into the same little universe.
+							I enjoy brainstorming fun and unusual game ideas, experimenting across
+							different genres, and designing experiences that do not feel too expected.
 						</p>
 						<p>
-							I gravitate toward launcher-like navigation, rounded glassy shells, and
-							layouts that feel collected rather than generic. Even when the work is
-							playful, the structure underneath still needs to be practical and sturdy.
+							A lot of my process happens through building prototypes and demos. I like
+							finding the shape of a game by making it playable early, then sharpening the
+							experience once the feeling is clear.
 						</p>
 						<p>
-							The bigger aim is simple: make products that are clear enough to use fast,
-							but distinct enough that they leave a taste in your memory after you close
-							the tab.
+							On the art side, I spend that same energy on pixel art, mockups, and assets
+							that help the world feel cohesive. I want the mechanics, tone, and visuals
+							to support each other from the start.
 						</p>
 					</div>
 
@@ -173,14 +200,26 @@ export function AboutContent({ theme }: { theme: ThemeMode }) {
 						aria-label="Visit Chunli on itch.io"
 					>
 						<div>
-							<div className={`text-xs uppercase tracking-[0.18em] ${isDark ? "text-slate-500" : "text-cyan-700"}`}>
+							<div
+								className={`text-xs uppercase tracking-[0.18em] ${
+									isDark ? "text-slate-500" : "text-cyan-700"
+								}`}
+							>
 								{FEATURED_LINK.title}
 							</div>
-							<div className={`mt-2 flex items-center gap-2 text-lg font-bold ${isDark ? "text-white" : "text-slate-800"}`}>
+							<div
+								className={`mt-2 flex items-center gap-2 text-lg font-bold ${
+									isDark ? "text-white" : "text-slate-800"
+								}`}
+							>
 								<Link className="h-4 w-4" />
 								{FEATURED_LINK.label}
 							</div>
-							<p className={`mt-2 max-w-xl text-sm leading-7 ${isDark ? "text-slate-300" : "text-sky-900/76"}`}>
+							<p
+								className={`mt-2 max-w-xl text-sm leading-7 ${
+									isDark ? "text-slate-300" : "text-sky-900/76"
+								}`}
+							>
 								{FEATURED_LINK.description}
 							</p>
 						</div>
@@ -206,11 +245,19 @@ export function AboutContent({ theme }: { theme: ThemeMode }) {
 				>
 					<div className="flex items-start justify-between gap-4">
 						<div>
-							<div className={`text-xs uppercase tracking-[0.18em] ${isDark ? "text-slate-500" : "text-cyan-700"}`}>
+							<div
+								className={`text-xs uppercase tracking-[0.18em] ${
+									isDark ? "text-slate-500" : "text-cyan-700"
+								}`}
+							>
 								Profile Card
 							</div>
-							<div className={`mt-2 text-2xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>
-								Operator Readout
+							<div
+								className={`mt-2 text-2xl font-bold ${
+									isDark ? "text-white" : "text-slate-800"
+								}`}
+							>
+								Creative Readout
 							</div>
 						</div>
 						<div
@@ -238,13 +285,25 @@ export function AboutContent({ theme }: { theme: ThemeMode }) {
 						))}
 					</div>
 
-					<div className={`mt-5 rounded-[24px] border p-4 ${isDark ? "border-white/8 bg-slate-950/35" : "border-[#daf7fc] bg-[#ecfdff]/90"}`}>
-						<div className={`text-xs uppercase tracking-[0.16em] ${isDark ? "text-slate-500" : "text-cyan-700"}`}>
+					<div
+						className={`mt-5 rounded-[24px] border p-4 ${
+							isDark ? "border-white/8 bg-slate-950/35" : "border-[#daf7fc] bg-[#ecfdff]/90"
+						}`}
+					>
+						<div
+							className={`text-xs uppercase tracking-[0.16em] ${
+								isDark ? "text-slate-500" : "text-cyan-700"
+							}`}
+						>
 							Vibe Check
 						</div>
-						<p className={`mt-3 text-sm leading-7 ${isDark ? "text-slate-300" : "text-sky-900/78"}`}>
-							Soft-console energy, frontend rigor, and a stubborn refusal to let polished
-							work become visually anonymous.
+						<p
+							className={`mt-3 text-sm leading-7 ${
+								isDark ? "text-slate-300" : "text-sky-900/78"
+							}`}
+						>
+							Prototype-first thinking, playful genre curiosity, and a soft spot for
+							pixel details that make a game world feel personal.
 						</p>
 					</div>
 				</motion.div>
@@ -264,7 +323,9 @@ export function AboutContent({ theme }: { theme: ThemeMode }) {
 						}`}
 					>
 						<div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${trait.accent}`} />
-						<div className={`inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br ${trait.accent} text-white shadow-lg`}>
+						<div
+							className={`inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br ${trait.accent} text-white shadow-lg`}
+						>
 							{trait.icon}
 						</div>
 						<h3 className={`mt-4 text-xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>
@@ -290,11 +351,19 @@ export function AboutContent({ theme }: { theme: ThemeMode }) {
 				>
 					<div className="flex items-center justify-between">
 						<div>
-							<div className={`text-xs uppercase tracking-[0.18em] ${isDark ? "text-slate-500" : "text-cyan-700"}`}>
-								Signal Board
+							<div
+								className={`text-xs uppercase tracking-[0.18em] ${
+									isDark ? "text-slate-500" : "text-cyan-700"
+								}`}
+							>
+								Tool Stack
 							</div>
-							<div className={`mt-2 text-2xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>
-								Craft Meter
+							<div
+								className={`mt-2 text-2xl font-bold ${
+									isDark ? "text-white" : "text-slate-800"
+								}`}
+							>
+								What I Build With
 							</div>
 						</div>
 						<div
@@ -302,25 +371,49 @@ export function AboutContent({ theme }: { theme: ThemeMode }) {
 								isDark ? "bg-emerald-400/12 text-emerald-300" : "bg-cyan-50 text-cyan-800"
 							}`}
 						>
-							System Calm
+							Active Kit
 						</div>
 					</div>
 
-					<div className="mt-5 space-y-4">
-						{ABOUT_SIGNALS.map((item, index) => (
-							<div key={item.label}>
-								<div className="mb-2 flex items-center justify-between text-sm">
-									<span className={isDark ? "text-slate-300" : "text-sky-900/78"}>{item.label}</span>
-									<span className={isDark ? "text-slate-500" : "text-sky-700/70"}>{item.value}</span>
+					<div className="mt-5 grid gap-4 md:grid-cols-2">
+						{TOOL_GROUPS.map((group) => (
+							<div
+								key={group.title}
+								className={`rounded-[24px] border p-4 ${
+									isDark
+										? "border-white/8 bg-slate-950/40"
+										: "border-[#daf7fc] bg-[#ecfdff]/86"
+								}`}
+							>
+								<div
+									className={`text-xs uppercase tracking-[0.16em] ${
+										isDark ? "text-slate-500" : "text-sky-700/80"
+									}`}
+								>
+									{group.title}
 								</div>
-								<div className={`h-3 rounded-full ${isDark ? "bg-slate-900" : "bg-cyan-100/90"}`}>
-									<motion.div
-										initial={{ width: 0 }}
-										animate={{ width: item.width }}
-										transition={{ duration: 0.55, delay: 0.08 * index, ease: "easeOut" }}
-										className="h-full rounded-full bg-gradient-to-r from-cyan-300 via-sky-400 to-blue-500"
-									/>
-								</div>
+								<ul
+									className={`mt-4 space-y-3 text-sm leading-6 ${
+										isDark ? "text-slate-300" : "text-sky-900/78"
+									}`}
+								>
+									{group.items.map((item, index) => (
+										<li key={item} className="flex gap-3">
+											<span
+												className={`mt-1 h-2.5 w-2.5 flex-shrink-0 rounded-full ${
+													index % 2 === 0
+														? isDark
+															? "bg-cyan-300"
+															: "bg-cyan-500"
+														: isDark
+															? "bg-pink-300"
+															: "bg-sky-500"
+												}`}
+											/>
+											{item}
+										</li>
+									))}
+								</ul>
 							</div>
 						))}
 					</div>
@@ -337,11 +430,15 @@ export function AboutContent({ theme }: { theme: ThemeMode }) {
 								: "border-[#daf7fc] bg-[linear-gradient(180deg,rgba(235,253,255,0.96),rgba(216,247,251,0.88))] shadow-[0_18px_36px_rgba(67,152,184,0.08)]"
 						}`}
 					>
-						<div className={`text-xs uppercase tracking-[0.18em] ${isDark ? "text-slate-500" : "text-cyan-700"}`}>
-							Current Rotation
+						<div
+							className={`text-xs uppercase tracking-[0.18em] ${
+								isDark ? "text-slate-500" : "text-cyan-700"
+							}`}
+						>
+							Creative Loop
 						</div>
 						<div className={`mt-2 text-2xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>
-							What I Keep Clicking On
+							What I Keep Returning To
 						</div>
 						<ul className={`mt-5 space-y-3 text-sm leading-6 ${isDark ? "text-slate-300" : "text-sky-900/76"}`}>
 							{CURRENT_ROTATION.map((note, index) => (
@@ -373,34 +470,48 @@ export function AboutContent({ theme }: { theme: ThemeMode }) {
 								: "border-[#daf7fc] bg-[linear-gradient(180deg,rgba(235,253,255,0.96),rgba(216,247,251,0.88))] shadow-[0_18px_36px_rgba(67,152,184,0.08)]"
 						}`}
 					>
-						<div className={`text-xs uppercase tracking-[0.18em] ${isDark ? "text-slate-500" : "text-cyan-700"}`}>
-							Studio Notes
+						<div
+							className={`text-xs uppercase tracking-[0.18em] ${
+								isDark ? "text-slate-500" : "text-cyan-700"
+							}`}
+						>
+							Education
 						</div>
 						<div className={`mt-2 text-2xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>
-							Keep-It-Cute Rules
+							Game Design Degree
 						</div>
-						<ul className={`mt-5 space-y-3 text-sm leading-6 ${isDark ? "text-slate-300" : "text-sky-900/76"}`}>
-							{STUDIO_NOTES.map((note, index) => (
-								<li key={note} className="flex gap-3">
-									<span
-										className={`mt-1 h-2.5 w-2.5 flex-shrink-0 rounded-full ${
-											index % 3 === 0
-												? isDark
-													? "bg-cyan-300"
-													: "bg-cyan-500"
-												: index % 3 === 1
-													? isDark
-														? "bg-pink-300"
-														: "bg-pink-500"
-													: isDark
-														? "bg-emerald-300"
-														: "bg-emerald-500"
+						<div
+							className={`mt-5 rounded-[24px] border p-4 ${
+								isDark ? "border-amber-300/20 bg-amber-400/8" : "border-[#daf7fc] bg-[#f0feff]"
+							}`}
+						>
+							<div className="flex items-start gap-3">
+								<div
+									className={`inline-flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl ${
+										isDark ? "bg-amber-300/12 text-amber-200" : "bg-amber-50 text-amber-700"
+									}`}
+								>
+									<Trophy className="h-5 w-5" />
+								</div>
+								<div>
+									<div
+										className={`text-sm font-bold ${
+											isDark ? "text-white" : "text-slate-800"
 										}`}
-									/>
-									{note}
-								</li>
-							))}
-						</ul>
+									>
+										Bachelor of Design in Games
+									</div>
+									<p
+										className={`mt-2 text-sm leading-7 ${
+											isDark ? "text-slate-300" : "text-sky-900/78"
+										}`}
+									>
+										Graduated with Distinction in 2026. The degree shaped both the design
+										side of the practice and the art side that supports each project.
+									</p>
+								</div>
+							</div>
+						</div>
 					</motion.div>
 				</div>
 			</section>

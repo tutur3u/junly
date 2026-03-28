@@ -116,8 +116,8 @@ export function BlogContent({ theme }: { theme: ThemeMode }) {
 							</div>
 							<h2 className={`text-3xl font-bold ${isDark ? "text-green-300" : "text-green-700"}`}>Tiny notes, bright mood.</h2>
 							<p className={`mt-2 max-w-2xl text-sm leading-7 ${isDark ? "text-slate-400" : "text-slate-500"}`}>
-								Tiny notes from the studio: process snapshots, interface crushes, and
-								little ideas that felt too fun to leave in drafts.
+								Tiny notes from the studio: prototype snapshots, art experiments, and
+								little game ideas that felt too fun to leave in drafts.
 							</p>
 						</div>
 

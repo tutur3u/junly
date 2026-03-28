@@ -37,7 +37,7 @@ const monogram = localFont({
 export const metadata: Metadata = {
 	title: "Chunli",
 	description:
-		"A Wii U-inspired personal console for Chunli's frontend, interface, and research work.",
+		"A Wii U-inspired personal console for Chunli's game design, game art, prototypes, and research work.",
 };
 
 export default function RootLayout({
