@@ -256,6 +256,12 @@ export const GAME_PREVIEWS: GamePreview[] = [
 		description:
 			"A punchy story-driven RPG about an aspiring romance novelist who accidentally stumbles into magical-girl chaos and has to save the day in the least expected way possible.",
 		genres: ["Vertical Slice", "Turn-based", "Experimental", "Solo Dev"],
+		documents: [
+			{
+				label: "MAGI GIRL Pre-production Pitch Deck",
+				url: "https://drive.google.com/file/d/1GOaKSNQvad50R99k17lNhF3te1OBi5Hs/view",
+			},
+		],
 		screenshots: {
 			gameplay: [
 				"/media/portfolio/games/magi/gameplay/1.png",

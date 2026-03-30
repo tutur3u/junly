@@ -329,12 +329,12 @@ export function AboutContent({ theme }: { theme: ThemeMode }) {
 				))}
 			</section>
 
-			<section className="grid gap-4 xl:grid-cols-[1.08fr_0.92fr]">
+			<section className="grid gap-4 xl:grid-cols-[0.92fr_1.08fr]">
 				<motion.div
 					initial={{ opacity: 0, y: 16 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.3, delay: 0.28 }}
-					className={`rounded-[28px] border p-5 ${
+					className={`rounded-[28px] border p-5 xl:order-2 ${
 						isDark
 							? "border-cyan-200/10 bg-slate-950/45"
 							: "border-[#daf7fc] bg-[linear-gradient(180deg,rgba(234,253,255,0.96),rgba(211,245,251,0.88))] shadow-[0_18px_36px_rgba(67,152,184,0.08)]"
@@ -410,47 +410,7 @@ export function AboutContent({ theme }: { theme: ThemeMode }) {
 					</div>
 				</motion.div>
 
-				<div className="grid gap-4">
-					<motion.div
-						initial={{ opacity: 0, y: 16 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.3, delay: 0.32 }}
-						className={`rounded-[28px] border p-5 ${
-							isDark
-								? "border-white/8 bg-slate-950/40"
-								: "border-[#daf7fc] bg-[linear-gradient(180deg,rgba(235,253,255,0.96),rgba(216,247,251,0.88))] shadow-[0_18px_36px_rgba(67,152,184,0.08)]"
-						}`}
-					>
-						<div
-							className={`text-xs uppercase tracking-[0.18em] ${
-								isDark ? "text-slate-500" : "text-cyan-700"
-							}`}
-						>
-							Creative Loop
-						</div>
-						<div className={`mt-2 text-2xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>
-							What I Keep Returning To
-						</div>
-						<ul className={`mt-5 space-y-3 text-sm leading-6 ${isDark ? "text-slate-300" : "text-sky-900/76"}`}>
-							{CURRENT_ROTATION.map((note, index) => (
-								<li key={note} className="flex gap-3">
-									<span
-										className={`mt-1 h-2.5 w-2.5 flex-shrink-0 rounded-full ${
-											index % 2 === 0
-												? isDark
-													? "bg-cyan-300"
-													: "bg-cyan-500"
-												: isDark
-													? "bg-pink-300"
-													: "bg-sky-500"
-										}`}
-									/>
-									{note}
-								</li>
-							))}
-						</ul>
-					</motion.div>
-
+				<div className="grid gap-4 xl:order-1">
 					<motion.div
 						initial={{ opacity: 0, y: 16 }}
 						animate={{ opacity: 1, y: 0 }}
@@ -511,6 +471,46 @@ export function AboutContent({ theme }: { theme: ThemeMode }) {
 								</div>
 							</div>
 						</div>
+					</motion.div>
+
+					<motion.div
+						initial={{ opacity: 0, y: 16 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.3, delay: 0.32 }}
+						className={`rounded-[28px] border p-5 ${
+							isDark
+								? "border-white/8 bg-slate-950/40"
+								: "border-[#daf7fc] bg-[linear-gradient(180deg,rgba(235,253,255,0.96),rgba(216,247,251,0.88))] shadow-[0_18px_36px_rgba(67,152,184,0.08)]"
+						}`}
+					>
+						<div
+							className={`text-xs uppercase tracking-[0.18em] ${
+								isDark ? "text-slate-500" : "text-cyan-700"
+							}`}
+						>
+							Creative Loop
+						</div>
+						<div className={`mt-2 text-2xl font-bold ${isDark ? "text-white" : "text-slate-800"}`}>
+							What I Keep Returning To
+						</div>
+						<ul className={`mt-5 space-y-3 text-sm leading-6 ${isDark ? "text-slate-300" : "text-sky-900/76"}`}>
+							{CURRENT_ROTATION.map((note, index) => (
+								<li key={note} className="flex gap-3">
+									<span
+										className={`mt-1 h-2.5 w-2.5 flex-shrink-0 rounded-full ${
+											index % 2 === 0
+												? isDark
+													? "bg-cyan-300"
+													: "bg-cyan-500"
+												: isDark
+													? "bg-pink-300"
+													: "bg-sky-500"
+										}`}
+									/>
+									{note}
+								</li>
+							))}
+						</ul>
 					</motion.div>
 				</div>
 			</section>

@@ -135,7 +135,7 @@ export function LauncherShell({
 								CHUNLI
 							</div>
 							<div className={`truncate text-[0.62rem] uppercase tracking-[0.2em] ${theme === "dark" ? "text-slate-500" : "text-slate-500"}`}>
-								Personal Console Web
+								Portfolio Web
 							</div>
 						</div>
 					</div>
